@@ -61,7 +61,7 @@ class Object:
             'id': self.get_id(),
             'infos': deepcopy(self.get_infos())
         }
-    
+
     def __eq__(self, other) -> bool:
         if isinstance(self, other.__class__):
             return self.to_dict() == other.to_dict()

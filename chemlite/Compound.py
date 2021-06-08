@@ -33,7 +33,6 @@ from logging import (
     getLogger
 )
 from copy import deepcopy
-from brs_utils import Cache
 from chemlite.Object import Object
 
 
@@ -47,10 +46,12 @@ class Compound(Object):
         inchikey: str = '',
         formula: str = '',
         name: str = '',
+        infos: Dict = {},
         logger: Logger = getLogger(__name__)
     ):
         super().__init__(
             id=id,
+            infos=infos,
             logger=logger
         )
         self.set_smiles(smiles)
@@ -102,20 +103,15 @@ class Compound(Object):
     ## WRITE METHODS
     def set_name(self, name: str) -> None:
         self.__name = name
-        Cache.add(self, self.get_id())
 
     def set_smiles(self, smiles: str) -> None:
         self.__smiles = smiles
-        Cache.add(self, self.get_id())
 
     def set_inchi(self, inchi: str) -> None:
         self.__inchi = inchi
-        Cache.add(self, self.get_id())
 
     def set_inchikey(self, inchikey: str) -> None:
         self.__inchikey = inchikey
-        Cache.add(self, self.get_id())
 
     def set_formula(self, formula: str) -> None:
         self.__formula = formula
-        Cache.add(self, self.get_id())

@@ -110,8 +110,8 @@ class Pathway:
     def get_compounds_ids(self) -> List[str]:
         return self.get_species_ids()
 
-    def get_compound(self, id: str) -> Compound:
-        return self.get_specie(id)
+    def get_compound(self, cmpd_id: str) -> Compound:
+        return self.get_specie(cmpd_id)
 
     def get_reactions_ids(self) -> List[str]:
         return self.__reactions
