@@ -28,7 +28,6 @@ def build_args_parser(
 
     return parser
 
-
 def add_arguments(parser: ArgumentParser) -> ArgumentParser:
     # Add arguments related to the logger
     parser = add_logger_args(parser)
