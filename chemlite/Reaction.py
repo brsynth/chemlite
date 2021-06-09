@@ -48,10 +48,12 @@ class Reaction(Object):
         ec_numbers: List[str] = [],
         reactants: Dict = {},
         products: Dict = {},
+        infos: Dict = {},
         logger: Logger = getLogger(__name__)
     ):
         super().__init__(
             id=id,
+            infos=infos,
             logger=logger
         )
         self.__logger = logger
