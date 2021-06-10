@@ -2,7 +2,11 @@
 
 ## 1.1.0
 #### Jun 10 2021
-- chore(Reaction): add infos to __init__
+- chore(Pathway): net_reaction not static
+- chore(Pathway): (rename_compound) do not rm compound from Cache when renamed
+- chore(Pathway): inherit Pathway from Object
+- chore(Reaction): sort (lexicography) compounds in get_smiles()
+- chore: rename to_dict() into _to_dict()
 
 ## 1.0.1
 #### Jun 9 2021
