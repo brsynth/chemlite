@@ -64,9 +64,6 @@ class Compound(Object):
     # def __repr__(self):
     #     return f'Compound {self.get_id()}'
 
-    def to_string(self):
-        return f'Compound({self.get_id()})'
-
     def to_dict(self) -> Dict:
         return {
             **{

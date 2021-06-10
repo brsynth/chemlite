@@ -46,8 +46,8 @@ class Reaction(Object):
         id: str,
         ec_number: str = None,
         ec_numbers: List[str] = [],
-        reactants: Dict = {},
-        products: Dict = {},
+        reactants: Dict[str, int] = {},
+        products: Dict[str, int] = {},
         infos: Dict = {},
         logger: Logger = getLogger(__name__)
     ):
@@ -68,7 +68,7 @@ class Reaction(Object):
 
     def to_string(self) -> str:
         if self.get_nb_reactants() == 0 or self.get_nb_products() == 0:
-            return f'{type(self).__name__} {self.get_id()}'
+            return super().to_string()
         else:
             return '{class_name} {rxn_name}: {reactants} = {products}'.format(
                 class_name=type(self).__name__,

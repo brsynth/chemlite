@@ -51,7 +51,7 @@ class Object:
         Cache.add(self, self.get_id())
 
     def to_string(self):
-        return f'Object({self.get_id()})'
+        return f'{type(self).__name__}({self.get_id()})'
 
     def __str__(self):
         return self.to_string()
@@ -97,5 +97,10 @@ class Object:
 
     def add_info(self, key: str, value: TypeVar) -> None:
         self.__infos[key] = deepcopy(value)
-        # Cache.add(self, self.get_id())
+
+    def del_info(self, key: str) -> None:
+        try:
+            del self.__infos[key]
+        except KeyError:
+            Cache.__logger.warning(f'No such key {key} found in infos, nothing deleted.')
 
