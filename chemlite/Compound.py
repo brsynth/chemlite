@@ -66,14 +66,17 @@ class Compound(Object):
 
     def _to_dict(self) -> Dict:
         return {
-            **{
-                'name': self.get_name(),
-                'smiles': self.get_smiles(),
-                'inchi': self.get_inchi(),
-                'inchikey': self.get_inchikey(),
-                'formula': self.get_formula(),
-            },
-            **super()._to_dict()
+            **super()._to_dict(),
+            **self.__to_dict()
+        }
+    
+    def __to_dict(self) -> Dict:
+        return {
+            'name': self.get_name(),
+            'smiles': self.get_smiles(),
+            'inchi': self.get_inchi(),
+            'inchikey': self.get_inchikey(),
+            'formula': self.get_formula(),
         }
     
     def __eq__(self, other) -> bool:

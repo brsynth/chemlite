@@ -83,12 +83,15 @@ class Reaction(Object):
 
     def _to_dict(self) -> Dict:
         return {
-            **{
-                'ec_numbers': deepcopy(self.get_ec_numbers()),
-                'reactants': deepcopy(self.get_reactants()),
-                'products': deepcopy(self.get_products()),
-            },
-            **super()._to_dict()
+            **super()._to_dict(),
+            **self.__to_dict()}
+        }
+
+    def __to_dict(self) -> Dict:
+        return {
+            'ec_numbers': deepcopy(self.get_ec_numbers()),
+            'reactants': deepcopy(self.get_reactants()),
+            'products': deepcopy(self.get_products()),
         }
 
     def __eq__(self, other) -> bool:
