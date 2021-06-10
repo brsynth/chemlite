@@ -171,7 +171,7 @@ class Pathway(Object):
             new_id=self.__get_cache_id(rxn_id)
         )
         if rxn.get_id() not in self.get_reactions_ids():
-            self.__reactions += [rxn.get_id()]
+            self.__reactions += [rxn_id]
 
     def del_reaction(self, rxn_id: str) -> None:
         try:

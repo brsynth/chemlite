@@ -520,6 +520,23 @@ class Test_Pathway(TestCase):
             self.test_pathway.get_reactions(),
             self.reactions + [rxn]
         )
+        self.assertListEqual(
+            self.test_pathway.get_reactions_ids(),
+            [rxn.get_id() for rxn in self.reactions] + [rxn.get_id()]
+        )
+    
+    def test_add_reaction_with_id(self):
+        rxn = Reaction(id='rxn')
+        other_id = 'other_' + rxn.get_id()
+        self.test_pathway.add_reaction(rxn, other_id)
+        self.assertListEqual(
+            self.test_pathway.get_reactions(),
+            self.reactions + [rxn]
+        )
+        self.assertListEqual(
+            self.test_pathway.get_reactions_ids(),
+            [rxn.get_id() for rxn in self.reactions] + [other_id]
+        )
     
     # def test_add_species_id(self):
     #     name = 'TEST_1'
