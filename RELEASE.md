@@ -1,5 +1,9 @@
 # Release history
 
+## 1.1.1
+#### Jun 10 2021
+- chore(Pathway): change __eq__ method
+
 ## 1.1.0
 #### Jun 10 2021
 - chore(Pathway): net_reaction not static

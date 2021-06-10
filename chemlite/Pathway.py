@@ -66,14 +66,19 @@ class Pathway(Object):
 
     def _to_dict(self) -> Dict:
         return {
+            **super()._to_dict(),
+            **self.__to_dict()
+        }
+
+    def __to_dict(self) -> Dict:
+        return {
             'reactions': {rxn_id: self.get_reaction(rxn_id)._to_dict() for rxn_id in self.get_reactions_ids()},
             'species': {spe_id: self.get_specie(spe_id)._to_dict() for spe_id in self.get_species_ids()},
-            'infos': deepcopy(self.get_infos()),
         }
 
     def __eq__(self, other) -> bool:
         if isinstance(self, other.__class__):
-            return self._to_dict() == other._to_dict()
+            return self.__to_dict() == other.__to_dict()
         return False
 
     ## READ METHODS
