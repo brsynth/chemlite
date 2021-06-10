@@ -39,6 +39,7 @@ from copy import deepcopy
 from brs_utils import Cache
 from chemlite.Compound import Compound
 from chemlite.Reaction import Reaction
+from chemlite.Object import Object
 
 
 class Pathway(Object):
@@ -107,7 +108,7 @@ class Pathway(Object):
     def get_specie(self, spe_id: str) -> Compound:
         compound = Cache.get(spe_id)
         if compound is None:
-            self.__logger.debug(f'There is no specie \'{id}\' in the pathway')
+            self.get_logger().debug(f'There is no specie \'{id}\' in the pathway')
         return compound
 
     def get_compounds_ids(self) -> List[str]:
@@ -122,7 +123,7 @@ class Pathway(Object):
     def get_reaction(self, rxn_id: str) -> Reaction:
         rxn = Cache.get(self.__get_cache_id(rxn_id))
         if rxn is None:
-            self.__logger.debug(f'There is no reaction \'{rxn_id}\' in the pathway')
+            self.get_logger().debug(f'There is no reaction \'{rxn_id}\' in the pathway')
         return rxn
 
     def get_reactions(self) -> List[Reaction]:
@@ -150,7 +151,7 @@ class Pathway(Object):
                 self.replace_reaction(rxn.get_id(), rxn)
 
     def replace_reaction(self, rxn_id: str, rxn: Reaction) -> None:
-        self.__logger.debug(rxn_id+' '+rxn.to_string())
+        self.get_logger().debug(rxn_id+' '+rxn.to_string())
         self.del_reaction(rxn_id)
         self.add_reaction(rxn, rxn_id)
 
@@ -160,7 +161,7 @@ class Pathway(Object):
         rxn_id: str = None,
     ) -> None:
 
-        self.__logger.debug(rxn)
+        self.get_logger().debug(rxn)
 
         # RXN ID
         if rxn_id is None:
@@ -176,7 +177,7 @@ class Pathway(Object):
         try:
             del self.__reactions[self.__reactions.index(rxn_id)]
         except ValueError:
-            self.__logger.error(f'There is no reaction \'{rxn_id}\' in the pathway, nothing deleted.')
+            self.get_logger().error(f'There is no reaction \'{rxn_id}\' in the pathway, nothing deleted.')
 
 
     ## MISC

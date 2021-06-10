@@ -51,7 +51,7 @@ class Object:
         Cache.add(self, self.get_id())
 
     def to_string(self):
-        return f'{type(self).__name__}({self.get_id()})'
+        return f'{type(self).__name__} {self.get_id()}'
 
     def __str__(self):
         return self.to_string()
@@ -75,6 +75,9 @@ class Object:
     ## READ METHODS
     def get_id(self) -> str:
         return self.__id
+
+    def get_logger(self) -> Logger:
+        return self.__logger
 
     def get_infos(self) -> Dict:
         return self.__infos

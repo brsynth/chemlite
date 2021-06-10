@@ -29,12 +29,12 @@ class Test_Compound(TestCase):
     def test_to_string(self):
         self.assertEqual(
             self.compound.to_string(),
-            f'Compound({self.id})'
+            f'Compound {self.id}'
         )
 
     def test_to_dict(self):
         self.assertDictEqual(
-            self.compound.to_dict(),
+            self.compound._to_dict(),
             {
                 'name': self.name,
                 'smiles': self.smiles,

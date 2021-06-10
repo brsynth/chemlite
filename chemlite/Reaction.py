@@ -204,7 +204,7 @@ class Reaction(Object):
         stoichio: int = 1
     ) -> None:
         if id == '':
-            self.__logger.error(f'id argument has to be provided')
+            self.get_logger().error(f'id argument has to be provided')
         else:
             # Select the side to add the compound
             side = self.get_reactants_stoichio() if stoichio < 1 else self.get_products_stoichio()
@@ -220,7 +220,7 @@ class Reaction(Object):
     ) -> None:
         if id is None:
             if compound is None:
-                self.__logger.error(f'At least compound or id argument has to be provided')
+                self.get_logger().error(f'At least compound or id argument has to be provided')
                 return
             else:
                 id = compound.get_id()

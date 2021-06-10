@@ -27,14 +27,14 @@ class Test_Object(TestCase):
         id = 'obj_id'
         self.assertEqual(
             Object(id).to_string(),
-            f'Object({id})'
+            f'Object {id}'
         )
 
     def test___str__(self):
         id = 'obj_id'
         self.assertEqual(
             Object(id).__str__(),
-            f'Object({id})'
+            f'Object {id}'
         )
 
     def test_eq(self):

@@ -152,7 +152,7 @@ class Test_Reaction(TestCase):
 
     def test_to_dict(self):
         self.assertEqual(
-            self.rxn.to_dict(),
+            self.rxn._to_dict(),
             {
                 'ec_numbers': self.ec_numbers,
                 'reactants': [species[spe_id] for spe_id in self.reactants.keys()],
@@ -169,9 +169,17 @@ class Test_Reaction(TestCase):
             self.rxn
         )
 
-    def test_not_eq(self):
+    def test_eq_diff_infos(self):
         rxn = deepcopy(self.rxn)
         rxn.add_info('new_info', {'a': 1})
+        self.assertEqual(
+            rxn,
+            self.rxn
+        )
+
+    def test_not_eq(self):
+        rxn = deepcopy(self.rxn)
+        rxn.add_reactant(compound_id='c', stoichio=1)
         self.assertNotEqual(
             rxn,
             self.rxn

@@ -619,19 +619,11 @@ class Test_Pathway(TestCase):
     def test_to_dict(self):
         list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions]
         l = list(set([spe for species in list_of_list_of_species for spe in species]))
-        print(self.test_pathway.to_dict())
-        print()
-        print({
-                'reactions': {rxn.get_id():rxn.to_dict() for rxn in self.reactions},
-                'species': {spe.get_id():spe.to_dict() for spe in [self.species[spe_id] for spe_id in l]},
-                'infos': self.infos
-            })
-        # exit()
         self.assertDictEqual(
-            self.test_pathway.to_dict(),
+            self.test_pathway._to_dict(),
             {
-                'reactions': {rxn.get_id():rxn.to_dict() for rxn in self.reactions},
-                'species': {spe.get_id():spe.to_dict() for spe in [self.species[spe_id] for spe_id in l]},
+                'reactions': {rxn.get_id():rxn._to_dict() for rxn in self.reactions},
+                'species': {spe.get_id():spe._to_dict() for spe in [self.species[spe_id] for spe_id in l]},
                 'infos': self.infos
             }
         )
