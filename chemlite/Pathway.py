@@ -137,7 +137,8 @@ class Pathway(Object):
         self.__id = id
 
     def rename_compound(self, id: str, new_id: str) -> None:
-        for rxn in self.get_reactions():
+        for rxn_id in self.get_reactions_ids():
+            rxn = self.get_reaction(rxn_id)
             if id in rxn.get_species_ids():
                 # rename compound in cache
                 compound = Cache.get(id)
@@ -148,7 +149,7 @@ class Pathway(Object):
                     Cache.add(compound)
                 # rename in reaction
                 rxn.rename_compound(id, new_id)
-                self.replace_reaction(rxn.get_id(), rxn)
+                # self.replace_reaction(rxn_id, rxn)
 
     def replace_reaction(self, rxn_id: str, rxn: Reaction) -> None:
         self.get_logger().debug(rxn_id+' '+rxn.to_string())
@@ -165,47 +166,37 @@ class Pathway(Object):
 
         # RXN ID
         if rxn_id is None:
-            rxn_id = rxn.get_id()        
-        Cache.rename(
+            rxn_id = rxn.get_id()
+        Cache.copy(
             id=rxn.get_id(),
             new_id=self.__get_cache_id(rxn_id)
         )
-        if rxn.get_id() not in self.get_reactions_ids():
+        if rxn_id not in self.get_reactions_ids():
             self.__reactions += [rxn_id]
 
     def del_reaction(self, rxn_id: str) -> None:
         try:
+            Cache.remove_object_by_id(self.__get_cache_id(rxn_id))
             del self.__reactions[self.__reactions.index(rxn_id)]
         except ValueError:
             self.get_logger().error(f'There is no reaction \'{rxn_id}\' in the pathway, nothing deleted.')
 
 
     ## MISC
-    @staticmethod
-    def net_reaction(reactions: List[Reaction]) -> Reaction:
+    def net_reaction(self) -> Reaction:
         '''
         '''
-
-        # SUM ALL SPECIES
-        species = {}
-        for rxn in reactions:
-            # LEFT
-            for spe_id, spe_sto in rxn.get_reactants_stoichio().items():
-                if spe_id in species:
-                    species[spe_id] -= spe_sto
-                else:
-                    species[spe_id] = -spe_sto
-            # RIGHT
-            for spe_id, spe_sto in rxn.get_products_stoichio().items():
-                if spe_id in species:
-                    species[spe_id] += spe_sto
-                else:
-                    species[spe_id] = spe_sto
-
-        # WRITE INTO A NEW REACTION
+        species_stoichio = Reaction.sum_stoichio(
+            [rxn.get_reactants_stoichio() for rxn in self.get_reactions()],
+            [rxn.get_products_stoichio() for rxn in self.get_reactions()]
+        )
         return Reaction(
             id='net_rxn',
-            reactants={spe_id:-spe_sto for (spe_id,spe_sto) in species.items() if spe_sto < 0},
-            products={spe_id:spe_sto for (spe_id,spe_sto) in species.items() if spe_sto > 0}
+            reactants={spe_id:-spe_sto for (spe_id,spe_sto) in species_stoichio.items() if spe_sto < 0},
+            products={spe_id:spe_sto for (spe_id,spe_sto) in species_stoichio.items() if spe_sto > 0}
         )
 
+    def pseudo_reaction(self) -> Reaction:
+        '''
+        '''
+        return self.net_reaction()

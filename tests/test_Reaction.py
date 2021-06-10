@@ -342,3 +342,52 @@ class Test_Reaction(TestCase):
             self.rxn.get_products_ids(),
             products_ids
         )
+
+    def test_sum_stoichio(self):
+        reactants_1 = {
+            'MNXM4': 1,
+            'MNXM337': 1,
+            'MNXM3': 2
+        }
+        reactants_2 = {
+            'MNXM4': 1,
+            'MNXM337': 1,
+        }
+        reactants_3 = {
+            'MNXM4': 2,
+            'MNXM6': 1,
+            'MNXM5': 1,
+        }
+        products_1 = {
+            'MNXM2': 1,
+            'MNXM5': 1,
+            'MNXM23': 1
+        }
+        products_2 = {
+            'MNXM13': 1,
+            'MNXM6': 3,
+            'MNXM5': 1,
+            'MNXM3': 1
+        }
+        products_3 = {
+            'TARGET_0000000001': 1,
+            'MNXM2': 1,
+            'MNXM5': 1,
+            'MNXM3': 1
+        }
+        self.assertDictEqual(
+            Reaction.sum_stoichio(
+                [reactants_1, reactants_2, reactants_3],
+                [products_1, products_2, products_3],
+            ),
+            {
+                'MNXM4': -4,
+                'MNXM337': -2,
+                'MNXM6': 2,
+                'MNXM2': 2,
+                'MNXM5': 2,
+                'TARGET_0000000001': 1,
+                'MNXM13': 1,
+                'MNXM23': 1
+            }
+        )

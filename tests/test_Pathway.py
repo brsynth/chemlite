@@ -97,8 +97,6 @@ class Test_Pathway(TestCase):
                 inchikey="ACFIXJIJDZMPPO-UHFFFAOYSA-N"
             )
         }
-
-
         self.reactants = {
             "CMPD_0000000003": 1,
             "MNXM4": 1
@@ -108,7 +106,7 @@ class Test_Pathway(TestCase):
             "MNXM1": 2
         }
         self.rxn = Reaction(
-            id="self.rxn",
+            id="rxn_4",
             ec_numbers=[
                 "1.13.11.1"
             ],
@@ -247,12 +245,27 @@ class Test_Pathway(TestCase):
     def test_rename_compound(self):
         old_id = self.rxn.get_reactants_ids()[0]
         new_id = 'NEW_CMPD_ID'
-        self.test_pathway.rename_compound(self.rxn.get_reactants_ids()[0], new_id)
+        self.test_pathway.rename_compound(old_id, new_id)
         self.assertEqual(
             self.test_pathway.get_reaction(self.rxn.get_id()).get_reactants_ids()[0],
             new_id
         )
-        self.test_pathway.rename_compound(new_id, old_id)
+
+    def test_replace_reaction(self):
+        _rxn = deepcopy(self.rxn)
+        rxn = Reaction(_rxn.get_id())
+        self.assertEqual(
+            self.test_pathway.get_reaction(self.rxn.get_id()),
+            _rxn
+        )
+        self.test_pathway.replace_reaction(
+            self.rxn.get_id(),
+            rxn
+        )
+        self.assertNotEqual(
+            self.test_pathway.get_reaction(self.rxn.get_id()),
+            _rxn
+        )
 
     def test_get_id(self):
         self.assertEqual(
@@ -328,7 +341,7 @@ class Test_Pathway(TestCase):
 
     def test_get_reaction(self):
         self.assertEqual(
-            self.test_pathway.get_reaction('self.rxn'),
+            self.test_pathway.get_reaction('rxn_4'),
             self.rxn
         )
 
@@ -370,26 +383,26 @@ class Test_Pathway(TestCase):
 
     # def test_get_reaction_scores(self):
     #     self.assertDictEqual(
-    #         self.test_pathway.get_reaction_scores('self.rxn'),
-    #         reactions['self.rxn']['scores']
+    #         self.test_pathway.get_reaction_scores('rxn_4'),
+    #         reactions['rxn_4']['scores']
     #     )
 
     # def test_get_reaction_rule_score(self):
     #     self.assertEqual(
-    #         self.test_pathway.get_reaction_rule_score('self.rxn'),
-    #         reactions['self.rxn']['scores']['rule']
+    #         self.test_pathway.get_reaction_rule_score('rxn_4'),
+    #         reactions['rxn_4']['scores']['rule']
     #     )
 
     # def test_get_reaction_fba_score(self):
     #     self.assertDictEqual(
-    #         self.test_pathway.get_reaction_fba_score('self.rxn'),
-    #         reactions['self.rxn']['scores']['fba']
+    #         self.test_pathway.get_reaction_fba_score('rxn_4'),
+    #         reactions['rxn_4']['scores']['fba']
     #     )
 
     # def test_get_reaction_thermo_scores(self):
     #     self.assertDictEqual(
-    #         self.test_pathway.get_reaction_thermo_scores('self.rxn'),
-    #         reactions['self.rxn']['scores']['thermo']
+    #         self.test_pathway.get_reaction_thermo_scores('rxn_4'),
+    #         reactions['rxn_4']['scores']['thermo']
     #     )
 
     # def test_get_pathway(self):
@@ -524,7 +537,7 @@ class Test_Pathway(TestCase):
             self.test_pathway.get_reactions_ids(),
             [rxn.get_id() for rxn in self.reactions] + [rxn.get_id()]
         )
-    
+
     def test_add_reaction_with_id(self):
         rxn = Reaction(id='rxn')
         other_id = 'other_' + rxn.get_id()
@@ -651,7 +664,7 @@ class Test_Pathway(TestCase):
             '----------------\n' \
           + f'Pathway {self.test_pathway.get_id()}\n' \
           + '----------------\n' \
-          + 'Reaction self.rxn: 1 CMPD_0000000003 + 1 MNXM4 = 1 TARGET_0000000001 + 2 MNXM1\nReaction rxn_3: 1 CMPD_0000000010 + 1 MNXM1 = 1 CMPD_0000000003 + 1 MNXM13\nReaction rxn_2: 1 CMPD_0000000025 + 1 MNXM4 + 1 MNXM6 + 1 MNXM1 = 1 CMPD_0000000010 + 1 MNXM2 + 1 MNXM5\nReaction rxn_1: 1 MNXM337 = 1 CMPD_0000000025 + 1 MNXM23'
+          + 'Reaction rxn_4: 1 CMPD_0000000003 + 1 MNXM4 = 1 TARGET_0000000001 + 2 MNXM1\nReaction rxn_3: 1 CMPD_0000000010 + 1 MNXM1 = 1 CMPD_0000000003 + 1 MNXM13\nReaction rxn_2: 1 CMPD_0000000025 + 1 MNXM4 + 1 MNXM6 + 1 MNXM1 = 1 CMPD_0000000010 + 1 MNXM2 + 1 MNXM5\nReaction rxn_1: 1 MNXM337 = 1 CMPD_0000000025 + 1 MNXM23'
         )
 
     def test_eq(self):
@@ -725,7 +738,7 @@ class Test_Pathway(TestCase):
 
     def test_net_reaction(self):
         self.assertEqual(
-            Pathway.net_reaction(self.test_pathway.get_reactions()).get_species_stoichio(),
+            self.test_pathway.net_reaction().get_species_stoichio(),
             {
                 'MNXM4': -2,
                 'TARGET_0000000001': 1,

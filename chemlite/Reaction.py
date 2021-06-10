@@ -274,4 +274,28 @@ class Reaction(Object):
             stoichio=abs(stoichio)
         )
 
+    @staticmethod
+    def sum_stoichio(l_reactants: List[Dict], l_products: List[Dict]) -> Dict:
+        '''
+        '''
 
+        # SUM ALL SPECIES
+        species = {}
+
+        # Reactants
+        for reactants in l_reactants:
+            for spe_id, spe_sto in reactants.items():
+                if spe_id in species:
+                    species[spe_id] -= spe_sto
+                else:
+                    species[spe_id] = -spe_sto
+
+        # Products
+        for products in l_products:
+            for spe_id, spe_sto in products.items():
+                if spe_id in species:
+                    species[spe_id] += spe_sto
+                else:
+                    species[spe_id] = spe_sto
+
+        return {spe_id:spe_sto for (spe_id,spe_sto) in species.items() if spe_sto != 0}
