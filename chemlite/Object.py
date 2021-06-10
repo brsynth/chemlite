@@ -57,7 +57,7 @@ class Object:
         return self.to_string()
 
     def _to_dict(self) -> Dict:
-        return self._to_dict()
+        return self.__to_dict()
 
     def __to_dict(self) -> Dict:
         '''For compatibility with __eq__ method in child classes

@@ -107,20 +107,30 @@ class Reaction(Object):
 
     def get_smiles(self) -> str:
         ## LEFT
-        left = []
+        smi = []
+        # sort reactants from compound IDs
+        stoichio = sorted(
+            self.get_reactants_stoichio().items(),
+            key = lambda kv:(kv[1], kv[0].lower())
+        )
         # build list of compounds with stoichiometry
-        for spe_id, spe_sto in self.get_reactants_stoichio().items():
-            left += [Cache.get(spe_id).get_smiles()]*spe_sto
+        for spe_id, spe_sto in stoichio:
+            smi += [Cache.get(spe_id).get_smiles()]*spe_sto
         # build smiles string
-        left_smi = '.'.join(left)
+        left_smi = '.'.join(smi)
 
         ## RIGHT
-        right = []
+        smi = []
+        # sort reactants from compound IDs
+        stoichio = sorted(
+            self.get_products_stoichio().items(),
+            key = lambda kv:(kv[1], kv[0].lower())
+        )
         # build list of compounds with stoichiometry
-        for spe_id, spe_sto in self.get_products_stoichio().items():
-            right += [Cache.get(spe_id).get_smiles()]*spe_sto
+        for spe_id, spe_sto in stoichio:
+            smi += [Cache.get(spe_id).get_smiles()]*spe_sto
         # build smiles string
-        right_smi = '.'.join(right)
+        right_smi = '.'.join(smi)
 
         return left_smi + '>>' + right_smi
 
