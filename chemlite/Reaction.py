@@ -44,8 +44,7 @@ class Reaction(Object):
     def __init__(
         self,
         id: str,
-        ec_number: str = None,
-        ec_numbers: List[str] = [],
+        ec_numbers: Union[List[str], str] = [],
         reactants: Dict[str, int] = {},
         products: Dict[str, int] = {},
         infos: Dict = {},
@@ -57,8 +56,11 @@ class Reaction(Object):
             logger=logger
         )
         self.__logger = logger
-        self.set_ec_numbers(ec_numbers)
-        self.add_ec_number(ec_number)
+        if isinstance(ec_numbers, list):
+            self.set_ec_numbers(ec_numbers)
+        else:
+            self.set_ec_numbers([])
+            self.add_ec_number(ec_number)
         self.set_reactants(reactants)
         self.set_products(products)
 
