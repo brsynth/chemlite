@@ -110,5 +110,5 @@ class Object:
         try:
             del self.__infos[key]
         except KeyError:
-            Cache.__logger.warning(f'No such key {key} found in infos, nothing deleted.')
+            self.__logger.warning(f'No such key {key} found in infos, nothing deleted.')
 

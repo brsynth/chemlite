@@ -137,6 +137,17 @@ class Test_Reaction(TestCase):
             products=self.products
         )
 
+    def test___init__ec_number(self):
+        ec_number = '1.1.2'
+        rxn = Reaction(
+            id='rxn_test',
+            ec_numbers=ec_number
+        )
+        self.assertListEqual(
+            rxn.get_ec_numbers(),
+            [ec_number]
+        )
+
     def test_to_string(self):
         self.assertEqual(
             self.rxn.to_string(),

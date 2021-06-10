@@ -59,7 +59,7 @@ class Reaction(Object):
             self.set_ec_numbers(ec_numbers)
         else:
             self.set_ec_numbers([])
-            self.add_ec_number(ec_number)
+            self.add_ec_number(ec_numbers)
         self.set_reactants(reactants)
         self.set_products(products)
 

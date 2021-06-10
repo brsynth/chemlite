@@ -4,6 +4,9 @@ Created on May 28 2021
 @author: Joan Hérisson
 """
 
+from typing import(
+    TypeVar
+)
 from unittest import TestCase
 from chemlite import Object
 
@@ -121,14 +124,31 @@ class Test_Object(TestCase):
             new_infos
         )
 
-    def test_add_info(self):
-        new_info_id = 'new'
-        new_infos = {'a': 1}
-        self.object.add_info(new_info_id, new_infos)
+    def __add_info(self, info_id: str, info: TypeVar):
+        self.object.add_info(info_id, info)
         self.assertDictEqual(
             self.object.get_infos(),
             {
                 **self.infos,
-                **{new_info_id: new_infos}
+                **{info_id: info}
             }
+        )
+
+    def test_del_info(self):
+        info_id = 'new'
+        info = {'a': 1}
+        self.__add_info(info_id, info)
+        self.object.del_info(info_id)
+        self.assertDictEqual(
+            self.object.get_infos(),
+            self.infos
+        )
+
+    def test_del_info_wrong_key(self):
+        info_id = 'new'
+        info = {'a': 1}
+        self.object.del_info(info_id)
+        self.assertDictEqual(
+            self.object.get_infos(),
+            self.infos
         )
