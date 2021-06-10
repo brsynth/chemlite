@@ -389,7 +389,8 @@ class Test_Pathway(TestCase):
             {
                 'reactions': {rxn.get_id(): rxn._to_dict() for rxn in self.reactions},
                 'species': {spe.get_id(): spe._to_dict() for spe in [self.species[spe_id] for spe_id in list_of_species]},
-                'infos': self.infos
+                'infos': self.infos,
+                'id': self.id
             }
         )
 
@@ -452,6 +453,21 @@ class Test_Pathway(TestCase):
     def test_net_reaction(self):
         self.assertEqual(
             self.test_pathway.net_reaction().get_species_stoichio(),
+            {
+                'MNXM4': -2,
+                'TARGET_0000000001': 1,
+                'MNXM13': 1,
+                'MNXM6': -1,
+                'MNXM2': 1,
+                'MNXM5': 1,
+                'MNXM337': -1,
+                'MNXM23': 1
+            }
+        )
+
+    def test_pseudo_reaction(self):
+        self.assertEqual(
+            self.test_pathway.pseudo_reaction().get_species_stoichio(),
             {
                 'MNXM4': -2,
                 'TARGET_0000000001': 1,
