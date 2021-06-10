@@ -55,7 +55,6 @@ class Reaction(Object):
             infos=infos,
             logger=logger
         )
-        self.__logger = logger
         if isinstance(ec_numbers, list):
             self.set_ec_numbers(ec_numbers)
         else:

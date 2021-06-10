@@ -41,18 +41,21 @@ from chemlite.Compound import Compound
 from chemlite.Reaction import Reaction
 
 
-class Pathway:
+class Pathway(Object):
 
     def __init__(
         self,
         id: str,
         cache: Cache = None,
+        infos: Dict = {},
         logger: Logger = getLogger(__name__)
     ):
-        self.__logger = logger
-        self.set_id(id)
+        super().__init__(
+            id=id,
+            infos=infos,
+            logger=logger
+        )
         self.__reactions = []
-        self.set_infos({})
 
     ## OUT METHODS
     # def __repr__(self):
@@ -125,16 +128,6 @@ class Pathway:
     def get_reactions(self) -> List[Reaction]:
         return [self.get_reaction(rxn_id) for rxn_id in self.get_reactions_ids()]
 
-    def get_infos(self) -> Dict:
-        return self.__infos
-
-    def get_info(self, key: str) -> TypeVar:
-        try:
-            return self.get_infos()[key]
-        except:
-            self.__logger.debug(f'There is no such field {key} in infos for the pathway')
-            return None
-
     def __get_cache_id(self, id: str) -> str:
         return f'{self.get_id()}_{id}'
 
@@ -184,12 +177,6 @@ class Pathway:
             del self.__reactions[self.__reactions.index(rxn_id)]
         except ValueError:
             self.__logger.error(f'There is no reaction \'{rxn_id}\' in the pathway, nothing deleted.')
-
-    def set_infos(self, infos: Dict) -> None:
-        self.__infos = deepcopy(infos)
-
-    def add_info(self, key: str, value: TypeVar) -> None:
-        self.__infos[key] = deepcopy(value)
 
 
     ## MISC
