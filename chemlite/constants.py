@@ -41,4 +41,3 @@ DEFAULT_THERMO = {
         "unit": ''
     }
 }
-

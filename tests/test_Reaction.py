@@ -257,9 +257,8 @@ class Test_Reaction(TestCase):
             self.rxn.get_ec_numbers(),
             self.ec_numbers + [ec_number]
         )
-    
+
     def test_add_reactant(self):
-        reactants = self.rxn.get_reactants_stoichio()
         for spe_sto in [3, -3]:
             with self.subTest(spe_sto=spe_sto):
                 rxn = deepcopy(self.rxn)
@@ -304,7 +303,6 @@ class Test_Reaction(TestCase):
         )
 
     def test_add_product(self):
-        products = self.rxn.get_products_stoichio()
         for spe_sto in [3, -3]:
             with self.subTest(spe_sto=spe_sto):
                 rxn = deepcopy(self.rxn)

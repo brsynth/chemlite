@@ -26,14 +26,10 @@
 from typing import (
     Dict,
     List,
-    TypeVar,
-    Union,
-    Callable
 )
 from logging import (
     Logger,
     getLogger,
-    ERROR
 )
 from copy import deepcopy
 from brs_utils import Cache
@@ -64,14 +60,14 @@ class Pathway(Object):
 
     def to_string(self):
         return '----------------\n' \
-             + f'Pathway {self.get_id()}\n' \
-             + '----------------\n' \
-             + '\n'.join([rxn.__str__() for rxn in self.get_reactions()])
+            + f'Pathway {self.get_id()}\n' \
+            + '----------------\n' \
+            + '\n'.join([rxn.__str__() for rxn in self.get_reactions()])
 
     def _to_dict(self) -> Dict:
         return {
-            'reactions': {rxn_id:self.get_reaction(rxn_id)._to_dict() for rxn_id in self.get_reactions_ids()},
-            'species': {spe_id:self.get_specie(spe_id)._to_dict() for spe_id in self.get_species_ids()},
+            'reactions': {rxn_id: self.get_reaction(rxn_id)._to_dict() for rxn_id in self.get_reactions_ids()},
+            'species': {spe_id: self.get_specie(spe_id)._to_dict() for spe_id in self.get_species_ids()},
             'infos': deepcopy(self.get_infos()),
         }
 
@@ -181,7 +177,6 @@ class Pathway(Object):
         except ValueError:
             self.get_logger().error(f'There is no reaction \'{rxn_id}\' in the pathway, nothing deleted.')
 
-
     ## MISC
     def net_reaction(self) -> Reaction:
         '''
@@ -192,8 +187,8 @@ class Pathway(Object):
         )
         return Reaction(
             id='net_rxn',
-            reactants={spe_id:-spe_sto for (spe_id,spe_sto) in species_stoichio.items() if spe_sto < 0},
-            products={spe_id:spe_sto for (spe_id,spe_sto) in species_stoichio.items() if spe_sto > 0}
+            reactants={spe_id: -spe_sto for (spe_id, spe_sto) in species_stoichio.items() if spe_sto < 0},
+            products={spe_id: spe_sto for (spe_id, spe_sto) in species_stoichio.items() if spe_sto > 0}
         )
 
     def pseudo_reaction(self) -> Reaction:

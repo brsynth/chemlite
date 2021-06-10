@@ -26,7 +26,6 @@
 from typing import (
     Dict,
     List,
-    TypeVar,
     Union
 )
 from logging import (
@@ -80,7 +79,7 @@ class Reaction(Object):
                 products=' + '.join(
                     [f'{spe_sto} {spe_id}' for spe_id, spe_sto in self.get_products_stoichio().items()]
                 ),
-        )
+            )
 
     def _to_dict(self) -> Dict:
         return {
@@ -110,7 +109,7 @@ class Reaction(Object):
         # sort reactants from compound IDs
         stoichio = sorted(
             self.get_reactants_stoichio().items(),
-            key = lambda kv:(kv[1], kv[0].lower())
+            key = lambda kv: (kv[1], kv[0].lower())
         )
         # build list of compounds with stoichiometry
         for spe_id, spe_sto in stoichio:
@@ -123,7 +122,7 @@ class Reaction(Object):
         # sort reactants from compound IDs
         stoichio = sorted(
             self.get_products_stoichio().items(),
-            key = lambda kv:(kv[1], kv[0].lower())
+            key = lambda kv: (kv[1], kv[0].lower())
         )
         # build list of compounds with stoichiometry
         for spe_id, spe_sto in stoichio:
@@ -164,8 +163,8 @@ class Reaction(Object):
         return self.get_products_stoichio()
 
     def get_species_stoichio(self) -> Dict:
-        reactants = {spe_id:-spe_sto for (spe_id,spe_sto) in self.get_reactants_stoichio().items()}
-        products = {spe_id:spe_sto for (spe_id,spe_sto) in self.get_products_stoichio().items()}
+        reactants = {spe_id: -spe_sto for (spe_id, spe_sto) in self.get_reactants_stoichio().items()}
+        products = {spe_id: spe_sto for (spe_id, spe_sto) in self.get_products_stoichio().items()}
         return {**reactants, **products}
 
     def get_species_ids(self) -> List[str]:
@@ -204,7 +203,7 @@ class Reaction(Object):
         stoichio: int = 1
     ) -> None:
         if id == '':
-            self.get_logger().error(f'id argument has to be provided')
+            self.get_logger().error('id argument has to be provided')
         else:
             # Select the side to add the compound
             side = self.get_reactants_stoichio() if stoichio < 1 else self.get_products_stoichio()
@@ -220,7 +219,7 @@ class Reaction(Object):
     ) -> None:
         if id is None:
             if compound is None:
-                self.get_logger().error(f'At least compound or id argument has to be provided')
+                self.get_logger().error('At least compound or id argument has to be provided')
                 return
             else:
                 id = compound.get_id()
@@ -298,4 +297,4 @@ class Reaction(Object):
                 else:
                     species[spe_id] = spe_sto
 
-        return {spe_id:spe_sto for (spe_id,spe_sto) in species.items() if spe_sto != 0}
+        return {spe_id: spe_sto for (spe_id, spe_sto) in species.items() if spe_sto != 0}

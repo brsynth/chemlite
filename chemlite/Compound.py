@@ -25,14 +25,11 @@
 
 from typing import (
     Dict,
-    List,
-    TypeVar
 )
 from logging import (
     Logger,
     getLogger
 )
-from copy import deepcopy
 from chemlite.Object import Object
 
 
@@ -69,7 +66,7 @@ class Compound(Object):
             **super()._to_dict(),
             **self.__to_dict()
         }
-    
+
     def __to_dict(self) -> Dict:
         return {
             'name': self.get_name(),
@@ -78,7 +75,7 @@ class Compound(Object):
             'inchikey': self.get_inchikey(),
             'formula': self.get_formula(),
         }
-    
+
     def __eq__(self, other) -> bool:
         if isinstance(self, other.__class__):
             return self.__to_dict() == other.__to_dict()

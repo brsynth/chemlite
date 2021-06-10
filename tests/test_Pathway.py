@@ -9,7 +9,6 @@ from chemlite import (
     Pathway,
     Reaction,
     Compound,
-    Object
 )
 from copy import deepcopy
 
@@ -287,10 +286,10 @@ class Test_Pathway(TestCase):
 
     def test_get_species(self):
         list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions]
-        l = list(set([spe for species in list_of_list_of_species for spe in species]))
+        list_of_species = list(set([spe for species in list_of_list_of_species for spe in species]))
         self.assertListEqual(
             self.test_pathway.get_species(),
-            [self.test_pathway.get_specie(spe_id) for spe_id in l]
+            [self.test_pathway.get_specie(spe_id) for spe_id in list_of_species]
         )
 
     def test_get_species_ids(self):
@@ -321,10 +320,10 @@ class Test_Pathway(TestCase):
 
     def test_get_compounds(self):
         list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions]
-        l = list(set([spe for species in list_of_list_of_species for spe in species]))
+        list_of_species = list(set([spe for species in list_of_list_of_species for spe in species]))
         self.assertListEqual(
             self.test_pathway.get_compounds(),
-            [self.test_pathway.get_specie(spe_id) for spe_id in l]
+            [self.test_pathway.get_specie(spe_id) for spe_id in list_of_species]
         )
 
     def test_get_compound(self):
@@ -357,175 +356,6 @@ class Test_Pathway(TestCase):
             [rxn.get_id() for rxn in self.reactions]
         )
 
-    # def test_get_rxn_target_id(self):
-    #     self.assertEqual(
-    #         self.test_pathway.get_rxn_target_id(),
-    #         self.rxn.get_id()
-    #     )
-
-    # def test_get_rxn_target(self):
-    #     self.assertEqual(
-    #         self.test_pathway.get_target(),
-    #         species['TARGET_0000000001']
-    #     )
-
-    # def test_get_target(self):
-    #     self.assertEqual(
-    #         self.test_pathway.get_rxn_target(),
-    #         self.rxn
-    #     )
-
-    # def test_get_target_id(self):
-    #     self.assertEqual(
-    #         self.test_pathway.get_target_id(),
-    #         'TARGET_0000000001'
-    #     )
-
-    # def test_get_reaction_scores(self):
-    #     self.assertDictEqual(
-    #         self.test_pathway.get_reaction_scores('rxn_4'),
-    #         reactions['rxn_4']['scores']
-    #     )
-
-    # def test_get_reaction_rule_score(self):
-    #     self.assertEqual(
-    #         self.test_pathway.get_reaction_rule_score('rxn_4'),
-    #         reactions['rxn_4']['scores']['rule']
-    #     )
-
-    # def test_get_reaction_fba_score(self):
-    #     self.assertDictEqual(
-    #         self.test_pathway.get_reaction_fba_score('rxn_4'),
-    #         reactions['rxn_4']['scores']['fba']
-    #     )
-
-    # def test_get_reaction_thermo_scores(self):
-    #     self.assertDictEqual(
-    #         self.test_pathway.get_reaction_thermo_scores('rxn_4'),
-    #         reactions['rxn_4']['scores']['thermo']
-    #     )
-
-    # def test_get_pathway(self):
-    #     self.assertListEqual(
-    #         self.test_pathway.get_pathway(),
-    #         self.pathway
-    #     )
-
-    # def test_get_sink(self):
-    #     self.assertListEqual(
-    #         self.test_pathway.get_sink(),
-    #         self.sink
-    #     )
-
-    # def test_get_fba(self):
-    #     self.assertEqual(
-    #         self.test_pathway.get_fba(),
-    #         self.fba
-    #     )
-
-    # def test_get_thermo(self):
-    #     self.assertDictEqual(
-    #         self.test_pathway.get_thermo(),
-    #         self.thermo
-    #     )
-
-    # def test_get_compartments(self):
-    #     self.assertDictEqual(
-    #         self.test_pathway.get_compartments(),
-    #         self.compartments
-    #     )
-
-    # def test_get_compartment(self):
-    #     self.assertDictEqual(
-    #         self.test_pathway.get_compartment('MNXC3'),
-    #         self.compartments['MNXC3']
-    #     )
-
-    # def test_get_compartment_wrong_id(self):
-    #     self.assertEqual(
-    #         self.test_pathway.get_compartment('WRONG_ID'),
-    #         None
-    #     )
-
-    # def test_get_parameters(self):
-    #     self.assertDictEqual(
-    #         self.test_pathway.get_parameters(),
-    #         self.parameters
-    #     )
-
-    # def test_get_parameter(self):
-    #     self.assertDictEqual(
-    #         self.test_pathway.get_parameter('upper_flux_bound'),
-    #         self.parameters['upper_flux_bound']
-    #     )
-
-    # def test_get_parameter_wrong_ID(self):
-    #     self.assertEqual(
-    #         self.test_pathway.get_parameter('WRONG_ID'),
-    #         None
-    #     )
-
-    # def test_get_units_def(self):
-    #     self.assertDictEqual(
-    #         self.test_pathway.get_units_def(),
-    #         self.units_def
-    #     )
-
-    # def test_get_units_def_id(self):
-    #     id = 'mmol_per_gDW_per_hr'
-    #     self.assertListEqual(
-    #         self.test_pathway.get_units_def(id),
-    #         self.units_def[id]
-    #     )
-
-    # def test_get_units_def_wrong_id(self):
-    #     id = 'WRONG_ID'
-    #     self.assertEqual(
-    #         self.test_pathway.get_units_def(id),
-    #         None
-    #     )
-
-    # def test_set_id(self):
-    #     name = 'test test_pathway'
-    #     self.test_pathway.set_id(name)
-    #     self.assertEqual(
-    #         self.test_pathway.get_id(),
-    #         name
-    #     )
-
-    # def test_set_species_ids_1(self):
-    #     species = ['TEST_CMPD_1', 'TEST_CMPD_2']
-    #     self.test_pathway.set_species(species)
-    #     self.assertListEqual(
-    #         self.test_pathway.get_list_of_species_ids(),
-    #         species
-    #     )
-
-    # def test_set_compounds(self):
-    #     species = ['TEST_CMPD_1', 'TEST_CMPD_2']
-    #     self.test_pathway.set_compounds(species)
-    #     self.assertListEqual(
-    #         self.test_pathway.get_list_of_species_ids(),
-    #         species
-    #     )
-
-    # def test_set_species_1(self):
-    #     species = [Compound('TEST_CMPD_1'), Compound('TEST_CMPD_2')]
-    #     self.test_pathway.set_species(species)
-    #     self.assertListEqual(
-    #         self.test_pathway.get_species(),
-    #         species
-    #     )
-
-    # def test_set_species_ids_2(self):
-    #     compound = Compound('TEST_CMPD_2')
-    #     species = ['TEST_CMPD_1', compound]
-    #     self.test_pathway.set_species(species)
-    #     self.assertListEqual(
-    #         self.test_pathway.get_list_of_species_ids(),
-    #         [species[0]] + [compound.get_id()]
-    #     )
-
     def test_add_reaction(self):
         rxn = Reaction(id='rxn')
         self.test_pathway.add_reaction(rxn)
@@ -550,136 +380,30 @@ class Test_Pathway(TestCase):
             self.test_pathway.get_reactions_ids(),
             [rxn.get_id() for rxn in self.reactions] + [other_id]
         )
-    
-    # def test_add_species_id(self):
-    #     name = 'TEST_1'
-    #     self.assertFalse(name in self.test_pathway.get_list_of_species_ids())
-    #     self.test_pathway.add_species(name)
-    #     self.assertTrue(name in self.test_pathway.get_list_of_species_ids())
-
-    # def test_add_species(self):
-    #     compound = Compound('TEST_1')
-    #     self.assertFalse(compound.get_id() in self.test_pathway.get_list_of_species_ids())
-    #     self.test_pathway.add_species(compound)
-    #     self.assertTrue(compound.get_id() in self.test_pathway.get_list_of_species_ids())
-
-    # def test_add_compound(self):
-    #     name = 'TEST_1'
-    #     self.assertFalse(name in self.test_pathway.get_list_of_species_ids())
-    #     self.test_pathway.add_compound(name)
-    #     self.assertTrue(name in self.test_pathway.get_list_of_species_ids())
-
-    # def test_add_species_wo_replace(self):
-    #     compound = Compound(id='TARGET_0000000001', smiles='TEST')
-    #     self.assertEqual(
-    #         self.test_pathway.get_compound('TARGET_0000000001').get_smiles(),
-    #         '[H]OC(=O)C([H])=C([H])C([H])=C([H])C(=O)O[H]'
-    #     )
-    #     self.test_pathway.add_species(compound)
-    #     self.assertEqual(
-    #         self.test_pathway.get_compound('TARGET_0000000001').get_smiles(),
-    #         '[H]OC(=O)C([H])=C([H])C([H])=C([H])C(=O)O[H]'
-    #     )
-
-    # def test_add_species_w_replace(self):
-    #     # # Add a species
-    #     # self.test_pathway.add_species(species=species['TARGET_0000000001'])
-    #     # Add a different species with the same name
-    #     # w/o replacing the one already present in the cache
-    #     compound = Compound(id='TARGET_0000000001', smiles='TEST')
-    #     # self.test_pathway.add_species(species=compound)
-    #     self.assertEqual(
-    #         self.test_pathway.get_compound('TARGET_0000000001').get_smiles(),
-    #         '[H]OC(=O)C([H])=C([H])C([H])=C([H])C(=O)O[H]'
-    #     )
-    #     # Add it and replacing the one already present
-    #     self.test_pathway.add_species(species=compound, replace=True)
-    #     self.assertEqual(
-    #         self.test_pathway.get_compound('TARGET_0000000001').get_smiles(),
-    #         'TEST'
-    #     )
-    #     # Put back the original compound in the cache
-    #     self.test_pathway.add_species(species=species['TARGET_0000000001'], replace=True)
-
-    # def test_get_smiles(self):
-    #     self.assertEqual(
-    #         self.test_pathway.get_list_of_reactions()[0].get_smiles(),
-    #         '[H]Oc1c([H])c([H])c([H])c([H])c1O[H].O=O>>[H]OC(=O)C([H])=C([H])C([H])=C([H])C(=O)O[H].[H+].[H+]'
-    #     )
-
-    # def test_add_compartment(self):
-    #     name = 'MNXC4'
-    #     compartment = {
-    #         "name": name,
-    #         "annot": name
-    #     }
-    #     self.test_pathway.add_compartment(name, compartment)
-    #     self.assertDictEqual(
-    #         self.test_pathway.get_compartment(name),
-    #         compartment
-    #     )
-
-    # def test_add_parameter(self):
-    #     name = 'new_param'
-    #     param = {
-    #         "value": 999999.0,
-    #         "units": "mmol_per_gDW_per_hr"
-    #     }
-    #     self.test_pathway.add_parameter(name, param)
-    #     # print(self.test_pathway.get_parameter(name))
-    #     self.assertDictEqual(
-    #         self.test_pathway.get_parameter(name),
-    #         param
-    #     )
-
-    # def test_add_units_def(self):
-    #     name = 'mmol_per_gDW_per_hr'
-    #     units_def = {
-    #         "kind": 23,
-    #         "exponent": 1,
-    #         "scale": -3,
-    #         "multiplier": 1.0
-    #     }
-    #     self.test_pathway.add_units_def(name, units_def)
-    #     self.assertDictEqual(
-    #         self.test_pathway.get_units_def(name),
-    #         units_def
-    #     )
 
     def test_to_dict(self):
         list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions]
-        l = list(set([spe for species in list_of_list_of_species for spe in species]))
+        list_of_species = list(set([spe for species in list_of_list_of_species for spe in species]))
         self.assertDictEqual(
             self.test_pathway._to_dict(),
             {
-                'reactions': {rxn.get_id():rxn._to_dict() for rxn in self.reactions},
-                'species': {spe.get_id():spe._to_dict() for spe in [self.species[spe_id] for spe_id in l]},
+                'reactions': {rxn.get_id(): rxn._to_dict() for rxn in self.reactions},
+                'species': {spe.get_id(): spe._to_dict() for spe in [self.species[spe_id] for spe_id in list_of_species]},
                 'infos': self.infos
             }
         )
-    
+
     def test_to_string(self):
         self.assertEqual(
             self.test_pathway.to_string(),
-            '----------------\n' \
-          + f'Pathway {self.test_pathway.get_id()}\n' \
-          + '----------------\n' \
-          + 'Reaction rxn_4: 1 CMPD_0000000003 + 1 MNXM4 = 1 TARGET_0000000001 + 2 MNXM1\nReaction rxn_3: 1 CMPD_0000000010 + 1 MNXM1 = 1 CMPD_0000000003 + 1 MNXM13\nReaction rxn_2: 1 CMPD_0000000025 + 1 MNXM4 + 1 MNXM6 + 1 MNXM1 = 1 CMPD_0000000010 + 1 MNXM2 + 1 MNXM5\nReaction rxn_1: 1 MNXM337 = 1 CMPD_0000000025 + 1 MNXM23'
+            '----------------\n' +
+            f'Pathway {self.test_pathway.get_id()}\n' +
+            '----------------\n' +
+            'Reaction rxn_4: 1 CMPD_0000000003 + 1 MNXM4 = 1 TARGET_0000000001 + 2 MNXM1\nReaction rxn_3: 1 CMPD_0000000010 + 1 MNXM1 = 1 CMPD_0000000003 + 1 MNXM13\nReaction rxn_2: 1 CMPD_0000000025 + 1 MNXM4 + 1 MNXM6 + 1 MNXM1 = 1 CMPD_0000000010 + 1 MNXM2 + 1 MNXM5\nReaction rxn_1: 1 MNXM337 = 1 CMPD_0000000025 + 1 MNXM23'
         )
 
     def test_eq(self):
-        pathway = Pathway(
-            id=self.id,
-            # species=species.values(),
-            # reactions=reactions,
-            # pathway=self.pathway,
-            # sink=self.sink,
-            # fba=self.fba,
-            # thermo=self.thermo,
-            # compartments=self.compartments,
-            # parameters=self.parameters,
-            # units_def=self.units_def
-        )
+        pathway = Pathway(id=self.id)
         for rxn in self.reactions:
             pathway.add_reaction(rxn)
         pathway.set_infos(self.infos)
@@ -716,18 +440,7 @@ class Test_Pathway(TestCase):
     def test_eq_not_equal(self):
         self.assertNotEqual(
             self.test_pathway,
-            Pathway(
-                id=self.id,
-                # species=[],
-                # reactions=reactions,
-                # pathway=self.pathway,
-                # sink=self.sink,
-                # fba=self.fba,
-                # thermo=self.thermo,
-                # compartments=self.compartments,
-                # parameters=self.parameters,
-                # units_def=self.units_def
-            )
+            Pathway(id=self.id)
         )
 
     def test_eq_wrong_type(self):
@@ -748,27 +461,5 @@ class Test_Pathway(TestCase):
                 'MNXM5': 1,
                 'MNXM337': -1,
                 'MNXM23': 1
-            }            
+            }
         )
-
-
-    # def test_add_rxn_in_pathway_2(self):
-    #     rxn_id = 'rxn_test'
-    #     self.assertListEqual(
-    #         self.test_pathway.add_rxn_in_pathway(rxn_id, 0),
-    #         [rxn_id] + self.pathway
-    #     )
-
-    # def test_add_rxn_in_pathway_3(self):
-    #     rxn_id = 'rxn_test'
-    #     self.assertListEqual(
-    #         self.test_pathway.add_rxn_in_pathway(rxn_id, 10),
-    #         self.pathway + [rxn_id]
-    #     )
-
-    # def test_add_rxn_in_pathway_4(self):
-    #     rxn_id = 'rxn_test'
-    #     self.assertListEqual(
-    #         self.test_pathway.add_rxn_in_pathway(rxn_id, -1),
-    #         self.pathway[:-1] + [rxn_id] + self.pathway[-1:]
-    #     )

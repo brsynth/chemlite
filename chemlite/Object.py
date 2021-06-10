@@ -25,14 +25,12 @@
 
 from typing import (
     Dict,
-    List,
     TypeVar
 )
 from logging import (
     Logger,
     getLogger
 )
-from json import dumps
 from copy import deepcopy
 from brs_utils import Cache
 
@@ -85,7 +83,7 @@ class Object:
     def get_info(self, key: str) -> TypeVar:
         try:
             return self.get_infos()[key]
-        except:
+        except KeyError:
             self.__logger.debug(f'There is no key \'{key}\' in the compound infos')
             return None
 
@@ -111,4 +109,3 @@ class Object:
             del self.__infos[key]
         except KeyError:
             self.__logger.warning(f'No such key {key} found in infos, nothing deleted.')
-

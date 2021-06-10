@@ -4,7 +4,7 @@ Created on May 28 2021
 @author: Joan Hérisson
 """
 
-from typing import(
+from typing import (
     TypeVar
 )
 from unittest import TestCase
@@ -14,7 +14,7 @@ from chemlite import Object
 class Test_Object(TestCase):
 
     def setUp(self):
-        self.infos={
+        self.infos = {
             'transfo_id': "TRS_0_3_65",
             'rule_id': "RR-02-b64ad57dc9b584cb-16-F",
             'rule_score': 1.0,
@@ -146,7 +146,6 @@ class Test_Object(TestCase):
 
     def test_del_info_wrong_key(self):
         info_id = 'new'
-        info = {'a': 1}
         self.object.del_info(info_id)
         self.assertDictEqual(
             self.object.get_infos(),
