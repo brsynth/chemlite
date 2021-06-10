@@ -144,7 +144,7 @@ class Pathway(Object):
                 # Check if id is in the cache (not already renamed)
                 if compound is not None:
                     compound.set_id(new_id)
-                    Cache.remove_object_by_id(id)
+                    # Cache.remove_object_by_id(id)
                     Cache.add(compound)
                 # rename in reaction
                 rxn.rename_compound(id, new_id)
