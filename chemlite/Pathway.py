@@ -56,7 +56,7 @@ class Pathway:
 
     ## OUT METHODS
     # def __repr__(self):
-    #     return dumps(self.to_dict(), indent=4)
+    #     return dumps(self._to_dict(), indent=4)
 
     def to_string(self):
         return '----------------\n' \
@@ -64,16 +64,16 @@ class Pathway:
              + '----------------\n' \
              + '\n'.join([rxn.__str__() for rxn in self.get_reactions()])
 
-    def to_dict(self) -> Dict:
+    def _to_dict(self) -> Dict:
         return {
-            'reactions': {rxn_id:self.get_reaction(rxn_id).to_dict() for rxn_id in self.get_reactions_ids()},
-            'species': {spe_id:self.get_specie(spe_id).to_dict() for spe_id in self.get_species_ids()},
+            'reactions': {rxn_id:self.get_reaction(rxn_id)._to_dict() for rxn_id in self.get_reactions_ids()},
+            'species': {spe_id:self.get_specie(spe_id)._to_dict() for spe_id in self.get_species_ids()},
             'infos': deepcopy(self.get_infos()),
         }
 
     def __eq__(self, other) -> bool:
         if isinstance(self, other.__class__):
-            return self.to_dict() == other.to_dict()
+            return self._to_dict() == other._to_dict()
         return False
 
     ## READ METHODS

@@ -64,7 +64,7 @@ class Compound(Object):
     # def __repr__(self):
     #     return f'Compound {self.get_id()}'
 
-    def to_dict(self) -> Dict:
+    def _to_dict(self) -> Dict:
         return {
             **{
                 'name': self.get_name(),
@@ -73,12 +73,12 @@ class Compound(Object):
                 'inchikey': self.get_inchikey(),
                 'formula': self.get_formula(),
             },
-            **super().to_dict()
+            **super()._to_dict()
         }
     
     def __eq__(self, other) -> bool:
         if isinstance(self, other.__class__):
-            return self.to_dict() == other.to_dict()
+            return self._to_dict() == other._to_dict()
         return False
 
     ## READ METHODS

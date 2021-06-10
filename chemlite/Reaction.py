@@ -81,19 +81,19 @@ class Reaction(Object):
                 ),
         )
 
-    def to_dict(self) -> Dict:
+    def _to_dict(self) -> Dict:
         return {
             **{
                 'ec_numbers': deepcopy(self.get_ec_numbers()),
                 'reactants': deepcopy(self.get_reactants()),
                 'products': deepcopy(self.get_products()),
             },
-            **super().to_dict()
+            **super()._to_dict()
         }
 
     def __eq__(self, other) -> bool:
         if isinstance(self, other.__class__):
-            return self.to_dict() == other.to_dict()
+            return self._to_dict() == other._to_dict()
         return False
 
     ## READ METHODS

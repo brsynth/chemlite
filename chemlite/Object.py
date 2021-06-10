@@ -56,7 +56,7 @@ class Object:
     def __str__(self):
         return self.to_string()
 
-    def to_dict(self) -> Dict:
+    def _to_dict(self) -> Dict:
         return {
             'id': self.get_id(),
             'infos': deepcopy(self.get_infos())
@@ -64,7 +64,7 @@ class Object:
 
     def __eq__(self, other) -> bool:
         if isinstance(self, other.__class__):
-            return self.to_dict() == other.to_dict()
+            return self._to_dict() == other._to_dict()
         return False
 
     ## READ METHODS
