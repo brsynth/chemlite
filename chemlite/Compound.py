@@ -81,7 +81,7 @@ class Compound(Object):
     
     def __eq__(self, other) -> bool:
         if isinstance(self, other.__class__):
-            return self._to_dict() == other._to_dict()
+            return self.__to_dict() == other.__to_dict()
         return False
 
     ## READ METHODS

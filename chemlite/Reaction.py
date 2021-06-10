@@ -84,7 +84,7 @@ class Reaction(Object):
     def _to_dict(self) -> Dict:
         return {
             **super()._to_dict(),
-            **self.__to_dict()}
+            **self.__to_dict()
         }
 
     def __to_dict(self) -> Dict:
@@ -96,7 +96,7 @@ class Reaction(Object):
 
     def __eq__(self, other) -> bool:
         if isinstance(self, other.__class__):
-            return self._to_dict() == other._to_dict()
+            return self.__to_dict() == other.__to_dict()
         return False
 
     ## READ METHODS
