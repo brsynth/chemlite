@@ -31,7 +31,6 @@ from logging import (
     Logger,
     getLogger,
 )
-from copy import deepcopy
 from brs_utils import Cache
 from chemlite.Compound import Compound
 from chemlite.Reaction import Reaction

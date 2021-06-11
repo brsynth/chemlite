@@ -1,5 +1,9 @@
 # Release history
 
+## 1.1.2
+#### Jun 11 2021
+- chore(Object): check id in set_id() so that get_id() always returns a value
+
 ## 1.1.1
 #### Jun 10 2021
 - chore(Pathway): change __eq__ method
