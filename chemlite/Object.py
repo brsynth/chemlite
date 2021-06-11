@@ -25,7 +25,8 @@
 
 from typing import (
     Dict,
-    TypeVar
+    TypeVar,
+    Union
 )
 from logging import (
     Logger,
@@ -88,14 +89,21 @@ class Object:
             return None
 
     ## WRITE METHODS
-    def set_id(self, id: str) -> None:
-        try:
-            old_id = self.__id
-        except AttributeError:
-            old_id = id
-        self.__id = id
-        if id in Cache.get_list_of_objects():
-            Cache.rename(old_id, self.get_id())
+    def set_id(self, id: str) -> Union[str, None]:
+        # try:
+        #     old_id = self.__id
+        # except AttributeError:
+        #     old_id = id
+        # self.__id = id
+        # if id in Cache.get_list_of_objects():
+        #     Cache.rename(old_id, self.get_id())
+        if id is None:
+            raise ValueError('id argument must be different to None for an Object')
+        elif id == '':
+            raise ValueError('id argument must not be empty for an Object')
+        else:
+            self.__id = id
+            return self.__id
 
     def set_infos(self, infos: Dict) -> None:
         self.__infos = deepcopy(infos)

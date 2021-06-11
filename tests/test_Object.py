@@ -8,6 +8,7 @@ from typing import (
     TypeVar
 )
 from unittest import TestCase
+from pytest import raises as pytest_raises
 from chemlite import Object
 
 
@@ -15,7 +16,7 @@ class Test_Object(TestCase):
 
     def setUp(self):
         self.infos = {
-            'transfo_id': "TRS_0_3_65",
+            'rp2_transfo_id': "TRS_0_3_65",
             'rule_id': "RR-02-b64ad57dc9b584cb-16-F",
             'rule_score': 1.0,
             'tmpl_rxn_id': "MNXR113924",
@@ -25,6 +26,14 @@ class Test_Object(TestCase):
             id=self.id,
             infos=self.infos
         )
+
+    def test___init___empty_id(self):
+        with pytest_raises(ValueError):
+            Object('').get_id(),
+
+    def test___init___none_id(self):
+        with pytest_raises(ValueError):
+            Object(None).get_id(),
 
     def test_to_string(self):
         id = 'obj_id'
