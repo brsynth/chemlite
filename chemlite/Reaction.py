@@ -281,6 +281,10 @@ class Reaction(Object):
             stoichio=abs(stoichio)
         )
 
+    def mult_stoichio_coeff(self, mult: int) -> None:
+        for spe_id in self.get_species_stoichio().keys():
+            self.__stoichio[spe_id] *= mult
+
     @staticmethod
     def sum_stoichio(
         l_reactants_sto: List[Dict[str, int]],

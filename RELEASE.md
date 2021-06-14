@@ -1,5 +1,9 @@
 # Release history
 
+## 1.2.0
+#### Jun 14 2021
+- feat(Reaction): add mult_stoichio_coeff() method
+
 ## 1.1.3
 #### Jun 14 2021
 - chore(Reaction): replace __reactants and __products by __species (transparent for the user)

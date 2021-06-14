@@ -347,6 +347,17 @@ class Test_Reaction(TestCase):
             products_ids
         )
 
+    def test_mult_stoichio_coeff(self):
+        mult = 2
+        self.rxn.mult_stoichio_coeff(mult)
+        self.assertDictEqual(
+            self.rxn.get_species_stoichio(),
+            {
+                **{spe_id: -mult * self.reactants[spe_id] for spe_id in self.reactants.keys()},
+                **{spe_id: mult * self.products[spe_id] for spe_id in self.products.keys()}
+            }
+        )
+
     def test_sum_stoichio(self):
         reactants_1 = {
             'MNXM4': 1,
