@@ -33,9 +33,21 @@ from logging import (
     getLogger
 )
 from copy import deepcopy
+import operator
 from brs_utils import Cache
 from chemlite.Compound import Compound
 from chemlite.Object import Object
+
+
+def get_truth(inp, relate, cut):
+    ops = {
+        '>': operator.gt,
+        '<': operator.lt,
+        '>=': operator.ge,
+        '<=': operator.le,
+        '==': operator.eq
+    }
+    return ops[relate](inp, cut)
 
 
 class Reaction(Object):
@@ -59,8 +71,10 @@ class Reaction(Object):
         else:
             self.set_ec_numbers([])
             self.add_ec_number(ec_numbers)
-        self.set_reactants(reactants)
-        self.set_products(products)
+        self.set_stoichio(
+            reactants=reactants,
+            products=products
+        )
 
     ## OUT METHODS
     # def __repr__(self):
@@ -106,34 +120,32 @@ class Reaction(Object):
     def get_smiles(self) -> str:
         ## LEFT
         smi = []
-        # sort reactants from compound IDs
-        stoichio = sorted(
-            self.get_reactants_stoichio().items(),
-            key = lambda kv: (kv[1], kv[0].lower())
-        )
         # build list of compounds with stoichiometry
-        for spe_id, spe_sto in stoichio:
+        for spe_id, spe_sto in self.get_reactants_stoichio().items():
             smi += [Cache.get(spe_id).get_smiles()]*spe_sto
         # build smiles string
         left_smi = '.'.join(smi)
 
         ## RIGHT
         smi = []
-        # sort reactants from compound IDs
-        stoichio = sorted(
-            self.get_products_stoichio().items(),
-            key = lambda kv: (kv[1], kv[0].lower())
-        )
         # build list of compounds with stoichiometry
-        for spe_id, spe_sto in stoichio:
+        for spe_id, spe_sto in self.get_products_stoichio().items():
             smi += [Cache.get(spe_id).get_smiles()]*spe_sto
         # build smiles string
         right_smi = '.'.join(smi)
 
         return left_smi + '>>' + right_smi
 
+    def __get_species_stoichio(self, op: str, coeff: int) -> Dict[str, int]:
+        return {
+            spe_id: coeff*spe_sto
+            for spe_id, spe_sto
+            in self.get_species_stoichio().items()
+            if get_truth(spe_sto, op, 0)
+        }
+
     def get_reactants_stoichio(self) -> Dict[str, int]:
-        return self.__reactants
+        return self.__get_species_stoichio('<', -1)
 
     def get_nb_reactants(self) -> int:
         return len(self.get_reactants())
@@ -145,7 +157,7 @@ class Reaction(Object):
         return [Cache.get(compound_id) for compound_id in self.get_reactants_ids()]
 
     def get_products_stoichio(self) -> Dict[str, int]:
-        return self.__products
+        return self.__get_species_stoichio('>', 1)
 
     def get_nb_products(self) -> int:
         return len(self.get_products())
@@ -163,9 +175,7 @@ class Reaction(Object):
         return self.get_products_stoichio()
 
     def get_species_stoichio(self) -> Dict:
-        reactants = {spe_id: -spe_sto for (spe_id, spe_sto) in self.get_reactants_stoichio().items()}
-        products = {spe_id: spe_sto for (spe_id, spe_sto) in self.get_products_stoichio().items()}
-        return {**reactants, **products}
+        return dict(sorted(self.__stoichio.items(), key=lambda item: item[0]))
 
     def get_species_ids(self) -> List[str]:
         return list(self.get_species_stoichio().keys())
@@ -181,35 +191,27 @@ class Reaction(Object):
         if number is not None and number != '':
             self.__ec_numbers += [number]
 
+    def set_stoichio(
+        self,
+        reactants: Dict[str, int],
+        products: Dict[str, int]
+    ) -> None:
+        self.__stoichio = {
+            **{spe_id: -spe_sto for spe_id, spe_sto in reactants.items()},
+            **products
+        }
+
     def set_reactants(self, compounds: Dict) -> None:
-        self.__reactants = {}
-        for compound_id, compound_stoichio in compounds.items():
-            self.add_reactant(
-                compound_id=compound_id,
-                stoichio=compound_stoichio
-            )
+        self.__stoichio = {
+            **{spe_id: -spe_sto for spe_id, spe_sto in compounds.items()},
+            **self.get_products_stoichio()
+        }
 
     def set_products(self, compounds: Dict) -> None:
-        self.__products = {}
-        for compound_id, compound_stoichio in compounds.items():
-            self.add_product(
-                compound_id=compound_id,
-                stoichio=compound_stoichio
-            )
-
-    def __add_compound_id(
-        self,
-        id: str,
-        stoichio: int = 1
-    ) -> None:
-        if id == '':
-            self.get_logger().error('id argument has to be provided')
-        else:
-            # Select the side to add the compound
-            side = self.get_reactants_stoichio() if stoichio < 1 else self.get_products_stoichio()
-            if id not in side.keys():
-                side[id] = 0
-            side[id] += abs(stoichio)
+        self.__stoichio = {
+            **{spe_id: -spe_sto for spe_id, spe_sto in self.get_reactants_stoichio().items()},
+            **compounds
+        }
 
     def __add_compound(
         self,
@@ -223,7 +225,10 @@ class Reaction(Object):
                 return
             else:
                 id = compound.get_id()
-        self.__add_compound_id(id, stoichio)
+        if id == '':
+            self.get_logger().error('id argument has to be provided')
+        else:
+            self.__stoichio[id] = stoichio
 
     def rename_compound(
         self,
@@ -274,7 +279,10 @@ class Reaction(Object):
         )
 
     @staticmethod
-    def sum_stoichio(l_reactants: List[Dict], l_products: List[Dict]) -> Dict:
+    def sum_stoichio(
+        l_reactants_sto: List[Dict[str, int]],
+        l_products_sto: List[Dict[str, int]]
+    ) -> Dict:
         '''
         '''
 
@@ -282,7 +290,7 @@ class Reaction(Object):
         species = {}
 
         # Reactants
-        for reactants in l_reactants:
+        for reactants in l_reactants_sto:
             for spe_id, spe_sto in reactants.items():
                 if spe_id in species:
                     species[spe_id] -= spe_sto
@@ -290,7 +298,7 @@ class Reaction(Object):
                     species[spe_id] = -spe_sto
 
         # Products
-        for products in l_products:
+        for products in l_products_sto:
             for spe_id, spe_sto in products.items():
                 if spe_id in species:
                     species[spe_id] += spe_sto

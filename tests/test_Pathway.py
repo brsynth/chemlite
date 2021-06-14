@@ -245,9 +245,11 @@ class Test_Pathway(TestCase):
         old_id = self.rxn.get_reactants_ids()[0]
         new_id = 'NEW_CMPD_ID'
         self.test_pathway.rename_compound(old_id, new_id)
-        self.assertEqual(
-            self.test_pathway.get_reaction(self.rxn.get_id()).get_reactants_ids()[0],
-            new_id
+        self.assertTrue(
+            new_id in self.test_pathway.get_reaction(self.rxn.get_id()).get_species_ids()
+        )
+        self.assertFalse(
+            old_id in self.test_pathway.get_reaction(self.rxn.get_id()).get_species_ids()
         )
 
     def test_replace_reaction(self):
@@ -395,12 +397,16 @@ class Test_Pathway(TestCase):
         )
 
     def test_to_string(self):
+        print(self.test_pathway.to_string())
+        print('\n'.join([rxn.to_string() for rxn in self.reactions]))
+        # for rxn in self.reactions:
+        #     print(rxn)
         self.assertEqual(
             self.test_pathway.to_string(),
             '----------------\n' +
             f'Pathway {self.test_pathway.get_id()}\n' +
             '----------------\n' +
-            'Reaction rxn_4: 1 CMPD_0000000003 + 1 MNXM4 = 1 TARGET_0000000001 + 2 MNXM1\nReaction rxn_3: 1 CMPD_0000000010 + 1 MNXM1 = 1 CMPD_0000000003 + 1 MNXM13\nReaction rxn_2: 1 CMPD_0000000025 + 1 MNXM4 + 1 MNXM6 + 1 MNXM1 = 1 CMPD_0000000010 + 1 MNXM2 + 1 MNXM5\nReaction rxn_1: 1 MNXM337 = 1 CMPD_0000000025 + 1 MNXM23'
+            '\n'.join([rxn.to_string() for rxn in self.reactions])
         )
 
     def test_eq(self):
