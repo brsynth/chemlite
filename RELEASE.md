@@ -1,5 +1,10 @@
 # Release history
 
+## 1.1.3
+#### Jun 14 2021
+- chore(Reaction): replace __reactants and __products by __species (transparent for the user)
+- chore(Reaction): returns sorted dictionary for get_ methods
+
 ## 1.1.2
 #### Jun 11 2021
 - chore(Object): check id in set_id() so that get_id() always returns a value

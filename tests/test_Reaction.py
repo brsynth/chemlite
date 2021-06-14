@@ -250,6 +250,12 @@ class Test_Reaction(TestCase):
             self.products
         )
 
+    def test_get_nb_species(self):
+        self.assertEqual(
+            self.rxn.get_nb_species(),
+            len(self.reactants) + len(self.products)
+        )
+
     def test_add_ec_number(self):
         ec_number = '1.2'
         self.rxn.add_ec_number(ec_number)

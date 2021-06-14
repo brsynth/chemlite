@@ -148,7 +148,7 @@ class Reaction(Object):
         return self.__get_species_stoichio('<', -1)
 
     def get_nb_reactants(self) -> int:
-        return len(self.get_reactants())
+        return len(self.get_reactants_stoichio())
 
     def get_reactants_ids(self) -> List[str]:
         return list(self.get_reactants_stoichio().keys())
@@ -160,7 +160,7 @@ class Reaction(Object):
         return self.__get_species_stoichio('>', 1)
 
     def get_nb_products(self) -> int:
-        return len(self.get_products())
+        return len(self.get_products_stoichio())
 
     def get_products_ids(self) -> List[str]:
         return list(self.get_products_stoichio().keys())
@@ -182,6 +182,9 @@ class Reaction(Object):
 
     def get_species(self) -> List[Compound]:
         return [Cache.get(spe_id) for spe_id in self.get_species_ids()]
+
+    def get_nb_species(self) -> int:
+        return len(self.get_species_stoichio())
 
     ## WRITE METHODS
     def set_ec_numbers(self, numbers: List[str]) -> None:
