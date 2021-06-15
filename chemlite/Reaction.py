@@ -120,7 +120,8 @@ class Reaction(Object):
         smi = []
         # build list of compounds with stoichiometry
         for spe_id, spe_sto in self.get_reactants_stoichio().items():
-            smi += [Cache.get(spe_id).get_smiles()]*spe_sto
+            if Cache.get(spe_id).get_smiles() != '':
+                smi += [Cache.get(spe_id).get_smiles()]*spe_sto
         # build smiles string
         left_smi = '.'.join(smi)
 
@@ -128,7 +129,8 @@ class Reaction(Object):
         smi = []
         # build list of compounds with stoichiometry
         for spe_id, spe_sto in self.get_products_stoichio().items():
-            smi += [Cache.get(spe_id).get_smiles()]*spe_sto
+            if Cache.get(spe_id).get_smiles() != '':
+                smi += [Cache.get(spe_id).get_smiles()]*spe_sto
         # build smiles string
         right_smi = '.'.join(smi)
 
