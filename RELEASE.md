@@ -1,5 +1,10 @@
 # Release history
 
+## 1.3.0
+#### Jun 15 2021
+- chore: remove infos attribute
+- fix(Reaction): check compound smiles before return it
+
 ## 1.2.1
 #### Jun 15 2021
 - chore(Reaction): __to_dict() returns stoichio for both reactants and products
