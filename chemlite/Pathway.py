@@ -43,12 +43,10 @@ class Pathway(Object):
         self,
         id: str,
         cache: Cache = None,
-        infos: Dict = {},
         logger: Logger = getLogger(__name__)
     ):
         super().__init__(
             id=id,
-            infos=infos,
             logger=logger
         )
         self.__reactions = []

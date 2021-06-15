@@ -43,12 +43,10 @@ class Compound(Object):
         inchikey: str = '',
         formula: str = '',
         name: str = '',
-        infos: Dict = {},
         logger: Logger = getLogger(__name__)
     ):
         super().__init__(
             id=id,
-            infos=infos,
             logger=logger
         )
         self.set_smiles(smiles)

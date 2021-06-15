@@ -168,21 +168,12 @@ class Test_Reaction(TestCase):
                 'ec_numbers': self.ec_numbers,
                 'reactants': self.reactants,
                 'products': self.products,
-                'infos': {},
                 'id': self.id
             }
         )
 
     def test_eq(self):
         rxn = deepcopy(self.rxn)
-        self.assertEqual(
-            rxn,
-            self.rxn
-        )
-
-    def test_eq_diff_infos(self):
-        rxn = deepcopy(self.rxn)
-        rxn.add_info('new_info', {'a': 1})
         self.assertEqual(
             rxn,
             self.rxn

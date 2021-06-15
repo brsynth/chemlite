@@ -58,12 +58,10 @@ class Reaction(Object):
         ec_numbers: Union[List[str], str] = [],
         reactants: Dict[str, int] = {},
         products: Dict[str, int] = {},
-        infos: Dict = {},
         logger: Logger = getLogger(__name__)
     ):
         super().__init__(
             id=id,
-            infos=infos,
             logger=logger
         )
         if isinstance(ec_numbers, list):

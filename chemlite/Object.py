@@ -41,12 +41,10 @@ class Object:
     def __init__(
         self,
         id: str,
-        infos: Dict = {},
         logger: Logger = getLogger(__name__)
     ):
         self.__logger = logger
         self.set_id(id)
-        self.set_infos(infos)
         Cache.add(self, self.get_id())
 
     def to_string(self):
@@ -62,8 +60,7 @@ class Object:
         '''For compatibility with __eq__ method in child classes
         '''
         return {
-            'id': self.get_id(),
-            'infos': deepcopy(self.get_infos())
+            'id': self.get_id()
         }
 
     def __eq__(self, other) -> bool:
@@ -77,16 +74,6 @@ class Object:
 
     def get_logger(self) -> Logger:
         return self.__logger
-
-    def get_infos(self) -> Dict:
-        return self.__infos
-
-    def get_info(self, key: str) -> TypeVar:
-        try:
-            return self.get_infos()[key]
-        except KeyError:
-            self.__logger.debug(f'There is no key \'{key}\' in the compound infos')
-            return None
 
     ## WRITE METHODS
     def set_id(self, id: str) -> Union[str, None]:
@@ -104,16 +91,3 @@ class Object:
         else:
             self.__id = id
             return self.__id
-
-    def set_infos(self, infos: Dict) -> None:
-        self.__infos = deepcopy(infos)
-        # Cache.add(self, self.get_id())
-
-    def add_info(self, key: str, value: TypeVar) -> None:
-        self.__infos[key] = deepcopy(value)
-
-    def del_info(self, key: str) -> None:
-        try:
-            del self.__infos[key]
-        except KeyError:
-            self.__logger.warning(f'No such key {key} found in infos, nothing deleted.')

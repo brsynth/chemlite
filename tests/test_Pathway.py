@@ -212,13 +212,6 @@ class Test_Pathway(TestCase):
                 }
             ]
         }
-        self.infos = {
-            'rpSBML': {
-                'compartments': self.compartments,
-                'parameters': self.parameters,
-                'units_def': self.units_def
-            }
-        }
         self.test_pathway = Pathway(
             id=self.id,
             # species=species.values(),
@@ -226,21 +219,8 @@ class Test_Pathway(TestCase):
         )
         for rxn in self.reactions:
             self.test_pathway.add_reaction(rxn)
-        self.test_pathway.set_infos(self.infos)
 
     ## READ METHODS
-    def test_get_info(self):
-        self.assertDictEqual(
-            self.test_pathway.get_info('rpSBML'),
-            self.infos['rpSBML']
-        )
-
-    def test_get_info_wrong_key(self):
-        self.assertEqual(
-            self.test_pathway.get_info('WRONG'),
-            None
-        )
-
     def test_rename_compound(self):
         old_id = self.rxn.get_reactants_ids()[0]
         new_id = 'NEW_CMPD_ID'
@@ -391,7 +371,6 @@ class Test_Pathway(TestCase):
             {
                 'reactions': {rxn.get_id(): rxn._to_dict() for rxn in self.reactions},
                 'species': {spe.get_id(): spe._to_dict() for spe in [self.species[spe_id] for spe_id in list_of_species]},
-                'infos': self.infos,
                 'id': self.id
             }
         )
@@ -413,7 +392,6 @@ class Test_Pathway(TestCase):
         pathway = Pathway(id=self.id)
         for rxn in self.reactions:
             pathway.add_reaction(rxn)
-        pathway.set_infos(self.infos)
         # for spe in species:
         #     pathway.add_species(spe)
         self.assertEqual(
@@ -433,15 +411,6 @@ class Test_Pathway(TestCase):
         self.assertListEqual(
             self.test_pathway.get_reactions_ids(),
             [rxn.get_id() for rxn in self.reactions]
-        )
-
-    def test_add_info(self):
-        info_id = 'test'
-        info = {'a': 1}
-        self.test_pathway.add_info(info_id, info)
-        self.assertDictEqual(
-            self.test_pathway.get_info(info_id),
-            info
         )
 
     def test_eq_not_equal(self):

@@ -41,8 +41,7 @@ class Test_Compound(TestCase):
                 'inchi': self.inchi,
                 'inchikey': self.inchikey,
                 'formula': self.formula,
-                'id': self.id,
-                'infos': {}
+                'id': self.id
             }
         )
 
@@ -59,17 +58,16 @@ class Test_Compound(TestCase):
             )
         )
 
-    def test_not_eq_toomuch(self):
-        self.assertNotEqual(
-            self.compound,
-            Compound(
-                smiles=self.smiles,
-                inchi=self.inchi,
-                inchikey=self.inchikey,
-                id=self.id,
-                infos={'a': 1}
-            )
-        )
+    # def test_not_eq_toomuch(self):
+    #     self.assertNotEqual(
+    #         self.compound,
+    #         Compound(
+    #             smiles=self.smiles,
+    #             inchi=self.inchi,
+    #             inchikey=self.inchikey,
+    #             id=self.id
+    #         )
+    #     )
 
     def test_not_eq_notenough(self):
         self.assertNotEqual(
