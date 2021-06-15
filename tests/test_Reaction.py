@@ -166,8 +166,8 @@ class Test_Reaction(TestCase):
             self.rxn._to_dict(),
             {
                 'ec_numbers': self.ec_numbers,
-                'reactants': [species[spe_id] for spe_id in self.reactants.keys()],
-                'products': [species[spe_id] for spe_id in self.products.keys()],
+                'reactants': self.reactants,
+                'products': self.products,
                 'infos': {},
                 'id': self.id
             }

@@ -1,5 +1,9 @@
 # Release history
 
+## 1.2.1
+#### Jun 15 2021
+- chore(Reaction): __to_dict() returns stoichio for both reactants and products
+
 ## 1.2.0
 #### Jun 14 2021
 - feat(Reaction): add mult_stoichio_coeff() method
