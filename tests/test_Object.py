@@ -4,9 +4,6 @@ Created on May 28 2021
 @author: Joan Hérisson
 """
 
-from typing import (
-    TypeVar
-)
 from unittest import TestCase
 from pytest import raises as pytest_raises
 from chemlite import Object

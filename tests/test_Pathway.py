@@ -159,110 +159,58 @@ class Test_Pathway(TestCase):
                 }
             )
         ]
-        self.id = 'test_pathway'
-        self.compartments = {
-            "MNXC3": {
-                "name": "",
-                "annot": ""
-            }
-        }
-        self.parameters = {
-            "upper_flux_bound": {
-                "value": 999999.0,
-                "units": "mmol_per_gDW_per_hr"
-            },
-            "lower_flux_bound": {
-                "value": 0.0,
-                "units": "mmol_per_gDW_per_hr"
-            }
-        }
-        self.units_def = {
-            "mmol_per_gDW_per_hr": [
-                {
-                    "kind": 23,
-                    "exponent": 1,
-                    "scale": -3,
-                    "multiplier": 1.0
-                },
-                {
-                    "kind": 8,
-                    "exponent": 1,
-                    "scale": 0,
-                    "multiplier": 1.0
-                },
-                {
-                    "kind": 28,
-                    "exponent": 1,
-                    "scale": 0,
-                    "multiplier": 3600.0
-                }
-            ],
-            "kj_per_mol": [
-                {
-                    "kind": 13,
-                    "exponent": 1,
-                    "scale": 3,
-                    "multiplier": 1.0
-                },
-                {
-                    "kind": 23,
-                    "exponent": -1,
-                    "scale": 1,
-                    "multiplier": 1.0
-                }
-            ]
-        }
-        self.test_pathway = Pathway(
+        self.id = 'pathway'
+        self.pathway = Pathway(
             id=self.id,
             # species=species.values(),
             # reactions=reactions,
         )
         for rxn in self.reactions:
-            self.test_pathway.add_reaction(rxn)
+            self.pathway.add_reaction(rxn)
 
     ## READ METHODS
     def test_rename_compound(self):
         old_id = self.rxn.get_reactants_ids()[0]
         new_id = 'NEW_CMPD_ID'
-        self.test_pathway.rename_compound(old_id, new_id)
+        self.pathway.rename_compound(old_id, new_id)
         self.assertTrue(
-            new_id in self.test_pathway.get_reaction(self.rxn.get_id()).get_species_ids()
+            new_id in self.pathway.get_reaction(self.rxn.get_id()).get_species_ids()
         )
         self.assertFalse(
-            old_id in self.test_pathway.get_reaction(self.rxn.get_id()).get_species_ids()
+            old_id in self.pathway.get_reaction(self.rxn.get_id()).get_species_ids()
         )
 
     def test_replace_reaction(self):
         _rxn = deepcopy(self.rxn)
         rxn = Reaction(_rxn.get_id())
         self.assertEqual(
-            self.test_pathway.get_reaction(self.rxn.get_id()),
+            self.pathway.get_reaction(self.rxn.get_id()),
             _rxn
         )
-        self.test_pathway.replace_reaction(
+        self.pathway.replace_reaction(
             self.rxn.get_id(),
             rxn
         )
         self.assertNotEqual(
-            self.test_pathway.get_reaction(self.rxn.get_id()),
+            self.pathway.get_reaction(self.rxn.get_id()),
             _rxn
         )
 
     def test_get_id(self):
         self.assertEqual(
-            self.test_pathway.get_id(),
+            self.pathway.get_id(),
             self.id
         )
 
     def test_get_nb_reactions(self):
         self.assertEqual(
-            self.test_pathway.get_nb_reactions(),
+            self.pathway.get_nb_reactions(),
             len(self.reactions)
         )
 
     def test_get_nb_species(self):
         self.assertEqual(
-            self.test_pathway.get_nb_species(),
+            self.pathway.get_nb_species(),
             len(self.species)
         )
 
@@ -270,33 +218,33 @@ class Test_Pathway(TestCase):
         list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions]
         list_of_species = list(set([spe for species in list_of_list_of_species for spe in species]))
         self.assertListEqual(
-            self.test_pathway.get_species(),
-            [self.test_pathway.get_specie(spe_id) for spe_id in list_of_species]
+            self.pathway.get_species(),
+            [self.pathway.get_specie(spe_id) for spe_id in list_of_species]
         )
 
     def test_get_species_ids(self):
         list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions]
         self.assertListEqual(
-            self.test_pathway.get_species_ids(),
+            self.pathway.get_species_ids(),
             list(set([spe for species in list_of_list_of_species for spe in species]))
         )
 
     def test_get_species_from_id(self):
         self.assertEqual(
-            self.test_pathway.get_specie('MNXM23'),
+            self.pathway.get_specie('MNXM23'),
             self.species['MNXM23']
         )
 
     def test_get_species_from_id_wrong_key(self):
         self.assertEqual(
-            self.test_pathway.get_specie('WRONG_KEY'),
+            self.pathway.get_specie('WRONG_KEY'),
             None
         )
 
     def test_get_compounds_ids(self):
         list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions]
         self.assertListEqual(
-            self.test_pathway.get_compounds_ids(),
+            self.pathway.get_compounds_ids(),
             list(set([spe for species in list_of_list_of_species for spe in species]))
         )
 
@@ -304,62 +252,62 @@ class Test_Pathway(TestCase):
         list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions]
         list_of_species = list(set([spe for species in list_of_list_of_species for spe in species]))
         self.assertListEqual(
-            self.test_pathway.get_compounds(),
-            [self.test_pathway.get_specie(spe_id) for spe_id in list_of_species]
+            self.pathway.get_compounds(),
+            [self.pathway.get_specie(spe_id) for spe_id in list_of_species]
         )
 
     def test_get_compound(self):
         self.assertEqual(
-            self.test_pathway.get_compound('MNXM23'),
+            self.pathway.get_compound('MNXM23'),
             self.species['MNXM23']
         )
 
     def test_get_reactions(self):
         self.assertListEqual(
-            self.test_pathway.get_reactions(),
+            self.pathway.get_reactions(),
             self.reactions
         )
 
     def test_get_reaction(self):
         self.assertEqual(
-            self.test_pathway.get_reaction('rxn_4'),
+            self.pathway.get_reaction('rxn_4'),
             self.rxn
         )
 
     def test_get_reaction_wrong_id(self):
         self.assertEqual(
-            self.test_pathway.get_reaction('WRONG_ID'),
+            self.pathway.get_reaction('WRONG_ID'),
             None
         )
 
     def test_reaction_ids(self):
         self.assertEqual(
-            self.test_pathway.get_reactions_ids(),
+            self.pathway.get_reactions_ids(),
             [rxn.get_id() for rxn in self.reactions]
         )
 
     def test_add_reaction(self):
         rxn = Reaction(id='rxn')
-        self.test_pathway.add_reaction(rxn)
+        self.pathway.add_reaction(rxn)
         self.assertListEqual(
-            self.test_pathway.get_reactions(),
+            self.pathway.get_reactions(),
             self.reactions + [rxn]
         )
         self.assertListEqual(
-            self.test_pathway.get_reactions_ids(),
+            self.pathway.get_reactions_ids(),
             [rxn.get_id() for rxn in self.reactions] + [rxn.get_id()]
         )
 
     def test_add_reaction_with_id(self):
         rxn = Reaction(id='rxn')
         other_id = 'other_' + rxn.get_id()
-        self.test_pathway.add_reaction(rxn, other_id)
+        self.pathway.add_reaction(rxn, other_id)
         self.assertListEqual(
-            self.test_pathway.get_reactions(),
+            self.pathway.get_reactions(),
             self.reactions + [rxn]
         )
         self.assertListEqual(
-            self.test_pathway.get_reactions_ids(),
+            self.pathway.get_reactions_ids(),
             [rxn.get_id() for rxn in self.reactions] + [other_id]
         )
 
@@ -367,7 +315,7 @@ class Test_Pathway(TestCase):
         list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions]
         list_of_species = list(set([spe for species in list_of_list_of_species for spe in species]))
         self.assertDictEqual(
-            self.test_pathway._to_dict(),
+            self.pathway._to_dict(),
             {
                 'reactions': {rxn.get_id(): rxn._to_dict() for rxn in self.reactions},
                 'species': {spe.get_id(): spe._to_dict() for spe in [self.species[spe_id] for spe_id in list_of_species]},
@@ -376,14 +324,14 @@ class Test_Pathway(TestCase):
         )
 
     def test_to_string(self):
-        print(self.test_pathway.to_string())
+        print(self.pathway.to_string())
         print('\n'.join([rxn.to_string() for rxn in self.reactions]))
         # for rxn in self.reactions:
         #     print(rxn)
         self.assertEqual(
-            self.test_pathway.to_string(),
+            self.pathway.to_string(),
             '----------------\n' +
-            f'Pathway {self.test_pathway.get_id()}\n' +
+            f'Pathway {self.pathway.get_id()}\n' +
             '----------------\n' +
             '\n'.join([rxn.to_string() for rxn in self.reactions])
         )
@@ -395,39 +343,39 @@ class Test_Pathway(TestCase):
         # for spe in species:
         #     pathway.add_species(spe)
         self.assertEqual(
-            self.test_pathway,
+            self.pathway,
             pathway
         )
 
     def test_del_reaction(self):
-        self.test_pathway.del_reaction(self.rxn.get_id())
+        self.pathway.del_reaction(self.rxn.get_id())
         self.assertListEqual(
-            self.test_pathway.get_reactions_ids(),
+            self.pathway.get_reactions_ids(),
             [rxn.get_id() for rxn in self.reactions[1:]]
         )
 
     def test_del_reaction_wrong_id(self):
-        self.test_pathway.del_reaction('WRONG')
+        self.pathway.del_reaction('WRONG')
         self.assertListEqual(
-            self.test_pathway.get_reactions_ids(),
+            self.pathway.get_reactions_ids(),
             [rxn.get_id() for rxn in self.reactions]
         )
 
     def test_eq_not_equal(self):
         self.assertNotEqual(
-            self.test_pathway,
+            self.pathway,
             Pathway(id=self.id)
         )
 
     def test_eq_wrong_type(self):
         self.assertNotEqual(
-            self.test_pathway,
+            self.pathway,
             0
         )
 
     def test_net_reaction(self):
         self.assertEqual(
-            self.test_pathway.net_reaction().get_species_stoichio(),
+            self.pathway.net_reaction().get_species_stoichio(),
             {
                 'MNXM4': -2,
                 'TARGET_0000000001': 1,
@@ -442,7 +390,7 @@ class Test_Pathway(TestCase):
 
     def test_pseudo_reaction(self):
         self.assertEqual(
-            self.test_pathway.pseudo_reaction().get_species_stoichio(),
+            self.pathway.pseudo_reaction().get_species_stoichio(),
             {
                 'MNXM4': -2,
                 'TARGET_0000000001': 1,

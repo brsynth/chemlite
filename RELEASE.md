@@ -1,5 +1,9 @@
 # Release history
 
+## 1.3.1
+#### Jun 15 2021
+- chore(Reaction): check harder compound smiles
+
 ## 1.3.0
 #### Jun 15 2021
 - chore: remove infos attribute

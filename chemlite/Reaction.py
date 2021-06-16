@@ -116,12 +116,24 @@ class Reaction(Object):
         return self.__ec_numbers
 
     def get_smiles(self) -> str:
+
+        def get_smi(spe_id: str) -> bool:
+            check_smiles = (
+                Cache.get(spe_id) is not None
+                and Cache.get(spe_id).get_smiles() is not None
+                and Cache.get(spe_id).get_smiles() != ''
+            )
+            if check_smiles:
+                return [Cache.get(spe_id).get_smiles()]*spe_sto
+            else:
+                self.get_logger().warning(f'Compound {spe_id} has no smiles')
+                return []
+
         ## LEFT
         smi = []
         # build list of compounds with stoichiometry
         for spe_id, spe_sto in self.get_reactants_stoichio().items():
-            if Cache.get(spe_id).get_smiles() != '':
-                smi += [Cache.get(spe_id).get_smiles()]*spe_sto
+            smi += get_smi(spe_id)
         # build smiles string
         left_smi = '.'.join(smi)
 
@@ -129,8 +141,7 @@ class Reaction(Object):
         smi = []
         # build list of compounds with stoichiometry
         for spe_id, spe_sto in self.get_products_stoichio().items():
-            if Cache.get(spe_id).get_smiles() != '':
-                smi += [Cache.get(spe_id).get_smiles()]*spe_sto
+            smi += get_smi(spe_id)
         # build smiles string
         right_smi = '.'.join(smi)
 

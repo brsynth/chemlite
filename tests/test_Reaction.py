@@ -50,6 +50,17 @@ species = {
         inchi="InChI=1S/C6H6O2/c7-5-3-1-2-4-6(5)8/h1-4,7-8H",
         inchikey="YCIMNLLNPGFGHC-UHFFFAOYSA-N"
     ),
+    "CMPD_0000000004_wo_smiles": Compound(
+        id="CMPD_0000000003_wo_smiles",
+        inchi="InChI=1S/C6H6O2/c7-5-3-1-2-4-6(5)8/h1-4,7-8H",
+        inchikey="YCIMNLLNPGFGHC-UHFFFAOYSA-N"
+    ),
+    "CMPD_0000000003_w_smiles_None": Compound(
+        id="CMPD_0000000003_wo_smiles",
+        inchi="InChI=1S/C6H6O2/c7-5-3-1-2-4-6(5)8/h1-4,7-8H",
+        inchikey="YCIMNLLNPGFGHC-UHFFFAOYSA-N",
+        smiles=None
+    ),
     "MNXM337": Compound(
         id="MNXM337",
         smiles="[H]OC(=O)C(OC1([H])C([H])=C(C(=O)O[H])C([H])=C([H])C1([H])O[H])=C([H])[H]",
@@ -222,9 +233,63 @@ class Test_Reaction(TestCase):
             self.smiles
         )
 
-    def test_get_smiles_cmpd_wo_smiles(self):
+    def test_get_smiles_cmpd_wo_smiles_L(self):
         self.rxn.add_reactant(
             compound_id='CMPD_0000000003_wo_smiles',
+            stoichio=1
+        )
+        self.assertEqual(
+            self.rxn.get_smiles(),
+            self.smiles
+        )
+
+    def test_get_smiles_cmpd_wo_smiles_R(self):
+        self.rxn.add_product(
+            compound_id='CMPD_0000000003_wo_smiles',
+            stoichio=1
+        )
+        self.assertEqual(
+            self.rxn.get_smiles(),
+            self.smiles
+        )
+
+    def test_get_smiles_w_cmpd_not_in_cache(self):
+        self.rxn.add_reactant(
+            compound_id='CMPD_NOT_IN_CACHE',
+            stoichio=1
+        )
+        self.assertEqual(
+            self.rxn.get_smiles(),
+            self.smiles
+        )
+
+    def test_get_smiles_w_smile_None_L(self):
+        self.rxn.add_reactant(
+            compound_id='CMPD_0000000003_w_smiles_None',
+            stoichio=1
+        )
+        self.assertEqual(
+            self.rxn.get_smiles(),
+            self.smiles
+        )
+
+    def test_get_smiles_w_smile_None_R(self):
+        self.rxn.add_product(
+            compound_id='CMPD_0000000003_w_smiles_None',
+            stoichio=1
+        )
+        self.assertEqual(
+            self.rxn.get_smiles(),
+            self.smiles
+        )
+
+    def test_get_smiles_w_all_cmpds_wo_smiles(self):
+        self.rxn.add_reactant(
+            compound_id='CMPD_0000000003_wo_smiles',
+            stoichio=1
+        )
+        self.rxn.add_product(
+            compound_id='CMPD_0000000004_wo_smiles',
             stoichio=1
         )
         self.assertEqual(
