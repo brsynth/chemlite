@@ -217,7 +217,9 @@ class Reaction(Object):
         if self.get_reactants() is None:
             self.__reactants = {}
         self.__reactants[cmpd_id] = abs(stoichio)
-        Cache.touch(cmpd_id)
+        if cmpd_id not in Cache.get_list_of_objects():
+            # add to Cache
+            Compound(id=cmpd_id)
 
     def set_products(self, compounds: Dict) -> None:
         self.__products = {}
@@ -232,7 +234,9 @@ class Reaction(Object):
         if self.get_products() is None:
             self.__products = {}
         self.__products[cmpd_id] = abs(stoichio)
-        Cache.touch(cmpd_id)
+        if cmpd_id not in Cache.get_list_of_objects():
+            # add to Cache
+            Compound(id=cmpd_id)
 
     def rename_compound(
         self,

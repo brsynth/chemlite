@@ -6,6 +6,7 @@ Created on May 28 2021
 
 from unittest import TestCase
 from copy import deepcopy
+from brs_utils import Cache
 from chemlite import (
     Reaction,
     Compound
@@ -366,6 +367,13 @@ class Test_Reaction(TestCase):
         self.rxn.set_products(None)
         self.rxn.add_product('cmpd', 1)
 
+    def test_set_product_already_exist(self):
+        self.rxn.add_product('MNXM13', 1)
+        self.assertEqual(
+            Cache.get('MNXM13').get_smiles(),
+            self.mnxm13.get_smiles()
+        )
+
     def test_add_reactant_wo_id(self):
         cmpd_sto = 4
         rxn = deepcopy(self.rxn)
@@ -442,9 +450,7 @@ class Test_Reaction(TestCase):
 
     def test_mult_stoichio_coeff(self):
         mult = 2
-        print(self.rxn)
         self.rxn.mult_stoichio_coeff(mult)
-        print(self.rxn)
         self.assertDictEqual(
             self.rxn.get_species(),
             {
