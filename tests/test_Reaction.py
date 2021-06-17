@@ -437,7 +437,7 @@ class Test_Reaction(TestCase):
             }
         )
 
-    def test_sum(self):
+    def test_sum_stoichio(self):
         reactants_1 = {
             'MNXM4': 1,
             'MNXM337': 1,
@@ -484,9 +484,6 @@ class Test_Reaction(TestCase):
             reactants=reactants_3,
             products=products_3,
         )
-        print(Reaction.sum_stoichio(
-                [rxn_1, rxn_2, rxn_3]
-            ))
         self.assertDictEqual(
             Reaction.sum_stoichio(
                 [rxn_1, rxn_2, rxn_3]

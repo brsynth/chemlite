@@ -33,7 +33,6 @@ from logging import (
     getLogger
 )
 from copy import deepcopy
-import operator
 from brs_utils import Cache
 from chemlite.Compound import Compound
 from chemlite.Object import Object
