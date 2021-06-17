@@ -103,7 +103,7 @@ class Reaction(Object):
 
     def get_smiles(self) -> str:
 
-        def get_smi(spe_id: str) -> bool:
+        def get_smi(spe_id: str, spe_sto: int) -> str:
             check_smiles = (
                 Cache.get(spe_id) is not None
                 and Cache.get(spe_id).get_smiles() is not None
@@ -119,7 +119,7 @@ class Reaction(Object):
         smi = []
         # build list of compounds with stoichiometry
         for spe_id, spe_sto in self.get_reactants().items():
-            smi += get_smi(spe_id)
+            smi += get_smi(spe_id, spe_sto)
         # build smiles string
         left_smi = '.'.join(smi)
 
@@ -127,14 +127,17 @@ class Reaction(Object):
         smi = []
         # build list of compounds with stoichiometry
         for spe_id, spe_sto in self.get_products().items():
-            smi += get_smi(spe_id)
+            smi += get_smi(spe_id, spe_sto)
         # build smiles string
         right_smi = '.'.join(smi)
 
         return left_smi + '>>' + right_smi
 
     def get_reactants(self) -> Dict[str, int]:
-        return self.__reactants
+        try:
+            return self.__reactants
+        except AttributeError:
+            return None
 
     def get_reactant(self, cmpd_id: str) -> int:
         try:
@@ -152,7 +155,10 @@ class Reaction(Object):
         return [Cache.get(compound_id) for compound_id in self.get_reactants_ids()]
 
     def get_products(self) -> Dict[str, int]:
-        return self.__products
+        try:
+            return self.__products
+        except AttributeError:
+            return None
 
     def get_product(self, cmpd_id: str) -> int:
         try:
@@ -199,29 +205,41 @@ class Reaction(Object):
             self.__ec_numbers += [number]
 
     def set_reactants(self, compounds: Dict) -> None:
-        self.__reactants = deepcopy(compounds)
+        self.__reactants = {}
+        if compounds is not None:
+            for spe_id, spe_sto in compounds.items():
+                self.set_reactant(spe_id, spe_sto)
 
     def set_reactant(self, cmpd_id: str, stoichio: int) -> None:
         if cmpd_id is None or cmpd_id == '':
             return None
             self.logger.warning(f'Compound ID passed is equal to {cmpd_id}')
         if self.get_reactants() is None:
-            self.set_reactants({})
+            self.__reactants = {}
         self.__reactants[cmpd_id] = abs(stoichio)
+        Cache.touch(cmpd_id)
 
     def set_products(self, compounds: Dict) -> None:
-        self.__products = deepcopy(compounds)
+        self.__products = {}
+        if compounds is not None:
+            for spe_id, spe_sto in compounds.items():
+                self.set_product(spe_id, spe_sto)
 
     def set_product(self, cmpd_id: str, stoichio: int) -> None:
+        if cmpd_id is None or cmpd_id == '':
+            return None
+            self.logger.warning(f'Compound ID passed is equal to {cmpd_id}')
         if self.get_products() is None:
-            self.set_products({})
+            self.__products = {}
         self.__products[cmpd_id] = abs(stoichio)
+        Cache.touch(cmpd_id)
 
     def rename_compound(
         self,
         id: str,
         new_id: str
     ) -> None:
+
         # Reactants
         species = {}
         for spe_id, spe_sto in self.get_reactants().items():
@@ -230,6 +248,7 @@ class Reaction(Object):
             else:
                 species[spe_id] = spe_sto
         self.set_reactants(species)
+
         # Products
         species = {}
         for spe_id, spe_sto in self.get_products().items():

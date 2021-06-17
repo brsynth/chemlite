@@ -209,6 +209,13 @@ class Test_Reaction(TestCase):
             0
         )
 
+    # def test_get_reactants_None(self):
+    #     self.rxn.set_reactants(None)
+    #     self.assertEqual(
+    #         self.rxn.get_reactants(),
+    #         None
+    #     )
+
     def test_get_reactants_ids(self):
         self.assertListEqual(
             self.rxn.get_reactants_ids(),
@@ -375,6 +382,15 @@ class Test_Reaction(TestCase):
         self.assertListEqual(
             rxn.get_reactants_ids(),
             self.rxn.get_reactants_ids()
+        )
+
+    def test_add_product_with_id_none(self):
+        cmpd_sto = 4
+        rxn = deepcopy(self.rxn)
+        rxn.add_product(stoichio=cmpd_sto, compound_id=None)
+        self.assertListEqual(
+            rxn.get_products_ids(),
+            self.rxn.get_products_ids()
         )
 
     def test_add_reactant_withall_none(self):
