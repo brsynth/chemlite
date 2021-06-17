@@ -146,7 +146,10 @@ class Reaction(Object):
             return 0
 
     def get_nb_reactants(self) -> int:
-        return len(self.get_reactants())
+        try:
+            return len(self.get_reactants())
+        except TypeError:
+            return 0
 
     def get_reactants_ids(self) -> List[str]:
         return list(self.get_reactants().keys())
@@ -167,7 +170,10 @@ class Reaction(Object):
             return 0
 
     def get_nb_products(self) -> int:
-        return len(self.get_products())
+        try:
+            return len(self.get_products())
+        except TypeError:
+            return 0
 
     def get_products_ids(self) -> List[str]:
         return list(self.get_products().keys())
