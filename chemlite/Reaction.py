@@ -180,7 +180,6 @@ class Reaction(Object):
             **dict(sorted({spe_id: -spe_sto for spe_id, spe_sto in self.get_reactants().items()}.items(), key=lambda item: item[0])),
             **dict(sorted(self.get_products().items(), key=lambda item: item[0])),
         }
-        # return dict(sorted(self.__stoichio.items(), key=lambda item: item[0]))
 
     def get_species_ids(self) -> List[str]:
         return list(set(list(self.get_reactants().keys()) + list(self.get_products().keys())))

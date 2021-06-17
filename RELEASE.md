@@ -1,5 +1,15 @@
 # Release history
 
+## 2.0.0
+#### Jun 17 2021
+- chore(Reaction): split __stoichio into __reactants and __products
+- BREAK! chore(Reaction): rename get_reactants_stoichio() into get_reactants()
+- BREAK! chore(Reaction): rename get_products_stoichio() into get_products()
+- BREAK! chore(Reaction): rename get_species_stoichio() into get_species()
+- BREAK! chore(Reaction): rename get_reactants() into get_reactants_compounds()
+- BREAK! chore(Reaction): rename get_products() into get_products_compounds()
+- BREAK! chore(Reaction): rename get_species() into get_speciess_compounds()
+
 ## 1.3.1
 #### Jun 15 2021
 - chore(Reaction): check harder compound smiles
