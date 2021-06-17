@@ -269,6 +269,12 @@ class Test_Pathway(TestCase):
             self.reactions
         )
 
+    def test_get_list_of_reactions(self):
+        self.assertListEqual(
+            self.pathway.get_list_of_reactions(),
+            list(self.reactions.values())
+        )
+
     def test_get_reaction(self):
         self.assertEqual(
             self.pathway.get_reaction('rxn_4'),

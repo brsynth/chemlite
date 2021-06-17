@@ -2,6 +2,10 @@
 
 ## 2.2.0
 #### Jun 17 2021
+- feat(Pathway): add get_list_of_reactions()
+
+## 2.2.0
+#### Jun 17 2021
 - chore(Pathway): change __reactions from List to Dict
 - chore(Reaction): check get_nb_X()
 

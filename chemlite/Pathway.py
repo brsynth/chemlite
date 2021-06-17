@@ -132,6 +132,9 @@ class Pathway(Object):
         return self.__reactions
         # return [self.get_reaction(rxn_id) for rxn_id in self.get_reactions_ids()]
 
+    def get_list_of_reactions(self) -> Dict[str, Reaction]:
+        return list(self.__reactions.values())
+
     ## WRITE METHODS
     def set_id(self, id: str) -> None:
         self.__id = id
