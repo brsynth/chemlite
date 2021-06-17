@@ -325,8 +325,6 @@ class Test_Pathway(TestCase):
         )
 
     def test_to_string(self):
-        print(self.pathway.to_string())
-        print('\n'.join([rxn.to_string() for rxn in self.reactions.values()]))
         # for rxn in self.reactions:
         #     print(rxn)
         self.assertEqual(

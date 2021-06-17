@@ -1,5 +1,10 @@
 # Release history
 
+## 2.2.0
+#### Jun 17 2021
+- chore(Pathway): change __reactions from List to Dict
+- chore(Reaction): check get_nb_X()
+
 ## 2.1.1
 #### Jun 17 2021
 - chore(Reaction): do not touch()
