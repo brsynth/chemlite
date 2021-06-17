@@ -49,7 +49,7 @@ class Pathway(Object):
             id=id,
             logger=logger
         )
-        self.__reactions = []
+        self.__reactions = {}
 
     ## OUT METHODS
     # def __repr__(self):
@@ -59,7 +59,7 @@ class Pathway(Object):
         return '----------------\n' \
             + f'Pathway {self.get_id()}\n' \
             + '----------------\n' \
-            + '\n'.join([rxn.__str__() for rxn in self.get_reactions()])
+            + '\n'.join([rxn.__str__() for rxn in self.get_reactions().values()])
 
     def _to_dict(self) -> Dict:
         return {
@@ -83,14 +83,14 @@ class Pathway(Object):
         return self.__id
 
     def get_nb_reactions(self) -> int:
-        return len(self.get_reactions_ids())
+        return len(self.get_reactions())
 
     def get_nb_species(self) -> int:
         return len(self.get_species_ids())
 
     def get_species_ids(self) -> List[str]:
         # Build the list of species over all reactions
-        list_of_list_of_species = [rxn.get_species_ids() for rxn in self.get_reactions()]
+        list_of_list_of_species = [rxn.get_species_ids() for rxn in self.get_reactions().values()]
         # Expand the list and remove duplicates (set)
         set_of_species = set([spe for species in list_of_list_of_species for spe in species])
         return list(set_of_species)
@@ -116,27 +116,29 @@ class Pathway(Object):
         return self.get_specie(cmpd_id)
 
     def get_reactions_ids(self) -> List[str]:
-        return self.__reactions
+        return list(self.__reactions.keys())
 
     def get_reaction(self, rxn_id: str) -> Reaction:
-        rxn = Cache.get(self.__get_cache_id(rxn_id))
-        if rxn is None:
+        try:
+            return self.get_reactions()[rxn_id]
+        except KeyError:
             self.get_logger().debug(f'There is no reaction \'{rxn_id}\' in the pathway')
-        return rxn
+        # rxn = Cache.get(self.__get_cache_id(rxn_id))
+        # if rxn is None:
+        #     self.get_logger().debug(f'There is no reaction \'{rxn_id}\' in the pathway')
+        # return rxn
 
-    def get_reactions(self) -> List[Reaction]:
-        return [self.get_reaction(rxn_id) for rxn_id in self.get_reactions_ids()]
-
-    def __get_cache_id(self, id: str) -> str:
-        return f'{self.get_id()}_{id}'
+    def get_reactions(self) -> Dict[str, Reaction]:
+        return self.__reactions
+        # return [self.get_reaction(rxn_id) for rxn_id in self.get_reactions_ids()]
 
     ## WRITE METHODS
     def set_id(self, id: str) -> None:
         self.__id = id
 
     def rename_compound(self, id: str, new_id: str) -> None:
-        for rxn_id in self.get_reactions_ids():
-            rxn = self.get_reaction(rxn_id)
+        for rxn in self.get_reactions().values():
+            # rxn = self.get_reaction(rxn_id)
             if id in rxn.get_species_ids():
                 # rename compound in cache
                 compound = Cache.get(id)
@@ -165,25 +167,26 @@ class Pathway(Object):
         # RXN ID
         if rxn_id is None:
             rxn_id = rxn.get_id()
-        Cache.copy(
-            id=rxn.get_id(),
-            new_id=self.__get_cache_id(rxn_id)
-        )
-        if rxn_id not in self.get_reactions_ids():
-            self.__reactions += [rxn_id]
+        # Cache.copy(
+        #     id=rxn.get_id(),
+        #     new_id=self.__get_cache_id(rxn_id)
+        # )
+        # if rxn_id not in self.get_reactions_ids():
+        #     self.__reactions += [rxn]
+        self.__reactions[rxn_id] = rxn
 
     def del_reaction(self, rxn_id: str) -> None:
         try:
-            Cache.remove_object_by_id(self.__get_cache_id(rxn_id))
-            del self.__reactions[self.__reactions.index(rxn_id)]
-        except ValueError:
+            # Cache.remove_object_by_id(self.__get_cache_id(rxn_id))
+            del self.__reactions[rxn_id]
+        except KeyError:
             self.get_logger().error(f'There is no reaction \'{rxn_id}\' in the pathway, nothing deleted.')
 
     ## MISC
     def net_reaction(self) -> Dict[str, float]:
         '''
         '''
-        return Reaction.sum_stoichio(self.get_reactions())
+        return Reaction.sum_stoichio(self.get_reactions().values())
 
     def pseudo_reaction(self) -> Reaction:
         '''

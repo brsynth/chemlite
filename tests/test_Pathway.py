@@ -112,9 +112,9 @@ class Test_Pathway(TestCase):
             reactants=self.reactants,
             products=self.products
         )
-        self.reactions = [
-            self.rxn,
-            Reaction(
+        self.reactions = {
+            self.rxn.get_id(): self.rxn,
+            "rxn_3": Reaction(
                 id="rxn_3",
                 ec_numbers=[
                     "4.1.1.63"
@@ -128,7 +128,7 @@ class Test_Pathway(TestCase):
                     "MNXM13": 1
                 }
             ),
-            Reaction(
+            "rxn_2": Reaction(
                 id="rxn_2",
                 ec_numbers=[
                     "1.14.13.23"
@@ -145,7 +145,7 @@ class Test_Pathway(TestCase):
                     "MNXM5": 1
                 }
             ),
-            Reaction(
+            "rxn_1": Reaction(
                 id="rxn_1",
                 ec_numbers=[
                     "4.1.3.45"
@@ -158,14 +158,14 @@ class Test_Pathway(TestCase):
                     "MNXM23": 1
                 }
             )
-        ]
+        }
         self.id = 'pathway'
         self.pathway = Pathway(
             id=self.id,
             # species=species.values(),
             # reactions=reactions,
         )
-        for rxn in self.reactions:
+        for rxn in self.reactions.values():
             self.pathway.add_reaction(rxn)
 
     ## READ METHODS
@@ -215,7 +215,7 @@ class Test_Pathway(TestCase):
         )
 
     def test_get_species(self):
-        list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions]
+        list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions.values()]
         list_of_species = list(set([spe for species in list_of_list_of_species for spe in species]))
         self.assertListEqual(
             self.pathway.get_species(),
@@ -223,7 +223,7 @@ class Test_Pathway(TestCase):
         )
 
     def test_get_species_ids(self):
-        list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions]
+        list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions.values()]
         self.assertListEqual(
             self.pathway.get_species_ids(),
             list(set([spe for species in list_of_list_of_species for spe in species]))
@@ -242,14 +242,14 @@ class Test_Pathway(TestCase):
         )
 
     def test_get_compounds_ids(self):
-        list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions]
+        list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions.values()]
         self.assertListEqual(
             self.pathway.get_compounds_ids(),
             list(set([spe for species in list_of_list_of_species for spe in species]))
         )
 
     def test_get_compounds(self):
-        list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions]
+        list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions.values()]
         list_of_species = list(set([spe for species in list_of_list_of_species for spe in species]))
         self.assertListEqual(
             self.pathway.get_compounds(),
@@ -264,7 +264,7 @@ class Test_Pathway(TestCase):
         )
 
     def test_get_reactions(self):
-        self.assertListEqual(
+        self.assertDictEqual(
             self.pathway.get_reactions(),
             self.reactions
         )
@@ -284,19 +284,19 @@ class Test_Pathway(TestCase):
     def test_reaction_ids(self):
         self.assertEqual(
             self.pathway.get_reactions_ids(),
-            [rxn.get_id() for rxn in self.reactions]
+            [rxn.get_id() for rxn in self.reactions.values()]
         )
 
     def test_add_reaction(self):
         rxn = Reaction(id='rxn')
         self.pathway.add_reaction(rxn)
         self.assertListEqual(
-            self.pathway.get_reactions(),
-            self.reactions + [rxn]
+            list(self.pathway.get_reactions().values()),
+            list(self.reactions.values()) + [rxn]
         )
         self.assertListEqual(
             self.pathway.get_reactions_ids(),
-            [rxn.get_id() for rxn in self.reactions] + [rxn.get_id()]
+            [rxn.get_id() for rxn in self.reactions.values()] + [rxn.get_id()]
         )
 
     def test_add_reaction_with_id(self):
@@ -304,21 +304,21 @@ class Test_Pathway(TestCase):
         other_id = 'other_' + rxn.get_id()
         self.pathway.add_reaction(rxn, other_id)
         self.assertListEqual(
-            self.pathway.get_reactions(),
-            self.reactions + [rxn]
+            list(self.pathway.get_reactions().values()),
+            list(self.reactions.values()) + [rxn]
         )
         self.assertListEqual(
             self.pathway.get_reactions_ids(),
-            [rxn.get_id() for rxn in self.reactions] + [other_id]
+            [rxn.get_id() for rxn in self.reactions.values()] + [other_id]
         )
 
     def test_to_dict(self):
-        list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions]
+        list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions.values()]
         list_of_species = list(set([spe for species in list_of_list_of_species for spe in species]))
         self.assertDictEqual(
             self.pathway._to_dict(),
             {
-                'reactions': {rxn.get_id(): rxn._to_dict() for rxn in self.reactions},
+                'reactions': {rxn.get_id(): rxn._to_dict() for rxn in self.reactions.values()},
                 'species': {spe.get_id(): spe._to_dict() for spe in [self.species[spe_id] for spe_id in list_of_species]},
                 'id': self.id
             }
@@ -326,7 +326,7 @@ class Test_Pathway(TestCase):
 
     def test_to_string(self):
         print(self.pathway.to_string())
-        print('\n'.join([rxn.to_string() for rxn in self.reactions]))
+        print('\n'.join([rxn.to_string() for rxn in self.reactions.values()]))
         # for rxn in self.reactions:
         #     print(rxn)
         self.assertEqual(
@@ -334,12 +334,12 @@ class Test_Pathway(TestCase):
             '----------------\n' +
             f'Pathway {self.pathway.get_id()}\n' +
             '----------------\n' +
-            '\n'.join([rxn.to_string() for rxn in self.reactions])
+            '\n'.join([rxn.to_string() for rxn in self.reactions.values()])
         )
 
     def test_eq(self):
         pathway = Pathway(id=self.id)
-        for rxn in self.reactions:
+        for rxn in self.reactions.values():
             pathway.add_reaction(rxn)
         # for spe in species:
         #     pathway.add_species(spe)
@@ -352,14 +352,14 @@ class Test_Pathway(TestCase):
         self.pathway.del_reaction(self.rxn.get_id())
         self.assertListEqual(
             self.pathway.get_reactions_ids(),
-            [rxn.get_id() for rxn in self.reactions[1:]]
+            [rxn.get_id() for rxn in list(self.reactions.values())[1:]]
         )
 
     def test_del_reaction_wrong_id(self):
         self.pathway.del_reaction('WRONG')
         self.assertListEqual(
             self.pathway.get_reactions_ids(),
-            [rxn.get_id() for rxn in self.reactions]
+            [rxn.get_id() for rxn in self.reactions.values()]
         )
 
     def test_eq_not_equal(self):
