@@ -1,5 +1,9 @@
 # Release history
 
+## 2.1.1
+#### Jun 17 2021
+- chore(Reaction): do not touch()
+
 ## 2.1.0
 #### Jun 17 2021
 - chore(Reaction): fix smiles checking
