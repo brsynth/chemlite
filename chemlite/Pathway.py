@@ -180,15 +180,10 @@ class Pathway(Object):
             self.get_logger().error(f'There is no reaction \'{rxn_id}\' in the pathway, nothing deleted.')
 
     ## MISC
-    def net_reaction(self) -> Reaction:
+    def net_reaction(self) -> Dict[str, float]:
         '''
         '''
-        species_stoichio = Reaction.sum_stoichio(self.get_reactions())
-        return Reaction(
-            id='net_rxn',
-            reactants={spe_id: -spe_sto for (spe_id, spe_sto) in species_stoichio.items() if spe_sto < 0},
-            products={spe_id: spe_sto for (spe_id, spe_sto) in species_stoichio.items() if spe_sto > 0}
-        )
+        return Reaction.sum_stoichio(self.get_reactions())
 
     def pseudo_reaction(self) -> Reaction:
         '''

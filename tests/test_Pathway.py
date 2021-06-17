@@ -375,7 +375,7 @@ class Test_Pathway(TestCase):
 
     def test_net_reaction(self):
         self.assertEqual(
-            self.pathway.net_reaction().get_species(),
+            self.pathway.net_reaction(),
             {
                 'MNXM4': -2,
                 'TARGET_0000000001': 1,
@@ -390,7 +390,7 @@ class Test_Pathway(TestCase):
 
     def test_pseudo_reaction(self):
         self.assertEqual(
-            self.pathway.pseudo_reaction().get_species(),
+            self.pathway.pseudo_reaction(),
             {
                 'MNXM4': -2,
                 'TARGET_0000000001': 1,
