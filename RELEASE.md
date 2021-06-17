@@ -1,5 +1,10 @@
 # Release history
 
+## 2.1.0
+#### Jun 17 2021
+- chore(Reaction): fix smiles checking
+- BREAK! chore(Pathway): change net_reaction() return
+
 ## 2.0.0
 #### Jun 17 2021
 - chore(Reaction): split __stoichio into __reactants and __products
