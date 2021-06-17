@@ -221,9 +221,9 @@ class Test_Reaction(TestCase):
             list(self.products.keys())
         )
 
-    def test_get_reactants(self):
+    def test_get_reactants_compounds(self):
         self.assertListEqual(
-            self.rxn.get_reactants(),
+            self.rxn.get_reactants_compounds(),
             [species[spe_id] for spe_id in self.reactants.keys()]
         )
 
@@ -297,15 +297,15 @@ class Test_Reaction(TestCase):
             self.smiles
         )
 
-    def test_get_products(self):
+    def test_get_products_compounds(self):
         self.assertListEqual(
-            self.rxn.get_products(),
+            self.rxn.get_products_compounds(),
             [species[spe_id] for spe_id in self.products.keys()]
         )
 
-    def test_get_species(self):
+    def test_get_species_compounds(self):
         self.assertListEqual(
-            sorted([spe.get_id() for spe in self.rxn.get_species()]),
+            sorted([spe.get_id() for spe in self.rxn.get_species_compounds()]),
             sorted(list(set(list(self.reactants.keys()) + list(self.products.keys()))))
         )
 
@@ -341,22 +341,29 @@ class Test_Reaction(TestCase):
                 rxn = deepcopy(self.rxn)
                 rxn.add_reactant(
                     compound_id=self.new_cmpd.get_id(),
-                    compound=self.new_cmpd,
                     stoichio=spe_sto
                 )
                 self.assertDictEqual(
-                    rxn.get_reactants_stoichio(),
+                    rxn.get_reactants(),
                     {
-                        **self.rxn.get_reactants_stoichio(),
+                        **self.rxn.get_reactants(),
                         **{self.new_cmpd.get_id(): abs(spe_sto)}
                     }
                 )
+
+    def test_set_reactant(self):
+        self.rxn.set_reactants(None)
+        self.rxn.add_reactant('cmpd', 1)
+
+    def test_set_product(self):
+        self.rxn.set_products(None)
+        self.rxn.add_product('cmpd', 1)
 
     def test_add_reactant_wo_id(self):
         cmpd_sto = 4
         rxn = deepcopy(self.rxn)
         rxn.add_reactant(stoichio=cmpd_sto, compound_id='')
-        self.assertListEqual(
+        self.assertDictEqual(
             rxn.get_reactants(),
             self.rxn.get_reactants()
         )
@@ -364,17 +371,17 @@ class Test_Reaction(TestCase):
     def test_add_reactant_with_id_none(self):
         cmpd_sto = 4
         rxn = deepcopy(self.rxn)
-        rxn.add_reactant(stoichio=cmpd_sto, compound=self.new_cmpd)
+        rxn.add_reactant(stoichio=cmpd_sto, compound_id=None)
         self.assertListEqual(
             rxn.get_reactants_ids(),
-            self.rxn.get_reactants_ids() + [self.new_cmpd.get_id()]
+            self.rxn.get_reactants_ids()
         )
 
     def test_add_reactant_withall_none(self):
         cmpd_sto = 4
         rxn = deepcopy(self.rxn)
-        rxn.add_reactant(stoichio=cmpd_sto, compound_id=None, compound=None)
-        self.assertListEqual(
+        rxn.add_reactant(stoichio=cmpd_sto, compound_id=None)
+        self.assertDictEqual(
             rxn.get_reactants(),
             self.rxn.get_reactants()
         )
@@ -385,13 +392,12 @@ class Test_Reaction(TestCase):
                 rxn = deepcopy(self.rxn)
                 rxn.add_product(
                     compound_id=self.new_cmpd.get_id(),
-                    compound=self.new_cmpd,
                     stoichio=spe_sto
                 )
                 self.assertDictEqual(
-                    rxn.get_products_stoichio(),
+                    rxn.get_products(),
                     {
-                        **self.rxn.get_products_stoichio(),
+                        **self.rxn.get_products(),
                         **{self.new_cmpd.get_id(): abs(spe_sto)}
                     }
                 )
@@ -420,16 +426,18 @@ class Test_Reaction(TestCase):
 
     def test_mult_stoichio_coeff(self):
         mult = 2
+        print(self.rxn)
         self.rxn.mult_stoichio_coeff(mult)
+        print(self.rxn)
         self.assertDictEqual(
-            self.rxn.get_species_stoichio(),
+            self.rxn.get_species(),
             {
                 **{spe_id: -mult * self.reactants[spe_id] for spe_id in self.reactants.keys()},
                 **{spe_id: mult * self.products[spe_id] for spe_id in self.products.keys()}
             }
         )
 
-    def test_sum_stoichio(self):
+    def test_sum(self):
         reactants_1 = {
             'MNXM4': 1,
             'MNXM337': 1,
@@ -461,10 +469,27 @@ class Test_Reaction(TestCase):
             'MNXM5': 1,
             'MNXM3': 1
         }
+        rxn_1 = Reaction(
+            id='rxn_1',
+            reactants=reactants_1,
+            products=products_1,
+        )
+        rxn_2 = Reaction(
+            id='rxn_2',
+            reactants=reactants_2,
+            products=products_2,
+        )
+        rxn_3 = Reaction(
+            id='rxn_3',
+            reactants=reactants_3,
+            products=products_3,
+        )
+        print(Reaction.sum_stoichio(
+                [rxn_1, rxn_2, rxn_3]
+            ))
         self.assertDictEqual(
             Reaction.sum_stoichio(
-                [reactants_1, reactants_2, reactants_3],
-                [products_1, products_2, products_3],
+                [rxn_1, rxn_2, rxn_3]
             ),
             {
                 'MNXM4': -4,

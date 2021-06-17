@@ -183,10 +183,7 @@ class Pathway(Object):
     def net_reaction(self) -> Reaction:
         '''
         '''
-        species_stoichio = Reaction.sum_stoichio(
-            [rxn.get_reactants_stoichio() for rxn in self.get_reactions()],
-            [rxn.get_products_stoichio() for rxn in self.get_reactions()]
-        )
+        species_stoichio = Reaction.sum_stoichio(self.get_reactions())
         return Reaction(
             id='net_rxn',
             reactants={spe_id: -spe_sto for (spe_id, spe_sto) in species_stoichio.items() if spe_sto < 0},
