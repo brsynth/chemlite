@@ -316,7 +316,6 @@ class Reaction(Object):
         # Reactants
         for reactants in l_reactants:
             for spe_id, spe_sto in reactants.items():
-                print(spe_id, spe_sto)
                 if spe_id in species:
                     species[spe_id] -= spe_sto
                 else:
