@@ -161,9 +161,7 @@ class Test_Pathway(TestCase):
         }
         self.id = 'pathway'
         self.pathway = Pathway(
-            id=self.id,
-            # species=species.values(),
-            # reactions=reactions,
+            id=self.id
         )
         for rxn in self.reactions.values():
             self.pathway.add_reaction(rxn)
@@ -318,7 +316,7 @@ class Test_Pathway(TestCase):
             [rxn.get_id() for rxn in self.reactions.values()] + [other_id]
         )
 
-    def test_to_dict(self):
+    def test__to_dict(self):
         list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions.values()]
         list_of_species = list(set([spe for species in list_of_list_of_species for spe in species]))
         self.assertDictEqual(

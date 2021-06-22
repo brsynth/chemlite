@@ -30,6 +30,7 @@ from logging import (
     Logger,
     getLogger
 )
+from brs_utils import Cache
 from chemlite.Object import Object
 
 
@@ -54,18 +55,35 @@ class Compound(Object):
         self.set_inchikey(inchikey)
         self.set_formula(formula)
         self.set_name(name)
+        Cache.add(self, self.get_id())
 
     ## OUT METHODS
     # def __repr__(self):
     #     return f'Compound {self.get_id()}'
 
     def _to_dict(self) -> Dict:
+        '''
+        Return a dictionary with all (with legacy) attributes of the object
+
+        Returns
+        -------
+        obj_dict: Dict[str, TypeVar]
+            A dictionary with all (with legacy) attributes
+        '''
         return {
             **super()._to_dict(),
             **self.__to_dict()
         }
 
     def __to_dict(self) -> Dict:
+        '''
+        Return a dictionary with (specific) attributes
+
+        Returns
+        -------
+        obj_dict: Dict[str, TypeVar]
+            A dictionary with (specific) attributes of the object
+        '''
         return {
             'name': self.get_name(),
             'smiles': self.get_smiles(),
@@ -73,11 +91,6 @@ class Compound(Object):
             'inchikey': self.get_inchikey(),
             'formula': self.get_formula(),
         }
-
-    def __eq__(self, other) -> bool:
-        if isinstance(self, other.__class__):
-            return self.__to_dict() == other.__to_dict()
-        return False
 
     ## READ METHODS
     def get_name(self) -> str:

@@ -32,7 +32,7 @@ class Test_Compound(TestCase):
             f'Compound {self.id}'
         )
 
-    def test_to_dict(self):
+    def test__to_dict(self):
         self.assertDictEqual(
             self.compound._to_dict(),
             {

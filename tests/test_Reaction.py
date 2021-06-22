@@ -178,7 +178,7 @@ class Test_Reaction(TestCase):
             f'Reaction {self.rxn.get_id()}'
         )
 
-    def test_to_dict(self):
+    def test__to_dict(self):
         self.assertEqual(
             self.rxn._to_dict(),
             {

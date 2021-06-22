@@ -76,3 +76,11 @@ class Test_Object(TestCase):
             self.object.get_id(),
             new_id
         )
+
+    def test__to_dict(self):
+        self.assertDictEqual(
+            self.object._to_dict(),
+            {
+                'id': self.id
+            }
+        )

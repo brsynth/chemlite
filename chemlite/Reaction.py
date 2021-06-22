@@ -92,11 +92,6 @@ class Reaction(Object):
             'products': deepcopy(self.get_products()),
         }
 
-    def __eq__(self, other) -> bool:
-        if isinstance(self, other.__class__):
-            return self.__to_dict() == other.__to_dict()
-        return False
-
     ## READ METHODS
     def get_ec_numbers(self) -> List[str]:
         return self.__ec_numbers

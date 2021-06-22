@@ -73,11 +73,6 @@ class Pathway(Object):
             'species': {spe_id: self.get_specie(spe_id)._to_dict() for spe_id in self.get_species_ids()},
         }
 
-    def __eq__(self, other) -> bool:
-        if isinstance(self, other.__class__):
-            return self.__to_dict() == other.__to_dict()
-        return False
-
     ## READ METHODS
     def get_nb_reactions(self) -> int:
         return len(self.get_reactions())
