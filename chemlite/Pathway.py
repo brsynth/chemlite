@@ -79,9 +79,6 @@ class Pathway(Object):
         return False
 
     ## READ METHODS
-    def get_id(self) -> str:
-        return self.__id
-
     def get_nb_reactions(self) -> int:
         return len(self.get_reactions())
 
@@ -136,9 +133,6 @@ class Pathway(Object):
         return list(self.__reactions.values())
 
     ## WRITE METHODS
-    def set_id(self, id: str) -> None:
-        self.__id = id
-
     def rename_compound(self, id: str, new_id: str) -> None:
         for rxn in self.get_reactions().values():
             # rxn = self.get_reaction(rxn_id)
