@@ -1,5 +1,12 @@
 # Release history
 
+## 2.4.0
+#### Jun 24 2021
+- feat(Pathway): add get_reactants_ids()
+- feat(Pathway): add get_products_ids()
+- chore: rename to_dict() methods
+- doc: add methods documentation
+
 ## 2.2.0
 #### Jun 17 2021
 - feat(Pathway): add get_list_of_reactions()
