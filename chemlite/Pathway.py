@@ -157,10 +157,26 @@ class Pathway(Object):
         return list(self.__reactions.values())
 
     def get_reactants_ids(self) -> List[str]:
-        return [spe_id for rxn in self.get_list_of_reactions() for spe_id in rxn.get_reactants_ids()]
+        return sorted(
+            set(
+                [
+                    spe_id
+                    for rxn in self.get_list_of_reactions()
+                    for spe_id in rxn.get_reactants_ids()
+                ]
+            )
+        )
 
     def get_products_ids(self) -> List[str]:
-        return [spe_id for rxn in self.get_list_of_reactions() for spe_id in rxn.get_products_ids()]
+        return sorted(
+            set(
+                [
+                    spe_id
+                    for rxn in self.get_list_of_reactions()
+                    for spe_id in rxn.get_products_ids()
+                ]
+            )
+        )
 
     ## WRITE METHODS
     def rename_compound(self, id: str, new_id: str) -> None:

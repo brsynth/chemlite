@@ -411,7 +411,7 @@ class Test_Pathway(TestCase):
             species += rxn.get_reactants_ids()
         self.assertListEqual(
             self.pathway.get_reactants_ids(),
-            species
+            sorted(set(species))
         )
 
     def test_get_products(self):
@@ -420,5 +420,5 @@ class Test_Pathway(TestCase):
             species += rxn.get_products_ids()
         self.assertListEqual(
             self.pathway.get_products_ids(),
-            species
+            sorted(set(species))
         )

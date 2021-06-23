@@ -1,5 +1,9 @@
 # Release history
 
+## 2.4.1
+#### Jun 24 2021
+- chore(Pathway): get_reactants/products_ids() returns a sorted list
+
 ## 2.4.0
 #### Jun 24 2021
 - feat(Pathway): add get_reactants_ids()
