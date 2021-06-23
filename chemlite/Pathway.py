@@ -56,18 +56,47 @@ class Pathway(Object):
     #     return dumps(self._to_dict(), indent=4)
 
     def to_string(self):
+        '''
+        Returns the string representation of the pathway
+
+        Returns
+        -------
+        string: str
+            String representation of the pathway
+        '''
         return '----------------\n' \
             + f'Pathway {self.get_id()}\n' \
             + '----------------\n' \
             + '\n'.join([rxn.__str__() for rxn in self.get_reactions().values()])
 
     def _to_dict(self) -> Dict:
+        '''
+        Returns a dictionary with all (with legacy) attributes of the pathway:
+            - id (legacy)
+            - reactions
+            - species
+
+        Returns
+        -------
+        dict: Dict
+            Dictionary with all (with legacy) attributes of the pathway
+        '''
         return {
             **super()._to_dict(),
             **self.__to_dict()
         }
 
     def __to_dict(self) -> Dict:
+        '''
+        Returns a dictionary with only specific attributes of the pathway:
+            - reactions
+            - species
+
+        Returns
+        -------
+        dict: Dict
+            Dictionary with only specific attributes of the pathway
+        '''
         return {
             'reactions': {rxn_id: self.get_reaction(rxn_id)._to_dict() for rxn_id in self.get_reactions_ids()},
             'species': {spe_id: self.get_specie(spe_id)._to_dict() for spe_id in self.get_species_ids()},
@@ -126,6 +155,12 @@ class Pathway(Object):
 
     def get_list_of_reactions(self) -> List[Reaction]:
         return list(self.__reactions.values())
+
+    def get_reactants_ids(self) -> List[str]:
+        return [spe_id for rxn in self.get_list_of_reactions() for spe_id in rxn.get_reactants_ids()]
+
+    def get_products_ids(self) -> List[str]:
+        return [spe_id for rxn in self.get_list_of_reactions() for spe_id in rxn.get_products_ids()]
 
     ## WRITE METHODS
     def rename_compound(self, id: str, new_id: str) -> None:

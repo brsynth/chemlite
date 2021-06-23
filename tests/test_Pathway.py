@@ -405,3 +405,21 @@ class Test_Pathway(TestCase):
                 'MNXM23': 1
             }
         )
+
+    def test_get_reactants(self):
+        species = []
+        for rxn in self.reactions.values():
+            species += rxn.get_reactants_ids()
+        self.assertListEqual(
+            self.pathway.get_reactants_ids(),
+            species
+        )
+
+    def test_get_products(self):
+        species = []
+        for rxn in self.reactions.values():
+            species += rxn.get_products_ids()
+        self.assertListEqual(
+            self.pathway.get_products_ids(),
+            species
+        )
