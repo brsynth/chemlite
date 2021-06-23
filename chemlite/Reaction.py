@@ -65,6 +65,14 @@ class Reaction(Object):
     #     return f'Reaction {self.get_name()}'
 
     def to_string(self) -> str:
+        '''
+        Returns the string representation of the reaction
+
+        Returns
+        -------
+        string: str
+            String representation of the reaction
+        '''
         if self.get_nb_reactants() == 0 or self.get_nb_products() == 0:
             return super().to_string()
         else:
@@ -80,12 +88,35 @@ class Reaction(Object):
             )
 
     def _to_dict(self) -> Dict:
+        '''
+        Returns a dictionary with all (with legacy) attributes of the reaction:
+            - id (legacy)
+            - ec_numbers
+            - reactants
+            - products
+
+        Returns
+        -------
+        dict: Dict
+            Dictionary with all (with legacy) attributes of the reaction
+        '''
         return {
             **super()._to_dict(),
             **self.__to_dict()
         }
 
     def __to_dict(self) -> Dict:
+        '''
+        Returns a dictionary with only specific attributes of the reaction:
+            - ec_numbers
+            - reactants
+            - products
+
+        Returns
+        -------
+        dict: Dict
+            Dictionary with only specific attributes of the reaction
+        '''
         return {
             'ec_numbers': deepcopy(self.get_ec_numbers()),
             'reactants': deepcopy(self.get_reactants()),
@@ -94,10 +125,25 @@ class Reaction(Object):
 
     ## READ METHODS
     def get_ec_numbers(self) -> List[str]:
+        '''
+        Returns the list of EC numbers of the reaction.
+
+        Returns
+        -------
+        ec_numbers: List[str]
+            List of EC numbers of the reaction
+        '''
         return self.__ec_numbers
 
     def get_smiles(self) -> str:
+        '''
+        Builds and returns the SMILES string of the reaction
 
+        Returns
+        -------
+        smiles: str
+            SMILES string of the reaction
+        '''
         def get_smi(spe_id: str, spe_sto: int) -> str:
             check_smiles = (
                 Cache.get(spe_id) is not None
@@ -129,89 +175,261 @@ class Reaction(Object):
         return left_smi + '>>' + right_smi
 
     def get_reactants(self) -> Dict[str, int]:
+        '''
+        Returns a dictionary (alphabetically sorted) where
+        keys are IDs of products and
+        values are the stoichiometric coefficient in the reaction
+
+        Returns
+        -------
+        products: Dict[str, int]
+            Stoichiometric dictionary of products
+        '''
         try:
-            return self.__reactants
+            return dict(sorted(self.__reactants.items(), key=lambda item: item[0]))
         except AttributeError:
             return None
 
     def get_reactant(self, cmpd_id: str) -> int:
+        '''
+        Returns the stoichiometric coefficient (> 0) of the
+        reactant compound with ID = 'cmpd_id'
+
+        Parameters
+        ----------
+        cmpd_id: str
+            ID of the compound to return the stoichiometric coefficient
+
+        Returns
+        -------
+        sto_coeff: Dict[str, int]
+            Stoichiometric coefficient of the reactant compound of ID 'cmpd_id'
+        '''
         try:
             return self.__reactants[cmpd_id]
         except (KeyError, TypeError):
             return 0
 
     def get_nb_reactants(self) -> int:
+        '''
+        Returns the number of reactants of the reaction
+
+        Returns
+        -------
+        nb: int
+            Number of reactants of the reaction
+        '''
         try:
             return len(self.get_reactants())
         except TypeError:
             return 0
 
     def get_reactants_ids(self) -> List[str]:
+        '''
+        Returns the list of reactants IDs
+
+        Returns
+        -------
+        reactants_ids: List[str]
+            List of reactants IDs
+        '''
         return list(self.get_reactants().keys())
 
     def get_reactants_compounds(self) -> List[Compound]:
+        '''
+        Returns the list of compounds that are reactants of the reaction
+
+        Returns
+        -------
+        reactants: List[Compound]
+            List of compounds that are reactants of the reaction
+        '''
         return [Cache.get(compound_id) for compound_id in self.get_reactants_ids()]
 
     def get_products(self) -> Dict[str, int]:
+        '''
+        Returns a dictionary (alphabetically sorted) where
+        keys are IDs of products and
+        values are the stoichiometric coefficient in the reaction
+
+        Returns
+        -------
+        products: Dict[str, int]
+            Stoichiometric dictionary of products
+        '''
         try:
-            return self.__products
+            return dict(sorted(self.__products.items(), key=lambda item: item[0]))
         except AttributeError:
             return None
 
     def get_product(self, cmpd_id: str) -> int:
+        '''
+        Returns the stoichiometric coefficient (> 0) of the
+        product compound with ID = 'cmpd_id'
+
+        Parameters
+        ----------
+        cmpd_id: str
+            ID of the compound to return the stoichiometric coefficient
+
+        Returns
+        -------
+        sto_coeff: Dict[str, int]
+            Stoichiometric coefficient of the product compound of ID 'cmpd_id'
+        '''
         try:
             return self.__products[cmpd_id]
         except (KeyError, TypeError):
             return 0
 
     def get_nb_products(self) -> int:
+        '''
+        Returns the number of products of the reaction
+
+        Returns
+        -------
+        nb: int
+            Number of products of the reaction
+        '''
         try:
             return len(self.get_products())
         except TypeError:
             return 0
 
     def get_products_ids(self) -> List[str]:
+        '''
+        Returns the list of products IDs
+
+        Returns
+        -------
+        products_ids: List[str]
+            List of products IDs
+        '''
         return list(self.get_products().keys())
 
     def get_products_compounds(self) -> List[Compound]:
+        '''
+        Returns the list of compounds that are products of the reaction
+
+        Returns
+        -------
+        products: List[Compound]
+            List of compounds that are products of the reaction
+        '''
         return [Cache.get(compound_id) for compound_id in self.get_products_ids()]
 
     def get_left(self) -> Dict[str, int]:
+        '''Same as get_reactants()'''
         return self.get_reactants()
 
     def get_right(self) -> Dict[str, int]:
+        '''Same as get_products()'''
         return self.get_products()
 
     def get_species(self) -> Dict:
+        '''
+        Combines the result of both get_reactants() and get_products() but
+        stoichiometric coefficients for reactants are negative (< 0).
+
+        Returns
+        -------
+        species: Dict[str, int]
+            Stoichiometric (alphabetically sorted) dictionary of
+            species in the reaction.
+        '''
         return {
-            **dict(sorted({spe_id: -spe_sto for spe_id, spe_sto in self.get_reactants().items()}.items(), key=lambda item: item[0])),
-            **dict(sorted(self.get_products().items(), key=lambda item: item[0])),
+            **{spe_id: -spe_sto for spe_id, spe_sto in self.get_reactants().items()},
+            **self.get_products(),
         }
 
     def get_species_ids(self) -> List[str]:
-        return list(set(list(self.get_reactants().keys()) + list(self.get_products().keys())))
+        '''
+        Returns the list of species IDs
+
+        Returns
+        -------
+        species_ids: List[str]
+            List of species IDs
+        '''
+        return list(
+            set(
+                list(self.get_reactants().keys())
+                + list(self.get_products().keys())
+            )
+        )
 
     def get_species_compounds(self) -> List[Compound]:
+        '''
+        Returns the list of compounds in the reaction
+
+        Returns
+        -------
+        compounds: List[Compound]
+            List of compounds in the reaction
+        '''
         return [Cache.get(spe_id) for spe_id in self.get_species_ids()]
 
     def get_nb_species(self) -> int:
-        return len(self.get_species())
+        '''
+        Returns the number of species of the reaction
+
+        Returns
+        -------
+        nb: int
+            Number of species of the reaction
+        '''
+        return len(self.get_species_ids())
 
     ## WRITE METHODS
     def set_ec_numbers(self, numbers: List[str]) -> None:
+        '''
+        Set the EC numbers of the reaction
+
+        Parameters
+        ----------
+        numbers: List[str]
+            List of string to set the reaction's EC numbers to
+        '''
         self.__ec_numbers = deepcopy(numbers)
 
     def add_ec_number(self, number: str) -> None:
+        '''
+        Add an EC number to the reaction
+
+        Parameters
+        ----------
+        number: str
+            String to add in the reaction's EC numbers
+        '''
         if number is not None and number != '':
             self.__ec_numbers += [number]
 
-    def set_reactants(self, compounds: Dict) -> None:
+    def set_reactants(self, compounds: Dict[str, int]) -> None:
+        '''
+        Set the reactants of the reaction
+
+        Parameters
+        ----------
+        compounds: Dict[str, int]
+            Stoichiometric dictionary to set the reactions's reactants to
+        '''
         self.__reactants = {}
         if compounds is not None:
             for spe_id, spe_sto in compounds.items():
                 self.set_reactant(spe_id, spe_sto)
 
     def set_reactant(self, cmpd_id: str, stoichio: int) -> None:
+        '''
+        Set the stoichiometric coefficient of the reactant compound
+        with ID 'cmpd_id'. Do nothing if 'cmpd_id' is None or empty string
+
+        Parameters
+        ----------
+        cmpd_id: str
+            ID of the reactant compound
+        stoichio: int
+            Stoichiometric coefficient to set the reactant compound to
+        '''
         if cmpd_id is None or cmpd_id == '':
             return None
             self.logger.warning(f'Compound ID passed is equal to {cmpd_id}')
@@ -223,12 +441,31 @@ class Reaction(Object):
             Compound(id=cmpd_id)
 
     def set_products(self, compounds: Dict) -> None:
+        '''
+        Set the products of the reaction
+
+        Parameters
+        ----------
+        compounds: Dict[str, int]
+            Stoichiometric dictionary to set the reactions's products to
+        '''
         self.__products = {}
         if compounds is not None:
             for spe_id, spe_sto in compounds.items():
                 self.set_product(spe_id, spe_sto)
 
     def set_product(self, cmpd_id: str, stoichio: int) -> None:
+        '''
+        Set the stoichiometric coefficient of the product compound
+        with ID 'cmpd_id'. Do nothing if 'cmpd_id' is None or empty string
+
+        Parameters
+        ----------
+        cmpd_id: str
+            ID of the product compound
+        stoichio: int
+            Stoichiometric coefficient to set the product compound to
+        '''
         if cmpd_id is None or cmpd_id == '':
             return None
             self.logger.warning(f'Compound ID passed is equal to {cmpd_id}')
@@ -244,6 +481,16 @@ class Reaction(Object):
         id: str,
         new_id: str
     ) -> None:
+        '''
+        Rename a compound in the reaction.
+
+        Parameters
+        ----------
+        id: str
+            ID of the compound to rename
+        new_id: str
+            String to set the compound's ID to
+        '''
 
         # Reactants
         species = {}
@@ -268,6 +515,18 @@ class Reaction(Object):
         compound_id: str,
         stoichio: int,
     ) -> None:
+        '''
+        Add the compound with ID 'compound_id' and
+        stoichiometric coefficient 'stoichio' to
+        the reaction's list of reactants
+
+        Parameters
+        ----------
+        compound_id: str
+            ID of the reactant compound to add
+        stoichio: int
+            Stoichiometric coefficient of the reactant compound to add
+        '''
         self.set_reactant(
             cmpd_id=compound_id,
             stoichio=self.get_reactant(compound_id)+abs(stoichio)
@@ -278,12 +537,32 @@ class Reaction(Object):
         compound_id: str,
         stoichio: int,
     ) -> None:
+        '''
+        Add the compound with ID 'compound_id' and
+        stoichiometric coefficient 'stoichio' to
+        the reaction's list of products
+
+        Parameters
+        ----------
+        compound_id: str
+            ID of the product compound to add
+        stoichio: int
+            Stoichiometric coefficient of the product compound to add
+        '''
         self.set_product(
             cmpd_id=compound_id,
             stoichio=self.get_product(compound_id)+abs(stoichio)
         )
 
-    def mult_stoichio_coeff(self, mult: int) -> None:
+    def mult_stoichio_coeff(self, mult: float) -> None:
+        '''
+        Multiply stoichiometric coefficients of all species of the reaction by 'mult'
+
+        Parameters
+        ----------
+        mult: float
+            Integer to multiply all stoichiometric coefficients with
+        '''
         for spe_id in self.get_reactants().keys():
             self.set_reactant(
                 spe_id,
@@ -298,8 +577,25 @@ class Reaction(Object):
     @staticmethod
     def sum_stoichio(
         reactions: List['Reaction']
-    ) -> Dict:
+    ) -> Dict[str, int]:
         '''
+        Make the sum of stoichiometric coefficients
+        of all species in all reactions in the passed list and
+        returns a stoichiometric dictionary of the pseudo-reaction.
+        If a compound is both a reactant of a reaction of the list (coeff < 0)
+        and a product of another reaction of the list (coeff > 0),
+        the sum could be 0 and the compound is naturally deleted from the
+        result (pseudo-reaction).
+
+        Parameters
+        ----------
+        reactions: List['Reaction']
+            List of reactions to make the stoichiometric sum of
+
+        Returns
+        -------
+        stoichio: Dict[str, int]
+            Stoichiometric dictionary of summed stoichiometric coefficients (pseudo-reaction)
         '''
 
         l_reactants = [rxn.get_reactants() for rxn in reactions]

@@ -63,7 +63,13 @@ class Compound(Object):
 
     def _to_dict(self) -> Dict:
         '''
-        Return a dictionary with all (with legacy) attributes of the object
+        Return a dictionary with all (with legacy) attributes of the object:
+            - id (legacy)
+            - name
+            - smiles
+            - inchi
+            - inchiley
+            - formula
 
         Returns
         -------
@@ -77,7 +83,12 @@ class Compound(Object):
 
     def __to_dict(self) -> Dict:
         '''
-        Return a dictionary with (specific) attributes
+        Return a dictionary with (specific) attributes:
+            - name
+            - smiles
+            - inchi
+            - inchiley
+            - formula
 
         Returns
         -------
@@ -94,32 +105,112 @@ class Compound(Object):
 
     ## READ METHODS
     def get_name(self) -> str:
+        '''
+        Returns the name of the compound
+
+        Returns
+        -------
+        name: str
+            Name of the compound
+        '''
         return self.__name
 
     def get_smiles(self) -> str:
+        '''
+        Returns the SMILES string of the compound
+
+        Returns
+        -------
+        smiles: str
+            SMILES of the compound
+        '''
         return self.__smiles
 
     def get_inchi(self) -> str:
+        '''
+        Returns the InChI of the compound
+
+        Returns
+        -------
+        inchi: str
+            Inchi of the compound
+        '''
         return self.__inchi
 
     def get_inchikey(self) -> str:
+        '''
+        Returns the InChIKey of the compound
+
+        Returns
+        -------
+        inchikey: str
+            InChIKey of the compound
+        '''
         return self.__inchikey
 
     def get_formula(self) -> str:
+        '''
+        Returns the formula of the compound
+
+        Returns
+        -------
+        formula: str
+            Formula of the compound
+        '''
         return self.__formula
 
     ## WRITE METHODS
     def set_name(self, name: str) -> None:
+        '''
+        Set the name of the compound
+
+        Parameters
+        ----------
+        name: str
+            String to set the compound's name to
+        '''
         self.__name = name
 
     def set_smiles(self, smiles: str) -> None:
+        '''
+        Set the SMILES string of the compound
+
+        Parameters
+        ----------
+        smiles: str
+            String to set the compound's SMILES string to
+        '''
         self.__smiles = smiles
 
     def set_inchi(self, inchi: str) -> None:
+        '''
+        Set the InChI of the compound
+
+        Parameters
+        ----------
+        inchi: str
+            String to set the compound's InChI to
+        '''
         self.__inchi = inchi
 
     def set_inchikey(self, inchikey: str) -> None:
+        '''
+        Set the InChIKey of the compound
+
+        Parameters
+        ----------
+        inchikey: str
+            String to set the compound's InChIKey to
+        '''
         self.__inchikey = inchikey
 
     def set_formula(self, formula: str) -> None:
+        '''
+        Set the formula of the compound
+
+        Parameters
+        ----------
+        formula: str
+            String to set the compound's formula to
+        '''
         self.__formula = formula

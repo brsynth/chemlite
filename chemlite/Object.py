@@ -68,7 +68,8 @@ class Object:
 
     def _to_dict(self) -> Dict[str, TypeVar]:
         '''
-        Return a dictionary with the attributes of the object
+        Return a dictionary with the attributes of the object:
+            - id
 
         Returns
         -------
@@ -78,10 +79,7 @@ class Object:
         return self.__to_dict()
 
     def __to_dict(self) -> Dict:
-        '''
-        For compatibility with __eq__ method in child classes.
-        Same as _to_dict().
-        '''
+        '''Same as _to_dict()'''
         return {
             'id': self.get_id()
         }
@@ -135,7 +133,7 @@ class Object:
         Parameters
         ----------
         id: str
-            The object's id to set
+            String to set the object's ID to
         '''
         if id is None:
             raise ValueError('id argument must be different to None for an Object')
