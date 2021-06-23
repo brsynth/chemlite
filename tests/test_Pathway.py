@@ -255,7 +255,6 @@ class Test_Pathway(TestCase):
         )
 
     def test_get_compound(self):
-        from brs_utils import Cache
         self.assertEqual(
             self.pathway.get_compound('MNXM23'),
             self.species['MNXM23']
