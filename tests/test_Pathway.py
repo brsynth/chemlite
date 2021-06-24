@@ -185,13 +185,23 @@ class Test_Pathway(TestCase):
             self.pathway.get_reaction(self.rxn.get_id()),
             _rxn
         )
-        self.pathway.replace_reaction(
-            self.rxn.get_id(),
-            rxn
+        self.assertTrue(
+            self.pathway.replace_reaction(
+                self.rxn.get_id(),
+                rxn
+            )
         )
         self.assertNotEqual(
             self.pathway.get_reaction(self.rxn.get_id()),
             _rxn
+        )
+
+    def test_replace_reaction_wrong_rxnid(self):
+        self.assertFalse(
+            self.pathway.replace_reaction(
+                'wrong_rxn_id',
+                Reaction(id='test')
+            )
         )
 
     def test_get_id(self):
@@ -350,14 +360,23 @@ class Test_Pathway(TestCase):
         )
 
     def test_del_reaction(self):
-        self.pathway.del_reaction(self.rxn.get_id())
+        self.assertTrue(
+            self.pathway.del_reaction(
+                self.rxn.get_id()
+            )
+        )
         self.assertListEqual(
             self.pathway.get_reactions_ids(),
-            [rxn.get_id() for rxn in list(self.reactions.values())[1:]]
+            [
+                rxn.get_id()
+                for rxn
+                in list(self.reactions.values())[1:]]
         )
 
     def test_del_reaction_wrong_id(self):
-        self.pathway.del_reaction('WRONG')
+        self.assertFalse(
+            self.pathway.del_reaction('WRONG')
+        )
         self.assertListEqual(
             self.pathway.get_reactions_ids(),
             [rxn.get_id() for rxn in self.reactions.values()]
