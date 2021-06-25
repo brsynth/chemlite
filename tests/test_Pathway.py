@@ -352,9 +352,15 @@ class Test_Pathway(TestCase):
         pathway = Pathway(id=self.id)
         for rxn in self.reactions.values():
             pathway.add_reaction(rxn)
-        # for spe in species:
-        #     pathway.add_species(spe)
         self.assertEqual(
+            self.pathway,
+            pathway
+        )
+
+    def test_not_equal_reactions(self):
+        pathway = deepcopy(Pathway(id=self.id))
+        pathway.add_reaction(Reaction(id='test_1'))
+        self.assertNotEqual(
             self.pathway,
             pathway
         )
