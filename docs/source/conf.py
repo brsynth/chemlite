@@ -24,11 +24,7 @@ author = 'Joan Hérisson'
 # The full version, including alpha/beta/rc tags
 release = '2.4.1'
 
-import mock
-
-MOCK_MODULES = ['brs_utils']
-for mod_name in MOCK_MODULES:
-    sys.modules[mod_name] = mock.Mock()
+autodoc_mock_imports = ['brs_utils']
 
 # -- General configuration ---------------------------------------------------
 

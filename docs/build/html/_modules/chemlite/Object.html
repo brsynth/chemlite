@@ -128,7 +128,10 @@
 <span class="sd">            Return true if the two objects are equal, False otherwise</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="vm">__class__</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_dict</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_to_dict</span><span class="p">()</span>
+            <span class="c1"># Do not compare ids</span>
+            <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_to_dict</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="n">keys</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_to_dict</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">_to_dict</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="c1">## READ METHODS</span>
