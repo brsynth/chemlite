@@ -292,7 +292,7 @@ class Pathway(Object):
             ID of the reaction to replace
         rxn: Reaction
             Reaction to add in the pathway
-        
+
         Returns
         -------
         b: bool

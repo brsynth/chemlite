@@ -1,5 +1,10 @@
 # Release history
 
+## 2.5.0
+#### Jun 25 2021
+- chore(Object): remove 'id' attribute for objects comparison
+- doc: add documentation material (produced by sphinx)
+
 ## 2.4.1
 #### Jun 24 2021
 - chore(Pathway): get_reactants/products_ids() returns a sorted list
