@@ -45,8 +45,7 @@ class Object:
         self.set_id(id)
 
     def to_string(self) -> str:
-        '''
-        Returns a string representation of the object
+        '''Returns a string representation of the object
 
         Returns
         -------
@@ -56,8 +55,7 @@ class Object:
         return f'{type(self).__name__} {self.get_id()}'
 
     def __str__(self) -> str:
-        '''
-        Prints a string representation of the object (called by print())
+        '''Prints a string representation of the object (called by print())
 
         Returns
         -------
@@ -67,8 +65,7 @@ class Object:
         return self.to_string()
 
     def _to_dict(self) -> Dict[str, TypeVar]:
-        '''
-        Return a dictionary with the attributes of the object:
+        '''Return a dictionary with the attributes of the object:
             - id
 
         Returns
@@ -85,8 +82,7 @@ class Object:
         }
 
     def __eq__(self, other) -> bool:
-        '''
-        Return the equality status of two Object objects
+        '''Return the equality status of two Object objects
 
         Parameters
         ----------
@@ -99,13 +95,15 @@ class Object:
             Return true if the two objects are equal, False otherwise
         '''
         if isinstance(self, other.__class__):
-            return self._to_dict() == other._to_dict()
+            # Do not compare ids
+            keys = list(self._to_dict().keys())
+            keys.remove('id')
+            return all(self._to_dict().get(key) == other._to_dict().get(key) for key in keys)
         return False
 
     ## READ METHODS
     def get_id(self) -> str:
-        '''
-        Return the ID of the object
+        '''Return the ID of the object
 
         Returns
         -------
@@ -115,8 +113,7 @@ class Object:
         return self.__id
 
     def get_logger(self) -> Logger:
-        '''
-        Return the object's logger
+        '''Return the object's logger
 
         Returns
         -------
@@ -127,8 +124,7 @@ class Object:
 
     ## WRITE METHODS
     def set_id(self, id: str) -> Union[str, None]:
-        '''
-        Set the object's id
+        '''Set the object's id
 
         Parameters
         ----------
