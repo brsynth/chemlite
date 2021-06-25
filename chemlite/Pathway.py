@@ -56,8 +56,7 @@ class Pathway(Object):
     #     return dumps(self._to_dict(), indent=4)
 
     def to_string(self):
-        '''
-        Returns the string representation of the pathway
+        '''Returns the string representation of the pathway
 
         Returns
         -------
@@ -70,8 +69,7 @@ class Pathway(Object):
             + '\n'.join([rxn.__str__() for rxn in self.get_reactions().values()])
 
     def _to_dict(self) -> Dict:
-        '''
-        Returns a dictionary with all (with legacy) attributes of the pathway:
+        '''Returns a dictionary with all (with legacy) attributes of the pathway:
             - id (legacy)
             - reactions
             - species
@@ -87,8 +85,7 @@ class Pathway(Object):
         }
 
     def __to_dict(self) -> Dict:
-        '''
-        Returns a dictionary with only specific attributes of the pathway:
+        '''Returns a dictionary with only specific attributes of the pathway:
             - reactions
             - species
 
@@ -104,8 +101,7 @@ class Pathway(Object):
 
     ## READ METHODS
     def get_nb_reactions(self) -> int:
-        '''
-        Returns the number of reactions of the pathway
+        '''Returns the number of reactions of the pathway
 
         Returns
         -------
@@ -115,8 +111,7 @@ class Pathway(Object):
         return len(self.get_reactions())
 
     def get_nb_species(self) -> int:
-        '''
-        Returns the number of species involved in all the reactions of the pathway
+        '''Returns the number of species involved in all the reactions of the pathway
 
         Returns
         -------
@@ -126,8 +121,7 @@ class Pathway(Object):
         return len(self.get_species_ids())
 
     def get_species_ids(self) -> List[str]:
-        '''
-        Returns IDs of the species involved in all the reactions of the pathway
+        '''Returns IDs of the species involved in all the reactions of the pathway
 
         Returns
         -------
@@ -141,8 +135,7 @@ class Pathway(Object):
         return list(set_of_species)
 
     def get_species(self) -> List[Compound]:
-        '''
-        Returns the species involved in all the reactions of the pathway
+        '''Returns the species involved in all the reactions of the pathway
 
         Returns
         -------
@@ -156,8 +149,7 @@ class Pathway(Object):
         return self.get_species()
 
     def get_specie(self, spe_id: str) -> Compound:
-        '''
-        Returns a specific specie involved in the pathway if exists,
+        '''Returns a specific specie involved in the pathway if exists,
         None otherwise.
 
         Parameters
@@ -182,8 +174,7 @@ class Pathway(Object):
         return self.get_specie(cmpd_id)
 
     def get_reactions_ids(self) -> List[str]:
-        '''
-        Returns IDs of reactions of the pathway
+        '''Returns IDs of reactions of the pathway
 
         Returns
         -------
@@ -193,8 +184,7 @@ class Pathway(Object):
         return list(self.__reactions.keys())
 
     def get_reaction(self, rxn_id: str) -> Reaction:
-        '''
-        Returns a specific reaction of the pathway if exists,
+        '''Returns a specific reaction of the pathway if exists,
         None otherwise.
 
         Parameters
@@ -210,8 +200,7 @@ class Pathway(Object):
         return self.get_reactions().get(rxn_id, None)
 
     def get_reactions(self) -> Dict[str, Reaction]:
-        '''
-        Returns a dictionary where keys are reaction ids
+        '''Returns a dictionary where keys are reaction ids
         and values the reactions themselves
 
         Returns
@@ -222,8 +211,7 @@ class Pathway(Object):
         return self.__reactions
 
     def get_list_of_reactions(self) -> List[Reaction]:
-        '''
-        Returns a list of the reactions in the pathway
+        '''Returns a list of the reactions in the pathway
 
         Returns
         -------
@@ -233,8 +221,7 @@ class Pathway(Object):
         return list(self.__reactions.values())
 
     def get_reactants_ids(self) -> List[str]:
-        '''
-        Returns all reactants involved in the pathway,
+        '''Returns all reactants involved in the pathway,
         alphabetically sorted
 
         Returns
@@ -253,8 +240,7 @@ class Pathway(Object):
         )
 
     def get_products_ids(self) -> List[str]:
-        '''
-        Returns all products involved in the pathway,
+        '''Returns all products involved in the pathway,
         alphabetically sorted
 
         Returns
@@ -274,8 +260,7 @@ class Pathway(Object):
 
     ## WRITE METHODS
     def rename_compound(self, id: str, new_id: str) -> None:
-        '''
-        Rename a compound within the pathway. Actually, the
+        '''Rename a compound within the pathway. Actually, the
         compound is renamed over all reactions
 
         Parameters
@@ -298,8 +283,7 @@ class Pathway(Object):
                 rxn.rename_compound(id, new_id)
 
     def replace_reaction(self, rxn_id: str, rxn: Reaction) -> bool:
-        '''
-        Replace a reaction in the pathway. Returns True if the
+        '''Replace a reaction in the pathway. Returns True if the
         replacement has been done, False otherwise
 
         Parameters
@@ -327,8 +311,7 @@ class Pathway(Object):
         rxn: Reaction,
         rxn_id: str = None,
     ) -> None:
-        '''
-        Add a reaction in the pathway
+        '''Add a reaction in the pathway
 
         Parameters
         ----------
@@ -345,8 +328,7 @@ class Pathway(Object):
         self.__reactions[rxn_id] = rxn
 
     def del_reaction(self, rxn_id: str) -> bool:
-        '''
-        Remove a reaction from the pathway. Returns True if the
+        '''Remove a reaction from the pathway. Returns True if the
         replacement has been done, False otherwise
 
         Parameters
@@ -368,8 +350,7 @@ class Pathway(Object):
 
     ## MISC
     def net_reaction(self) -> Dict[str, float]:
-        '''
-        Returns the net reaction (or pseudo-reaction) of the pathway,
+        '''Returns the net reaction (or pseudo-reaction) of the pathway,
         i.e. the stoichiometric sum of all reactions of the pathway.
         See Reaction::sum_stoichio for more details.
         '''

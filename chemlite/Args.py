@@ -1,5 +1,5 @@
 from argparse  import ArgumentParser
-from rr_cache._version import __version__
+from ._version import __version__
 from typing import (
     Callable,
 )

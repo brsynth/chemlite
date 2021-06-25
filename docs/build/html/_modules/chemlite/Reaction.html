@@ -1,0 +1,690 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>chemlite.Reaction &#8212; ChemLite 2.4.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for chemlite.Reaction</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;A class to represent a chemical reaction.&quot;&quot;&quot;</span>
+<span class="c1"># The MIT License (MIT)</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2018 Institute for Molecular Systems Biology, ETH Zurich.</span>
+<span class="c1"># Copyright (c) 2019 Novo Nordisk Foundation Center for Biosustainability,</span>
+<span class="c1"># Technical University of Denmark</span>
+<span class="c1">#</span>
+<span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
+<span class="c1"># in the Software without restriction, including without limitation the rights</span>
+<span class="c1"># to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="c1"># copies of the Software, and to permit persons to whom the Software is</span>
+<span class="c1"># furnished to do so, subject to the following conditions:</span>
+<span class="c1">#</span>
+<span class="c1"># The above copyright notice and this permission notice shall be included in</span>
+<span class="c1"># all copies or substantial portions of the Software.</span>
+<span class="c1">#</span>
+<span class="c1"># THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="c1"># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="c1"># FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="c1"># AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="c1"># LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="c1"># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN</span>
+<span class="c1"># THE SOFTWARE.</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Dict</span><span class="p">,</span>
+    <span class="n">List</span><span class="p">,</span>
+    <span class="n">Union</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">logging</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Logger</span><span class="p">,</span>
+    <span class="n">getLogger</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">brs_utils</span> <span class="kn">import</span> <span class="n">Cache</span>
+<span class="kn">from</span> <span class="nn">chemlite.Compound</span> <span class="kn">import</span> <span class="n">Compound</span>
+<span class="kn">from</span> <span class="nn">chemlite.Object</span> <span class="kn">import</span> <span class="n">Object</span>
+
+
+<div class="viewcode-block" id="Reaction"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction">[docs]</a><span class="k">class</span> <span class="nc">Reaction</span><span class="p">(</span><span class="n">Object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">ec_numbers</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span>
+        <span class="n">reactants</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{},</span>
+        <span class="n">products</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{},</span>
+        <span class="n">logger</span><span class="p">:</span> <span class="n">Logger</span> <span class="o">=</span> <span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span>
+            <span class="n">logger</span><span class="o">=</span><span class="n">logger</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ec_numbers</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_ec_numbers</span><span class="p">(</span><span class="n">ec_numbers</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_ec_numbers</span><span class="p">([])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_ec_number</span><span class="p">(</span><span class="n">ec_numbers</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_reactants</span><span class="p">(</span><span class="n">reactants</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_products</span><span class="p">(</span><span class="n">products</span><span class="p">)</span>
+
+    <span class="c1">## OUT METHODS</span>
+    <span class="c1"># def __repr__(self):</span>
+    <span class="c1">#     return f&#39;Reaction {self.get_name()}&#39;</span>
+
+<div class="viewcode-block" id="Reaction.to_string"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.to_string">[docs]</a>    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Returns the string representation of the reaction</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        string: str</span>
+<span class="sd">            String representation of the reaction</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nb_reactants</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nb_products</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{class_name}</span><span class="s1"> </span><span class="si">{rxn_name}</span><span class="s1">: </span><span class="si">{reactants}</span><span class="s1"> = </span><span class="si">{products}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">class_name</span><span class="o">=</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                <span class="n">rxn_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_id</span><span class="p">(),</span>
+                <span class="n">reactants</span><span class="o">=</span><span class="s1">&#39; + &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">spe_sto</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">spe_id</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">spe_id</span><span class="p">,</span> <span class="n">spe_sto</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_reactants</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+                <span class="p">),</span>
+                <span class="n">products</span><span class="o">=</span><span class="s1">&#39; + &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">spe_sto</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">spe_id</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">spe_id</span><span class="p">,</span> <span class="n">spe_sto</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_products</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+                <span class="p">),</span>
+            <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Returns a dictionary with all (with legacy) attributes of the reaction:</span>
+<span class="sd">            - id (legacy)</span>
+<span class="sd">            - ec_numbers</span>
+<span class="sd">            - reactants</span>
+<span class="sd">            - products</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict: Dict</span>
+<span class="sd">            Dictionary with all (with legacy) attributes of the reaction</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="o">**</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_to_dict</span><span class="p">(),</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">__to_dict</span><span class="p">()</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Returns a dictionary with only specific attributes of the reaction:</span>
+<span class="sd">            - ec_numbers</span>
+<span class="sd">            - reactants</span>
+<span class="sd">            - products</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict: Dict</span>
+<span class="sd">            Dictionary with only specific attributes of the reaction</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;ec_numbers&#39;</span><span class="p">:</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_ec_numbers</span><span class="p">()),</span>
+            <span class="s1">&#39;reactants&#39;</span><span class="p">:</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_reactants</span><span class="p">()),</span>
+            <span class="s1">&#39;products&#39;</span><span class="p">:</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_products</span><span class="p">()),</span>
+        <span class="p">}</span>
+
+    <span class="c1">## READ METHODS</span>
+<div class="viewcode-block" id="Reaction.get_ec_numbers"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.get_ec_numbers">[docs]</a>    <span class="k">def</span> <span class="nf">get_ec_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&#39;&#39;&#39;Returns the list of EC numbers of the reaction.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ec_numbers: List[str]</span>
+<span class="sd">            List of EC numbers of the reaction</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ec_numbers</span></div>
+
+<div class="viewcode-block" id="Reaction.get_smiles"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.get_smiles">[docs]</a>    <span class="k">def</span> <span class="nf">get_smiles</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Builds and returns the SMILES string of the reaction</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        smiles: str</span>
+<span class="sd">            SMILES string of the reaction</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">def</span> <span class="nf">get_smi</span><span class="p">(</span><span class="n">spe_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">spe_sto</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="n">check_smiles</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">Cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">spe_id</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="ow">and</span> <span class="n">Cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">spe_id</span><span class="p">)</span><span class="o">.</span><span class="n">get_smiles</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="ow">and</span> <span class="n">Cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">spe_id</span><span class="p">)</span><span class="o">.</span><span class="n">get_smiles</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">check_smiles</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">Cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">spe_id</span><span class="p">)</span><span class="o">.</span><span class="n">get_smiles</span><span class="p">()]</span><span class="o">*</span><span class="n">spe_sto</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Compound </span><span class="si">{</span><span class="n">spe_id</span><span class="si">}</span><span class="s1"> has no smiles&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="c1">## LEFT</span>
+        <span class="n">smi</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># build list of compounds with stoichiometry</span>
+        <span class="k">for</span> <span class="n">spe_id</span><span class="p">,</span> <span class="n">spe_sto</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_reactants</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">smi</span> <span class="o">+=</span> <span class="n">get_smi</span><span class="p">(</span><span class="n">spe_id</span><span class="p">,</span> <span class="n">spe_sto</span><span class="p">)</span>
+        <span class="c1"># build smiles string</span>
+        <span class="n">left_smi</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">smi</span><span class="p">)</span>
+
+        <span class="c1">## RIGHT</span>
+        <span class="n">smi</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># build list of compounds with stoichiometry</span>
+        <span class="k">for</span> <span class="n">spe_id</span><span class="p">,</span> <span class="n">spe_sto</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_products</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">smi</span> <span class="o">+=</span> <span class="n">get_smi</span><span class="p">(</span><span class="n">spe_id</span><span class="p">,</span> <span class="n">spe_sto</span><span class="p">)</span>
+        <span class="c1"># build smiles string</span>
+        <span class="n">right_smi</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">smi</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">left_smi</span> <span class="o">+</span> <span class="s1">&#39;&gt;&gt;&#39;</span> <span class="o">+</span> <span class="n">right_smi</span></div>
+
+<div class="viewcode-block" id="Reaction.get_reactants"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.get_reactants">[docs]</a>    <span class="k">def</span> <span class="nf">get_reactants</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&#39;&#39;&#39;Returns a dictionary (alphabetically sorted) where</span>
+<span class="sd">        keys are IDs of products and</span>
+<span class="sd">        values are the stoichiometric coefficient in the reaction</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        products: Dict[str, int]</span>
+<span class="sd">            Stoichiometric dictionary of products</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__reactants</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Reaction.get_reactant"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.get_reactant">[docs]</a>    <span class="k">def</span> <span class="nf">get_reactant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmpd_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Returns the stoichiometric coefficient (&gt; 0) of the</span>
+<span class="sd">        reactant compound with ID = &#39;cmpd_id&#39;</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cmpd_id: str</span>
+<span class="sd">            ID of the compound to return the stoichiometric coefficient</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        sto_coeff: Dict[str, int]</span>
+<span class="sd">            Stoichiometric coefficient of the reactant compound of ID &#39;cmpd_id&#39;</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__reactants</span><span class="p">[</span><span class="n">cmpd_id</span><span class="p">]</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="Reaction.get_nb_reactants"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.get_nb_reactants">[docs]</a>    <span class="k">def</span> <span class="nf">get_nb_reactants</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Returns the number of reactants of the reaction</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        nb: int</span>
+<span class="sd">            Number of reactants of the reaction</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_reactants</span><span class="p">())</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="Reaction.get_reactants_ids"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.get_reactants_ids">[docs]</a>    <span class="k">def</span> <span class="nf">get_reactants_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&#39;&#39;&#39;Returns the list of reactants IDs</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        reactants_ids: List[str]</span>
+<span class="sd">            List of reactants IDs</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_reactants</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="Reaction.get_reactants_compounds"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.get_reactants_compounds">[docs]</a>    <span class="k">def</span> <span class="nf">get_reactants_compounds</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Compound</span><span class="p">]:</span>
+        <span class="sd">&#39;&#39;&#39;Returns the list of compounds that are reactants of the reaction</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        reactants: List[Compound]</span>
+<span class="sd">            List of compounds that are reactants of the reaction</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">compound_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">compound_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_reactants_ids</span><span class="p">()]</span></div>
+
+<div class="viewcode-block" id="Reaction.get_products"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.get_products">[docs]</a>    <span class="k">def</span> <span class="nf">get_products</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&#39;&#39;&#39;Returns a dictionary (alphabetically sorted) where</span>
+<span class="sd">        keys are IDs of products and</span>
+<span class="sd">        values are the stoichiometric coefficient in the reaction</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        products: Dict[str, int]</span>
+<span class="sd">            Stoichiometric dictionary of products</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__products</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Reaction.get_product"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.get_product">[docs]</a>    <span class="k">def</span> <span class="nf">get_product</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmpd_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Returns the stoichiometric coefficient (&gt; 0) of the</span>
+<span class="sd">        product compound with ID = &#39;cmpd_id&#39;</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cmpd_id: str</span>
+<span class="sd">            ID of the compound to return the stoichiometric coefficient</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        sto_coeff: Dict[str, int]</span>
+<span class="sd">            Stoichiometric coefficient of the product compound of ID &#39;cmpd_id&#39;</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__products</span><span class="p">[</span><span class="n">cmpd_id</span><span class="p">]</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="Reaction.get_nb_products"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.get_nb_products">[docs]</a>    <span class="k">def</span> <span class="nf">get_nb_products</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Returns the number of products of the reaction</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        nb: int</span>
+<span class="sd">            Number of products of the reaction</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_products</span><span class="p">())</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="Reaction.get_products_ids"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.get_products_ids">[docs]</a>    <span class="k">def</span> <span class="nf">get_products_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&#39;&#39;&#39;Returns the list of products IDs</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        products_ids: List[str]</span>
+<span class="sd">            List of products IDs</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_products</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="Reaction.get_products_compounds"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.get_products_compounds">[docs]</a>    <span class="k">def</span> <span class="nf">get_products_compounds</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Compound</span><span class="p">]:</span>
+        <span class="sd">&#39;&#39;&#39;Returns the list of compounds that are products of the reaction</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        products: List[Compound]</span>
+<span class="sd">            List of compounds that are products of the reaction</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">compound_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">compound_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_products_ids</span><span class="p">()]</span></div>
+
+<div class="viewcode-block" id="Reaction.get_left"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.get_left">[docs]</a>    <span class="k">def</span> <span class="nf">get_left</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&#39;&#39;&#39;Same as get_reactants()&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_reactants</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Reaction.get_right"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.get_right">[docs]</a>    <span class="k">def</span> <span class="nf">get_right</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&#39;&#39;&#39;Same as get_products()&#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_products</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Reaction.get_species"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.get_species">[docs]</a>    <span class="k">def</span> <span class="nf">get_species</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Combines the result of both get_reactants() and get_products() but</span>
+<span class="sd">        stoichiometric coefficients for reactants are negative (&lt; 0).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        species: Dict[str, int]</span>
+<span class="sd">            Stoichiometric (alphabetically sorted) dictionary of</span>
+<span class="sd">            species in the reaction.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="o">**</span><span class="p">{</span><span class="n">spe_id</span><span class="p">:</span> <span class="o">-</span><span class="n">spe_sto</span> <span class="k">for</span> <span class="n">spe_id</span><span class="p">,</span> <span class="n">spe_sto</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_reactants</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">()},</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">get_products</span><span class="p">(),</span>
+        <span class="p">}</span></div>
+
+<div class="viewcode-block" id="Reaction.get_species_ids"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.get_species_ids">[docs]</a>    <span class="k">def</span> <span class="nf">get_species_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&#39;&#39;&#39;Returns the list of species IDs</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        species_ids: List[str]</span>
+<span class="sd">            List of species IDs</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span>
+            <span class="nb">set</span><span class="p">(</span>
+                <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_reactants</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+                <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_products</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Reaction.get_species_compounds"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.get_species_compounds">[docs]</a>    <span class="k">def</span> <span class="nf">get_species_compounds</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Compound</span><span class="p">]:</span>
+        <span class="sd">&#39;&#39;&#39;Returns the list of compounds in the reaction</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        compounds: List[Compound]</span>
+<span class="sd">            List of compounds in the reaction</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">spe_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">spe_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_species_ids</span><span class="p">()]</span></div>
+
+<div class="viewcode-block" id="Reaction.get_nb_species"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.get_nb_species">[docs]</a>    <span class="k">def</span> <span class="nf">get_nb_species</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Returns the number of species of the reaction</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        nb: int</span>
+<span class="sd">            Number of species of the reaction</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_species_ids</span><span class="p">())</span></div>
+
+    <span class="c1">## WRITE METHODS</span>
+<div class="viewcode-block" id="Reaction.set_ec_numbers"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.set_ec_numbers">[docs]</a>    <span class="k">def</span> <span class="nf">set_ec_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numbers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Set the EC numbers of the reaction</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        numbers: List[str]</span>
+<span class="sd">            List of string to set the reaction&#39;s EC numbers to</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__ec_numbers</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Reaction.add_ec_number"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.add_ec_number">[docs]</a>    <span class="k">def</span> <span class="nf">add_ec_number</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Add an EC number to the reaction</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        number: str</span>
+<span class="sd">            String to add in the reaction&#39;s EC numbers</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">number</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">number</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__ec_numbers</span> <span class="o">+=</span> <span class="p">[</span><span class="n">number</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Reaction.set_reactants"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.set_reactants">[docs]</a>    <span class="k">def</span> <span class="nf">set_reactants</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">compounds</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Set the reactants of the reaction</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        compounds: Dict[str, int]</span>
+<span class="sd">            Stoichiometric dictionary to set the reactions&#39;s reactants to</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__reactants</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">compounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">spe_id</span><span class="p">,</span> <span class="n">spe_sto</span> <span class="ow">in</span> <span class="n">compounds</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_reactant</span><span class="p">(</span><span class="n">spe_id</span><span class="p">,</span> <span class="n">spe_sto</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Reaction.set_reactant"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.set_reactant">[docs]</a>    <span class="k">def</span> <span class="nf">set_reactant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmpd_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">stoichio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Set the stoichiometric coefficient of the reactant compound</span>
+<span class="sd">        with ID &#39;cmpd_id&#39;. Do nothing if &#39;cmpd_id&#39; is None or empty string</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cmpd_id: str</span>
+<span class="sd">            ID of the reactant compound</span>
+<span class="sd">        stoichio: int</span>
+<span class="sd">            Stoichiometric coefficient to set the reactant compound to</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">cmpd_id</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">cmpd_id</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Compound ID passed is equal to </span><span class="si">{</span><span class="n">cmpd_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_reactants</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__reactants</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__reactants</span><span class="p">[</span><span class="n">cmpd_id</span><span class="p">]</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">stoichio</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cmpd_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Cache</span><span class="o">.</span><span class="n">get_list_of_objects</span><span class="p">():</span>
+            <span class="c1"># add to Cache</span>
+            <span class="n">Compound</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">cmpd_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Reaction.set_products"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.set_products">[docs]</a>    <span class="k">def</span> <span class="nf">set_products</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">compounds</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Set the products of the reaction</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        compounds: Dict[str, int]</span>
+<span class="sd">            Stoichiometric dictionary to set the reactions&#39;s products to</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__products</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">compounds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">spe_id</span><span class="p">,</span> <span class="n">spe_sto</span> <span class="ow">in</span> <span class="n">compounds</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_product</span><span class="p">(</span><span class="n">spe_id</span><span class="p">,</span> <span class="n">spe_sto</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Reaction.set_product"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.set_product">[docs]</a>    <span class="k">def</span> <span class="nf">set_product</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmpd_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">stoichio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Set the stoichiometric coefficient of the product compound</span>
+<span class="sd">        with ID &#39;cmpd_id&#39;. Do nothing if &#39;cmpd_id&#39; is None or empty string</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cmpd_id: str</span>
+<span class="sd">            ID of the product compound</span>
+<span class="sd">        stoichio: int</span>
+<span class="sd">            Stoichiometric coefficient to set the product compound to</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">cmpd_id</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">cmpd_id</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Compound ID passed is equal to </span><span class="si">{</span><span class="n">cmpd_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_products</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__products</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__products</span><span class="p">[</span><span class="n">cmpd_id</span><span class="p">]</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">stoichio</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cmpd_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Cache</span><span class="o">.</span><span class="n">get_list_of_objects</span><span class="p">():</span>
+            <span class="c1"># add to Cache</span>
+            <span class="n">Compound</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">cmpd_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Reaction.rename_compound"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.rename_compound">[docs]</a>    <span class="k">def</span> <span class="nf">rename_compound</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">new_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Rename a compound in the reaction.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        id: str</span>
+<span class="sd">            ID of the compound to rename</span>
+<span class="sd">        new_id: str</span>
+<span class="sd">            String to set the compound&#39;s ID to</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="c1"># Reactants</span>
+        <span class="n">species</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">spe_id</span><span class="p">,</span> <span class="n">spe_sto</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_reactants</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">spe_id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
+                <span class="n">species</span><span class="p">[</span><span class="n">new_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">spe_sto</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">species</span><span class="p">[</span><span class="n">spe_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">spe_sto</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_reactants</span><span class="p">(</span><span class="n">species</span><span class="p">)</span>
+
+        <span class="c1"># Products</span>
+        <span class="n">species</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">spe_id</span><span class="p">,</span> <span class="n">spe_sto</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_products</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">spe_id</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
+                <span class="n">species</span><span class="p">[</span><span class="n">new_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">spe_sto</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">species</span><span class="p">[</span><span class="n">spe_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">spe_sto</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_products</span><span class="p">(</span><span class="n">species</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Reaction.add_reactant"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.add_reactant">[docs]</a>    <span class="k">def</span> <span class="nf">add_reactant</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">compound_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">stoichio</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Add the compound with ID &#39;compound_id&#39; and</span>
+<span class="sd">        stoichiometric coefficient &#39;stoichio&#39; to</span>
+<span class="sd">        the reaction&#39;s list of reactants</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        compound_id: str</span>
+<span class="sd">            ID of the reactant compound to add</span>
+<span class="sd">        stoichio: int</span>
+<span class="sd">            Stoichiometric coefficient of the reactant compound to add</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_reactant</span><span class="p">(</span>
+            <span class="n">cmpd_id</span><span class="o">=</span><span class="n">compound_id</span><span class="p">,</span>
+            <span class="n">stoichio</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_reactant</span><span class="p">(</span><span class="n">compound_id</span><span class="p">)</span><span class="o">+</span><span class="nb">abs</span><span class="p">(</span><span class="n">stoichio</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Reaction.add_product"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.add_product">[docs]</a>    <span class="k">def</span> <span class="nf">add_product</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">compound_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">stoichio</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Add the compound with ID &#39;compound_id&#39; and</span>
+<span class="sd">        stoichiometric coefficient &#39;stoichio&#39; to</span>
+<span class="sd">        the reaction&#39;s list of products</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        compound_id: str</span>
+<span class="sd">            ID of the product compound to add</span>
+<span class="sd">        stoichio: int</span>
+<span class="sd">            Stoichiometric coefficient of the product compound to add</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_product</span><span class="p">(</span>
+            <span class="n">cmpd_id</span><span class="o">=</span><span class="n">compound_id</span><span class="p">,</span>
+            <span class="n">stoichio</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_product</span><span class="p">(</span><span class="n">compound_id</span><span class="p">)</span><span class="o">+</span><span class="nb">abs</span><span class="p">(</span><span class="n">stoichio</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Reaction.mult_stoichio_coeff"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.mult_stoichio_coeff">[docs]</a>    <span class="k">def</span> <span class="nf">mult_stoichio_coeff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mult</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&#39;&#39;&#39;Multiply stoichiometric coefficients of all species of the reaction by &#39;mult&#39;</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        mult: float</span>
+<span class="sd">            Integer to multiply all stoichiometric coefficients with</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">spe_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_reactants</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_reactant</span><span class="p">(</span>
+                <span class="n">spe_id</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">get_reactant</span><span class="p">(</span><span class="n">spe_id</span><span class="p">)</span><span class="o">*</span><span class="n">mult</span>
+            <span class="p">)</span>
+        <span class="k">for</span> <span class="n">spe_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_products</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_product</span><span class="p">(</span>
+                <span class="n">spe_id</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">get_product</span><span class="p">(</span><span class="n">spe_id</span><span class="p">)</span><span class="o">*</span><span class="n">mult</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Reaction.sum_stoichio"><a class="viewcode-back" href="../../chemlite.html#chemlite.Reaction.Reaction.sum_stoichio">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">sum_stoichio</span><span class="p">(</span>
+        <span class="n">reactions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s1">&#39;Reaction&#39;</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&#39;&#39;&#39;Make the sum of stoichiometric coefficients</span>
+<span class="sd">        of all species in all reactions in the passed list and</span>
+<span class="sd">        returns a stoichiometric dictionary of the pseudo-reaction.</span>
+<span class="sd">        If a compound is both a reactant of a reaction of the list (coeff &lt; 0)</span>
+<span class="sd">        and a product of another reaction of the list (coeff &gt; 0),</span>
+<span class="sd">        the sum could be 0 and the compound is naturally deleted from the</span>
+<span class="sd">        result (pseudo-reaction).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        reactions: List[&#39;Reaction&#39;]</span>
+<span class="sd">            List of reactions to make the stoichiometric sum of</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        stoichio: Dict[str, int]</span>
+<span class="sd">            Stoichiometric dictionary of summed stoichiometric coefficients (pseudo-reaction)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">l_reactants</span> <span class="o">=</span> <span class="p">[</span><span class="n">rxn</span><span class="o">.</span><span class="n">get_reactants</span><span class="p">()</span> <span class="k">for</span> <span class="n">rxn</span> <span class="ow">in</span> <span class="n">reactions</span><span class="p">]</span>
+        <span class="n">l_products</span> <span class="o">=</span> <span class="p">[</span><span class="n">rxn</span><span class="o">.</span><span class="n">get_products</span><span class="p">()</span> <span class="k">for</span> <span class="n">rxn</span> <span class="ow">in</span> <span class="n">reactions</span><span class="p">]</span>
+
+        <span class="c1"># SUM ALL SPECIES</span>
+        <span class="n">species</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Reactants</span>
+        <span class="k">for</span> <span class="n">reactants</span> <span class="ow">in</span> <span class="n">l_reactants</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">spe_id</span><span class="p">,</span> <span class="n">spe_sto</span> <span class="ow">in</span> <span class="n">reactants</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">spe_id</span> <span class="ow">in</span> <span class="n">species</span><span class="p">:</span>
+                    <span class="n">species</span><span class="p">[</span><span class="n">spe_id</span><span class="p">]</span> <span class="o">-=</span> <span class="n">spe_sto</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">species</span><span class="p">[</span><span class="n">spe_id</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">spe_sto</span>
+
+        <span class="c1"># Products</span>
+        <span class="k">for</span> <span class="n">products</span> <span class="ow">in</span> <span class="n">l_products</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">spe_id</span><span class="p">,</span> <span class="n">spe_sto</span> <span class="ow">in</span> <span class="n">products</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">spe_id</span> <span class="ow">in</span> <span class="n">species</span><span class="p">:</span>
+                    <span class="n">species</span><span class="p">[</span><span class="n">spe_id</span><span class="p">]</span> <span class="o">+=</span> <span class="n">spe_sto</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">species</span><span class="p">[</span><span class="n">spe_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">spe_sto</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="n">spe_id</span><span class="p">:</span> <span class="n">spe_sto</span> <span class="k">for</span> <span class="p">(</span><span class="n">spe_id</span><span class="p">,</span> <span class="n">spe_sto</span><span class="p">)</span> <span class="ow">in</span> <span class="n">species</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">spe_sto</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">}</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">ChemLite</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Joan Hérisson.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
