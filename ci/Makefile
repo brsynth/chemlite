@@ -69,4 +69,8 @@ doc-pdoc:
 	cd .. ; rm -rf chemlite/__pycache__ ; pdoc --force --html -o docs chemlite
 
 doc-sphinx:
-	cd .. ; sphinx-apidoc -f -o docs/source chemlite ; cd docs ; make html
+	cd .. ; sphinx-apidoc -f -o docs/source chemlite
+	
+doc-sphinx-html:
+	cd .. ; sphinx-apidoc -f -o docs/source chemlite
+	cd docs../ ; make html

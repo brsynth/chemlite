@@ -52,3 +52,10 @@ chemlite.constants module
    :undoc-members:
    :show-inheritance:
 
+Module contents
+---------------
+
+.. automodule:: chemlite
+   :members:
+   :undoc-members:
+   :show-inheritance:
