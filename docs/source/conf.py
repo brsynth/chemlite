@@ -24,8 +24,6 @@ author = 'Joan Hérisson'
 # The full version, including alpha/beta/rc tags
 release = '2.4.1'
 
-autodoc_mock_imports = ['brs_utils']
-
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be

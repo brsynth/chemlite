@@ -72,5 +72,4 @@ doc-sphinx:
 	cd .. ; sphinx-apidoc -f -o docs/source chemlite
 	
 doc-sphinx-html:
-	cd .. ; sphinx-apidoc -f -o docs/source chemlite
-	cd docs../ ; make html
+	cd ../docs ; make html

@@ -252,7 +252,7 @@
 <p>A class to represent a metabolic pathway.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="chemlite.Pathway.Pathway">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">chemlite.Pathway.</span></span><span class="sig-name descname"><span class="pre">Pathway</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">id:</span> <span class="pre">str</span></em>, <em class="sig-param"><span class="pre">cache:</span> <span class="pre">Optional[brs_utils.Cache]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">logger:</span> <span class="pre">logging.Logger</span> <span class="pre">=</span> <span class="pre">&lt;Logger</span> <span class="pre">chemlite.Pathway</span> <span class="pre">(WARNING)&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.Pathway" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">chemlite.Pathway.</span></span><span class="sig-name descname"><span class="pre">Pathway</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">id:</span> <span class="pre">str</span></em>, <em class="sig-param"><span class="pre">cache:</span> <span class="pre">Optional[brs_utils.Cache.Cache]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">logger:</span> <span class="pre">logging.Logger</span> <span class="pre">=</span> <span class="pre">&lt;Logger</span> <span class="pre">chemlite.Pathway</span> <span class="pre">(WARNING)&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.Pathway" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#chemlite.Object.Object" title="chemlite.Object.Object"><code class="xref py py-class docutils literal notranslate"><span class="pre">chemlite.Object.Object</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="chemlite.Pathway.Pathway.add_reaction">
@@ -261,7 +261,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>rxn</strong> (<a class="reference internal" href="#chemlite.Reaction.Reaction" title="chemlite.Reaction.Reaction"><em>Reaction</em></a>) – Reaction to add in the pathway</p></li>
+<li><p><strong>rxn</strong> (<a class="reference internal" href="#chemlite.Reaction" title="chemlite.Reaction"><em>Reaction</em></a>) – Reaction to add in the pathway</p></li>
 <li><p><strong>new_id</strong> (<em>str</em>) – ID that the compound has to be renamed to</p></li>
 </ul>
 </dd>
@@ -313,7 +313,7 @@ replacement has been done, False otherwise</p>
 <dd class="field-odd"><p><strong>reactions</strong> – Reactions of the pathway</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>Dict[str, <a class="reference internal" href="#chemlite.Reaction.Reaction" title="chemlite.Reaction.Reaction">Reaction</a>]</p>
+<dd class="field-even"><p>Dict[str, <a class="reference internal" href="#chemlite.Reaction" title="chemlite.Reaction">Reaction</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -389,7 +389,7 @@ None otherwise.</p>
 <dd class="field-even"><p><strong>reaction</strong> – The reaction with id ‘rxn_id’</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#chemlite.Reaction.Reaction" title="chemlite.Reaction.Reaction">Reaction</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#chemlite.Reaction" title="chemlite.Reaction">Reaction</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -404,7 +404,7 @@ and values the reactions themselves</p>
 <dd class="field-odd"><p><strong>reactions</strong> – Reactions of the pathway</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>Dict[str, <a class="reference internal" href="#chemlite.Reaction.Reaction" title="chemlite.Reaction.Reaction">Reaction</a>]</p>
+<dd class="field-even"><p>Dict[str, <a class="reference internal" href="#chemlite.Reaction" title="chemlite.Reaction">Reaction</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -436,7 +436,7 @@ None otherwise.</p>
 <dd class="field-even"><p><strong>specie</strong> – The specie with id ‘spe_id’</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#chemlite.Compound.Compound" title="chemlite.Compound.Compound">Compound</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#chemlite.Compound" title="chemlite.Compound">Compound</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -450,7 +450,7 @@ None otherwise.</p>
 <dd class="field-odd"><p><strong>species</strong> – Species involved in the pathway</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>List[<a class="reference internal" href="#chemlite.Compound.Compound" title="chemlite.Compound.Compound">Compound</a>]</p>
+<dd class="field-even"><p>List[<a class="reference internal" href="#chemlite.Compound" title="chemlite.Compound">Compound</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -507,7 +507,7 @@ replacement has been done, False otherwise</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>rxn_id</strong> (<em>str</em>) – ID of the reaction to replace</p></li>
-<li><p><strong>rxn</strong> (<a class="reference internal" href="#chemlite.Reaction.Reaction" title="chemlite.Reaction.Reaction"><em>Reaction</em></a>) – Reaction to add in the pathway</p></li>
+<li><p><strong>rxn</strong> (<a class="reference internal" href="#chemlite.Reaction" title="chemlite.Reaction"><em>Reaction</em></a>) – Reaction to add in the pathway</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -691,7 +691,7 @@ values are the stoichiometric coefficient in the reaction</p>
 <dd class="field-odd"><p><strong>products</strong> – List of compounds that are products of the reaction</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>List[<a class="reference internal" href="#chemlite.Compound.Compound" title="chemlite.Compound.Compound">Compound</a>]</p>
+<dd class="field-even"><p>List[<a class="reference internal" href="#chemlite.Compound" title="chemlite.Compound">Compound</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -753,7 +753,7 @@ values are the stoichiometric coefficient in the reaction</p>
 <dd class="field-odd"><p><strong>reactants</strong> – List of compounds that are reactants of the reaction</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>List[<a class="reference internal" href="#chemlite.Compound.Compound" title="chemlite.Compound.Compound">Compound</a>]</p>
+<dd class="field-even"><p>List[<a class="reference internal" href="#chemlite.Compound" title="chemlite.Compound">Compound</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -817,7 +817,7 @@ species in the reaction.</p>
 <dd class="field-odd"><p><strong>compounds</strong> – List of compounds in the reaction</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>List[<a class="reference internal" href="#chemlite.Compound.Compound" title="chemlite.Compound.Compound">Compound</a>]</p>
+<dd class="field-even"><p>List[<a class="reference internal" href="#chemlite.Compound" title="chemlite.Compound">Compound</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -967,6 +967,908 @@ result (pseudo-reaction).</p>
 <section id="module-chemlite.constants">
 <span id="chemlite-constants-module"></span><h2>chemlite.constants module<a class="headerlink" href="#module-chemlite.constants" title="Permalink to this headline">¶</a></h2>
 <p>A file to define constants</p>
+</section>
+<section id="module-chemlite">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-chemlite" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="chemlite.Compound">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">chemlite.</span></span><span class="sig-name descname"><span class="pre">Compound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">id:</span> <span class="pre">str</span></em>, <em class="sig-param"><span class="pre">smiles:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">''</span></em>, <em class="sig-param"><span class="pre">inchi:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">''</span></em>, <em class="sig-param"><span class="pre">inchikey:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">''</span></em>, <em class="sig-param"><span class="pre">formula:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">''</span></em>, <em class="sig-param"><span class="pre">name:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">''</span></em>, <em class="sig-param"><span class="pre">logger:</span> <span class="pre">logging.Logger</span> <span class="pre">=</span> <span class="pre">&lt;Logger</span> <span class="pre">chemlite.Compound</span> <span class="pre">(WARNING)&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chemlite/Compound.html#Compound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Compound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#chemlite.Object.Object" title="chemlite.Object.Object"><code class="xref py py-class docutils literal notranslate"><span class="pre">chemlite.Object.Object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Compound.get_formula">
+<span class="sig-name descname"><span class="pre">get_formula</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="_modules/chemlite/Compound.html#Compound.get_formula"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Compound.get_formula" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the formula of the compound</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>formula</strong> – Formula of the compound</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Compound.get_inchi">
+<span class="sig-name descname"><span class="pre">get_inchi</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="_modules/chemlite/Compound.html#Compound.get_inchi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Compound.get_inchi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the InChI of the compound</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>inchi</strong> – Inchi of the compound</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Compound.get_inchikey">
+<span class="sig-name descname"><span class="pre">get_inchikey</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="_modules/chemlite/Compound.html#Compound.get_inchikey"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Compound.get_inchikey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the InChIKey of the compound</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>inchikey</strong> – InChIKey of the compound</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Compound.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="_modules/chemlite/Compound.html#Compound.get_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Compound.get_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the name of the compound</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>name</strong> – Name of the compound</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Compound.get_smiles">
+<span class="sig-name descname"><span class="pre">get_smiles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="_modules/chemlite/Compound.html#Compound.get_smiles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Compound.get_smiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the SMILES string of the compound</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>smiles</strong> – SMILES of the compound</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Compound.set_formula">
+<span class="sig-name descname"><span class="pre">set_formula</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">formula</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/chemlite/Compound.html#Compound.set_formula"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Compound.set_formula" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the formula of the compound</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>formula</strong> (<em>str</em>) – String to set the compound’s formula to</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Compound.set_inchi">
+<span class="sig-name descname"><span class="pre">set_inchi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inchi</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/chemlite/Compound.html#Compound.set_inchi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Compound.set_inchi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the InChI of the compound</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>inchi</strong> (<em>str</em>) – String to set the compound’s InChI to</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Compound.set_inchikey">
+<span class="sig-name descname"><span class="pre">set_inchikey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inchikey</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/chemlite/Compound.html#Compound.set_inchikey"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Compound.set_inchikey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the InChIKey of the compound</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>inchikey</strong> (<em>str</em>) – String to set the compound’s InChIKey to</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Compound.set_name">
+<span class="sig-name descname"><span class="pre">set_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/chemlite/Compound.html#Compound.set_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Compound.set_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the name of the compound</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – String to set the compound’s name to</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Compound.set_smiles">
+<span class="sig-name descname"><span class="pre">set_smiles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">smiles</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/chemlite/Compound.html#Compound.set_smiles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Compound.set_smiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the SMILES string of the compound</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>smiles</strong> (<em>str</em>) – String to set the compound’s SMILES string to</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="chemlite.Object">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">chemlite.</span></span><span class="sig-name descname"><span class="pre">Object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">id:</span> <span class="pre">str</span></em>, <em class="sig-param"><span class="pre">logger:</span> <span class="pre">logging.Logger</span> <span class="pre">=</span> <span class="pre">&lt;Logger</span> <span class="pre">chemlite.Object</span> <span class="pre">(WARNING)&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chemlite/Object.html#Object"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Object.get_id">
+<span class="sig-name descname"><span class="pre">get_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="_modules/chemlite/Object.html#Object.get_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Object.get_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the ID of the object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>id</strong> – ID of the object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Object.get_logger">
+<span class="sig-name descname"><span class="pre">get_logger</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">logging.Logger</span><a class="reference internal" href="_modules/chemlite/Object.html#Object.get_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Object.get_logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the object’s logger</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>logger</strong> – The object’s logger</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Logger</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Object.set_id">
+<span class="sig-name descname"><span class="pre">set_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Object.html#Object.set_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Object.set_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the object’s id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>str</em>) – String to set the object’s ID to</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Object.to_string">
+<span class="sig-name descname"><span class="pre">to_string</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="_modules/chemlite/Object.html#Object.to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Object.to_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a string representation of the object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>string</strong> – The string representation of the object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="chemlite.Pathway">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">chemlite.</span></span><span class="sig-name descname"><span class="pre">Pathway</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">id:</span> <span class="pre">str</span></em>, <em class="sig-param"><span class="pre">cache:</span> <span class="pre">Optional[brs_utils.Cache.Cache]</span> <span class="pre">=</span> <span class="pre">None</span></em>, <em class="sig-param"><span class="pre">logger:</span> <span class="pre">logging.Logger</span> <span class="pre">=</span> <span class="pre">&lt;Logger</span> <span class="pre">chemlite.Pathway</span> <span class="pre">(WARNING)&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#chemlite.Object.Object" title="chemlite.Object.Object"><code class="xref py py-class docutils literal notranslate"><span class="pre">chemlite.Object.Object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Pathway.add_reaction">
+<span class="sig-name descname"><span class="pre">add_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rxn</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#chemlite.Reaction.Reaction" title="chemlite.Reaction.Reaction"><span class="pre">chemlite.Reaction.Reaction</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rxn_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway.add_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.add_reaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a reaction in the pathway</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rxn</strong> (<a class="reference internal" href="#chemlite.Reaction" title="chemlite.Reaction"><em>Reaction</em></a>) – Reaction to add in the pathway</p></li>
+<li><p><strong>new_id</strong> (<em>str</em>) – ID that the compound has to be renamed to</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Pathway.del_reaction">
+<span class="sig-name descname"><span class="pre">del_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rxn_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway.del_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.del_reaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a reaction from the pathway. Returns True if the
+replacement has been done, False otherwise</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rxn_id</strong> (<em>str</em>) – ID of the reaction to removed</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>b</strong> – True if deletion has been done, False otherwise</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Pathway.get_compound">
+<span class="sig-name descname"><span class="pre">get_compound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmpd_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#chemlite.Compound.Compound" title="chemlite.Compound.Compound"><span class="pre">chemlite.Compound.Compound</span></a><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway.get_compound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.get_compound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as get_specie(cmpd_id)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Pathway.get_compounds">
+<span class="sig-name descname"><span class="pre">get_compounds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#chemlite.Compound.Compound" title="chemlite.Compound.Compound"><span class="pre">chemlite.Compound.Compound</span></a><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway.get_compounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.get_compounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as get_species()</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Pathway.get_compounds_ids">
+<span class="sig-name descname"><span class="pre">get_compounds_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway.get_compounds_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.get_compounds_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as get_species_ids()</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Pathway.get_list_of_reactions">
+<span class="sig-name descname"><span class="pre">get_list_of_reactions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#chemlite.Reaction.Reaction" title="chemlite.Reaction.Reaction"><span class="pre">chemlite.Reaction.Reaction</span></a><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway.get_list_of_reactions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.get_list_of_reactions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of the reactions in the pathway</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>reactions</strong> – Reactions of the pathway</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Dict[str, <a class="reference internal" href="#chemlite.Reaction" title="chemlite.Reaction">Reaction</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Pathway.get_nb_reactions">
+<span class="sig-name descname"><span class="pre">get_nb_reactions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway.get_nb_reactions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.get_nb_reactions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of reactions of the pathway</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>nb</strong> – Integer equal to the number of reactions in the pathway</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Pathway.get_nb_species">
+<span class="sig-name descname"><span class="pre">get_nb_species</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway.get_nb_species"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.get_nb_species" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of species involved in all the reactions of the pathway</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>nb</strong> – Integer equal to the number of species invloved in the pathway</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Pathway.get_products_ids">
+<span class="sig-name descname"><span class="pre">get_products_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway.get_products_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.get_products_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all products involved in the pathway,
+alphabetically sorted</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>products</strong> – Products of the pathway</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Pathway.get_reactants_ids">
+<span class="sig-name descname"><span class="pre">get_reactants_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway.get_reactants_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.get_reactants_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all reactants involved in the pathway,
+alphabetically sorted</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>reactants</strong> – Reactants of the pathway</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Pathway.get_reaction">
+<span class="sig-name descname"><span class="pre">get_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rxn_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#chemlite.Reaction.Reaction" title="chemlite.Reaction.Reaction"><span class="pre">chemlite.Reaction.Reaction</span></a><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway.get_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.get_reaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a specific reaction of the pathway if exists,
+None otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rxn_id</strong> (<em>str</em>) – ID of the reaction to get</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>reaction</strong> – The reaction with id ‘rxn_id’</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#chemlite.Reaction" title="chemlite.Reaction">Reaction</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Pathway.get_reactions">
+<span class="sig-name descname"><span class="pre">get_reactions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><a class="reference internal" href="#chemlite.Reaction.Reaction" title="chemlite.Reaction.Reaction"><span class="pre">chemlite.Reaction.Reaction</span></a><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway.get_reactions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.get_reactions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary where keys are reaction ids
+and values the reactions themselves</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>reactions</strong> – Reactions of the pathway</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Dict[str, <a class="reference internal" href="#chemlite.Reaction" title="chemlite.Reaction">Reaction</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Pathway.get_reactions_ids">
+<span class="sig-name descname"><span class="pre">get_reactions_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway.get_reactions_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.get_reactions_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns IDs of reactions of the pathway</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>ids</strong> – IDs of reactions of the pathway</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Pathway.get_specie">
+<span class="sig-name descname"><span class="pre">get_specie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spe_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#chemlite.Compound.Compound" title="chemlite.Compound.Compound"><span class="pre">chemlite.Compound.Compound</span></a><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway.get_specie"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.get_specie" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a specific specie involved in the pathway if exists,
+None otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>spe_id</strong> (<em>str</em>) – ID of the specie to get</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>specie</strong> – The specie with id ‘spe_id’</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#chemlite.Compound" title="chemlite.Compound">Compound</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Pathway.get_species">
+<span class="sig-name descname"><span class="pre">get_species</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#chemlite.Compound.Compound" title="chemlite.Compound.Compound"><span class="pre">chemlite.Compound.Compound</span></a><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway.get_species"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.get_species" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the species involved in all the reactions of the pathway</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>species</strong> – Species involved in the pathway</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="#chemlite.Compound" title="chemlite.Compound">Compound</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Pathway.get_species_ids">
+<span class="sig-name descname"><span class="pre">get_species_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway.get_species_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.get_species_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns IDs of the species involved in all the reactions of the pathway</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>ids</strong> – IDs of the species involved in the pathway</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Pathway.net_reaction">
+<span class="sig-name descname"><span class="pre">net_reaction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway.net_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.net_reaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the net reaction (or pseudo-reaction) of the pathway,
+i.e. the stoichiometric sum of all reactions of the pathway.
+See Reaction::sum_stoichio for more details.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Pathway.pseudo_reaction">
+<span class="sig-name descname"><span class="pre">pseudo_reaction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#chemlite.Reaction.Reaction" title="chemlite.Reaction.Reaction"><span class="pre">chemlite.Reaction.Reaction</span></a><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway.pseudo_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.pseudo_reaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as net_reaction()</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Pathway.rename_compound">
+<span class="sig-name descname"><span class="pre">rename_compound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway.rename_compound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.rename_compound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rename a compound within the pathway. Actually, the
+compound is renamed over all reactions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>str</em>) – ID of the compound to rename</p></li>
+<li><p><strong>new_id</strong> (<em>str</em>) – ID that the compound has to be renamed to</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Pathway.replace_reaction">
+<span class="sig-name descname"><span class="pre">replace_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rxn_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rxn</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#chemlite.Reaction.Reaction" title="chemlite.Reaction.Reaction"><span class="pre">chemlite.Reaction.Reaction</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway.replace_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.replace_reaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace a reaction in the pathway. Returns True if the
+replacement has been done, False otherwise</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rxn_id</strong> (<em>str</em>) – ID of the reaction to replace</p></li>
+<li><p><strong>rxn</strong> (<a class="reference internal" href="#chemlite.Reaction" title="chemlite.Reaction"><em>Reaction</em></a>) – Reaction to add in the pathway</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>b</strong> – True if replacement has been done, False otherwise</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Pathway.to_string">
+<span class="sig-name descname"><span class="pre">to_string</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/chemlite/Pathway.html#Pathway.to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Pathway.to_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the string representation of the pathway</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>string</strong> – String representation of the pathway</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="chemlite.Reaction">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">chemlite.</span></span><span class="sig-name descname"><span class="pre">Reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">id:</span> <span class="pre">str,</span> <span class="pre">ec_numbers:</span> <span class="pre">Union[List[str],</span> <span class="pre">str]</span> <span class="pre">=</span> <span class="pre">[],</span> <span class="pre">reactants:</span> <span class="pre">Dict[str,</span> <span class="pre">int]</span> <span class="pre">=</span> <span class="pre">{},</span> <span class="pre">products:</span> <span class="pre">Dict[str,</span> <span class="pre">int]</span> <span class="pre">=</span> <span class="pre">{},</span> <span class="pre">logger:</span> <span class="pre">logging.Logger</span> <span class="pre">=</span> <span class="pre">&lt;Logger</span> <span class="pre">chemlite.Reaction</span> <span class="pre">(WARNING)&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#chemlite.Object.Object" title="chemlite.Object.Object"><code class="xref py py-class docutils literal notranslate"><span class="pre">chemlite.Object.Object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.add_ec_number">
+<span class="sig-name descname"><span class="pre">add_ec_number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">number</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.add_ec_number"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.add_ec_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an EC number to the reaction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>number</strong> (<em>str</em>) – String to add in the reaction’s EC numbers</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.add_product">
+<span class="sig-name descname"><span class="pre">add_product</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">compound_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stoichio</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.add_product"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.add_product" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the compound with ID ‘compound_id’ and
+stoichiometric coefficient ‘stoichio’ to
+the reaction’s list of products</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>compound_id</strong> (<em>str</em>) – ID of the product compound to add</p></li>
+<li><p><strong>stoichio</strong> (<em>int</em>) – Stoichiometric coefficient of the product compound to add</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.add_reactant">
+<span class="sig-name descname"><span class="pre">add_reactant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">compound_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stoichio</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.add_reactant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.add_reactant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the compound with ID ‘compound_id’ and
+stoichiometric coefficient ‘stoichio’ to
+the reaction’s list of reactants</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>compound_id</strong> (<em>str</em>) – ID of the reactant compound to add</p></li>
+<li><p><strong>stoichio</strong> (<em>int</em>) – Stoichiometric coefficient of the reactant compound to add</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.get_ec_numbers">
+<span class="sig-name descname"><span class="pre">get_ec_numbers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.get_ec_numbers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.get_ec_numbers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of EC numbers of the reaction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>ec_numbers</strong> – List of EC numbers of the reaction</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.get_left">
+<span class="sig-name descname"><span class="pre">get_left</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.get_left"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.get_left" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as get_reactants()</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.get_nb_products">
+<span class="sig-name descname"><span class="pre">get_nb_products</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.get_nb_products"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.get_nb_products" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of products of the reaction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>nb</strong> – Number of products of the reaction</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.get_nb_reactants">
+<span class="sig-name descname"><span class="pre">get_nb_reactants</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.get_nb_reactants"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.get_nb_reactants" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of reactants of the reaction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>nb</strong> – Number of reactants of the reaction</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.get_nb_species">
+<span class="sig-name descname"><span class="pre">get_nb_species</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.get_nb_species"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.get_nb_species" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of species of the reaction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>nb</strong> – Number of species of the reaction</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.get_product">
+<span class="sig-name descname"><span class="pre">get_product</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmpd_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.get_product"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.get_product" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the stoichiometric coefficient (&gt; 0) of the
+product compound with ID = ‘cmpd_id’</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmpd_id</strong> (<em>str</em>) – ID of the compound to return the stoichiometric coefficient</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>sto_coeff</strong> – Stoichiometric coefficient of the product compound of ID ‘cmpd_id’</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Dict[str, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.get_products">
+<span class="sig-name descname"><span class="pre">get_products</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.get_products"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.get_products" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary (alphabetically sorted) where
+keys are IDs of products and
+values are the stoichiometric coefficient in the reaction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>products</strong> – Stoichiometric dictionary of products</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Dict[str, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.get_products_compounds">
+<span class="sig-name descname"><span class="pre">get_products_compounds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#chemlite.Compound.Compound" title="chemlite.Compound.Compound"><span class="pre">chemlite.Compound.Compound</span></a><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.get_products_compounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.get_products_compounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of compounds that are products of the reaction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>products</strong> – List of compounds that are products of the reaction</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="#chemlite.Compound" title="chemlite.Compound">Compound</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.get_products_ids">
+<span class="sig-name descname"><span class="pre">get_products_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.get_products_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.get_products_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of products IDs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>products_ids</strong> – List of products IDs</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.get_reactant">
+<span class="sig-name descname"><span class="pre">get_reactant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmpd_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.get_reactant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.get_reactant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the stoichiometric coefficient (&gt; 0) of the
+reactant compound with ID = ‘cmpd_id’</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmpd_id</strong> (<em>str</em>) – ID of the compound to return the stoichiometric coefficient</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>sto_coeff</strong> – Stoichiometric coefficient of the reactant compound of ID ‘cmpd_id’</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Dict[str, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.get_reactants">
+<span class="sig-name descname"><span class="pre">get_reactants</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.get_reactants"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.get_reactants" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dictionary (alphabetically sorted) where
+keys are IDs of products and
+values are the stoichiometric coefficient in the reaction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>products</strong> – Stoichiometric dictionary of products</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Dict[str, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.get_reactants_compounds">
+<span class="sig-name descname"><span class="pre">get_reactants_compounds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#chemlite.Compound.Compound" title="chemlite.Compound.Compound"><span class="pre">chemlite.Compound.Compound</span></a><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.get_reactants_compounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.get_reactants_compounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of compounds that are reactants of the reaction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>reactants</strong> – List of compounds that are reactants of the reaction</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="#chemlite.Compound" title="chemlite.Compound">Compound</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.get_reactants_ids">
+<span class="sig-name descname"><span class="pre">get_reactants_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.get_reactants_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.get_reactants_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of reactants IDs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>reactants_ids</strong> – List of reactants IDs</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.get_right">
+<span class="sig-name descname"><span class="pre">get_right</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.get_right"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.get_right" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as get_products()</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.get_smiles">
+<span class="sig-name descname"><span class="pre">get_smiles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.get_smiles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.get_smiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds and returns the SMILES string of the reaction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>smiles</strong> – SMILES string of the reaction</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.get_species">
+<span class="sig-name descname"><span class="pre">get_species</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.get_species"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.get_species" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combines the result of both get_reactants() and get_products() but
+stoichiometric coefficients for reactants are negative (&lt; 0).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>species</strong> – Stoichiometric (alphabetically sorted) dictionary of
+species in the reaction.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Dict[str, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.get_species_compounds">
+<span class="sig-name descname"><span class="pre">get_species_compounds</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#chemlite.Compound.Compound" title="chemlite.Compound.Compound"><span class="pre">chemlite.Compound.Compound</span></a><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.get_species_compounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.get_species_compounds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of compounds in the reaction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>compounds</strong> – List of compounds in the reaction</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="#chemlite.Compound" title="chemlite.Compound">Compound</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.get_species_ids">
+<span class="sig-name descname"><span class="pre">get_species_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.get_species_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.get_species_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of species IDs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>species_ids</strong> – List of species IDs</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.mult_stoichio_coeff">
+<span class="sig-name descname"><span class="pre">mult_stoichio_coeff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mult</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.mult_stoichio_coeff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.mult_stoichio_coeff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multiply stoichiometric coefficients of all species of the reaction by ‘mult’</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mult</strong> (<em>float</em>) – Integer to multiply all stoichiometric coefficients with</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.rename_compound">
+<span class="sig-name descname"><span class="pre">rename_compound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.rename_compound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.rename_compound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rename a compound in the reaction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>str</em>) – ID of the compound to rename</p></li>
+<li><p><strong>new_id</strong> (<em>str</em>) – String to set the compound’s ID to</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.set_ec_numbers">
+<span class="sig-name descname"><span class="pre">set_ec_numbers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numbers</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.set_ec_numbers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.set_ec_numbers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the EC numbers of the reaction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>numbers</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – List of string to set the reaction’s EC numbers to</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.set_product">
+<span class="sig-name descname"><span class="pre">set_product</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmpd_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stoichio</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.set_product"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.set_product" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the stoichiometric coefficient of the product compound
+with ID ‘cmpd_id’. Do nothing if ‘cmpd_id’ is None or empty string</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmpd_id</strong> (<em>str</em>) – ID of the product compound</p></li>
+<li><p><strong>stoichio</strong> (<em>int</em>) – Stoichiometric coefficient to set the product compound to</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.set_products">
+<span class="sig-name descname"><span class="pre">set_products</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">compounds</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.set_products"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.set_products" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the products of the reaction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>compounds</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em>) – Stoichiometric dictionary to set the reactions’s products to</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.set_reactant">
+<span class="sig-name descname"><span class="pre">set_reactant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmpd_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stoichio</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.set_reactant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.set_reactant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the stoichiometric coefficient of the reactant compound
+with ID ‘cmpd_id’. Do nothing if ‘cmpd_id’ is None or empty string</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmpd_id</strong> (<em>str</em>) – ID of the reactant compound</p></li>
+<li><p><strong>stoichio</strong> (<em>int</em>) – Stoichiometric coefficient to set the reactant compound to</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.set_reactants">
+<span class="sig-name descname"><span class="pre">set_reactants</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">compounds</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.set_reactants"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.set_reactants" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the reactants of the reaction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>compounds</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em>) – Stoichiometric dictionary to set the reactions’s reactants to</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.sum_stoichio">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">sum_stoichio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reactions</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#chemlite.Reaction.Reaction" title="chemlite.Reaction.Reaction"><span class="pre">chemlite.Reaction.Reaction</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.sum_stoichio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.sum_stoichio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make the sum of stoichiometric coefficients
+of all species in all reactions in the passed list and
+returns a stoichiometric dictionary of the pseudo-reaction.
+If a compound is both a reactant of a reaction of the list (coeff &lt; 0)
+and a product of another reaction of the list (coeff &gt; 0),
+the sum could be 0 and the compound is naturally deleted from the
+result (pseudo-reaction).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>reactions</strong> (<em>List</em><em>[</em><em>'Reaction'</em><em>]</em>) – List of reactions to make the stoichiometric sum of</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>stoichio</strong> – Stoichiometric dictionary of summed stoichiometric coefficients (pseudo-reaction)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Dict[str, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chemlite.Reaction.to_string">
+<span class="sig-name descname"><span class="pre">to_string</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="_modules/chemlite/Reaction.html#Reaction.to_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chemlite.Reaction.to_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the string representation of the reaction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>string</strong> – String representation of the reaction</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
