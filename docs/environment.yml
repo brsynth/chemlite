@@ -1,0 +1,7 @@
+name: chemlite
+channels:
+  - brsynth
+  - conda-forge
+dependencies:
+  - python=3.8
+  - brs_utils
