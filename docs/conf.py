@@ -37,6 +37,8 @@ extensions = [
     # 'm2r'
 ]
 
+master_doc = 'index'
+
 # source_suffix = ['.rst', '.md']
 
 # autodoc_default_flags = [
