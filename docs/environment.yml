@@ -1,8 +1,8 @@
 name: doc
 channels:
+  - brsynth
   - defaults
 dependencies:
   - python > 3.6
-  - pip
   - brs_utils
   - sphix-autoapi
