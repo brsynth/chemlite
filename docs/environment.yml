@@ -1,0 +1,7 @@
+name: doc
+channels:
+  - defaults
+dependencies:
+  - python > 3.6
+  - brs_utils
+  - sphix-autoapi
