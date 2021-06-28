@@ -8,3 +8,4 @@ dependencies:
   - brs_utils
   - sphinx-autoapi
   - nbsphinx
+  - ipykernel
