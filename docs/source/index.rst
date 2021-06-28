@@ -1,8 +1,14 @@
-Welcome to ChemLite's documentation!
-====================================
+ChemLite overview
+=====================
+ChemLite is a generic library to define chemical compounds, reactions and metabolic pathways (a set of reactions).
 
-For installation instructions, please see the `README
-<https://github.com/brsynth/chemlite/blob/stable/README.md>`_. 
+How to install
+**************
+You can simply run ``conda install -c brsynth chemlite`` and start eQuilibrating. For more details, see :ref:`Installation`.
+
+How to use
+**********
+You can find a simple example in the :ref:`Example Usage` section.
 
 .. automodule:: chemlite
 
@@ -11,10 +17,3 @@ For installation instructions, please see the `README
    :caption: Contents:
 
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
