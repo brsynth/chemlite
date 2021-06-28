@@ -1,9 +1,0 @@
-name: chemlite
-channels:
-  - brsynth
-  - conda-forge
-dependencies:
-  - python >3.6,<3.10
-  - brs_utils
-  - sphinx
-  - sphinx-autoapi
