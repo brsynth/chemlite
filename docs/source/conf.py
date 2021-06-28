@@ -34,7 +34,8 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.coverage',
     'sphinx.ext.napoleon',
-    # 'm2r'
+    'sphinx.ext.autosectionlabel',
+    'autoapi.extension'
 ]
 
 master_doc = 'index'
