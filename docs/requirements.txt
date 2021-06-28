@@ -1,4 +1,0 @@
-sphinxcontrib-napoleon
-sphinx-autoapi
-nbsphinx
-ipykernel

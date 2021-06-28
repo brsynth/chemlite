@@ -7,3 +7,4 @@ dependencies:
   - python > 3.6
   - brs_utils
   - sphinx-autoapi
+  - nbsphinx
