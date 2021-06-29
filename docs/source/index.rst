@@ -10,10 +10,14 @@ How to use
 **********
 You can find a simple example in the :ref:`Example Usage` section.
 
-.. automodule:: chemlite
-
 .. toctree::
+   :hidden:
+   :numbered:
    :maxdepth: 2
-   :caption: Contents:
+
+   self
+   install
+   examples.ipynb
+   autoapi/index
 
 
