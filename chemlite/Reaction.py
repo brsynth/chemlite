@@ -72,19 +72,16 @@ class Reaction(Object):
         string: str
             String representation of the reaction
         '''
-        if self.get_nb_reactants() == 0 or self.get_nb_products() == 0:
-            return super().to_string()
-        else:
-            return '{class_name} {rxn_name}: {reactants} = {products}'.format(
-                class_name=type(self).__name__,
-                rxn_name=self.get_id(),
-                reactants=' + '.join(
-                    [f'{spe_sto} {spe_id}' for spe_id, spe_sto in self.get_reactants().items()]
-                ),
-                products=' + '.join(
-                    [f'{spe_sto} {spe_id}' for spe_id, spe_sto in self.get_products().items()]
-                ),
-            )
+        return '{class_name} {rxn_name}: {reactants} = {products}'.format(
+            class_name=type(self).__name__,
+            rxn_name=self.get_id(),
+            reactants=' + '.join(
+                [f'{spe_sto} {spe_id}' for spe_id, spe_sto in self.get_reactants().items()]
+            ),
+            products=' + '.join(
+                [f'{spe_sto} {spe_id}' for spe_id, spe_sto in self.get_products().items()]
+            ),
+        )
 
     def _to_dict(self) -> Dict:
         '''Returns a dictionary with all (with legacy) attributes of the reaction:
