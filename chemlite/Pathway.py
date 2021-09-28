@@ -68,7 +68,7 @@ class Pathway(Object):
             + '----------------\n' \
             + '\n'.join([rxn.__str__() for rxn in self.get_reactions().values()])
 
-    def _to_dict(self) -> Dict:
+    def _to_dict(self, full=False) -> Dict:
         '''Returns a dictionary with all (with legacy) attributes of the pathway:
             - id (legacy)
             - reactions
@@ -79,25 +79,38 @@ class Pathway(Object):
         dict: Dict
             Dictionary with all (with legacy) attributes of the pathway
         '''
-        return {
-            **super()._to_dict(),
-            **self.__to_dict()
-        }
-
-    def __to_dict(self) -> Dict:
-        '''Returns a dictionary with only specific attributes of the pathway:
-            - reactions
-            - species
-
-        Returns
-        -------
-        dict: Dict
-            Dictionary with only specific attributes of the pathway
-        '''
-        return {
+        d = {
             'reactions': {rxn_id: self.get_reaction(rxn_id)._to_dict() for rxn_id in self.get_reactions_ids()},
             'species': {spe_id: self.get_specie(spe_id)._to_dict() for spe_id in self.get_species_ids()},
         }
+        if full:
+            d.update(super()._to_dict())
+        return d
+
+    def __eq__(self: 'Pathway', other: 'Pathway') -> bool:
+        '''Compare if all reactions of one pathway are
+        in the other and vice-versa.
+
+        Parameters
+        ----------
+        self: Pathway
+        other: Pathway
+
+        Returns
+        -------
+        bool
+        '''
+        if isinstance(self, other.__class__):
+            return (
+                all(  # all reactions of self are in other
+                    rxn in self.get_list_of_reactions()
+                    for rxn in other.get_list_of_reactions()
+                ) and all (  # all reactions of other are in self
+                    rxn in other.get_list_of_reactions()
+                    for rxn in self.get_list_of_reactions()
+                )
+            )
+        return False
 
     ## READ METHODS
     def get_nb_reactions(self) -> int:
