@@ -173,14 +173,24 @@ class Test_Reaction(TestCase):
 
     def test_to_string_0(self):
         self.rxn.set_products({})
+        self.rxn.set_reactants({})
         self.assertEqual(
             self.rxn.to_string(),
-            f'Reaction {self.rxn.get_id()}'
+            f'Reaction {self.rxn.get_id()}:  = '
         )
 
     def test__to_dict(self):
         self.assertEqual(
-            self.rxn._to_dict(),
+            self.rxn._to_dict(full=False),
+            {
+                'reactants': self.reactants,
+                'products': self.products,
+            }
+        )
+
+    def test__to_dict_full(self):
+        self.assertEqual(
+            self.rxn._to_dict(full=True),
             {
                 'ec_numbers': self.ec_numbers,
                 'reactants': self.reactants,
@@ -189,8 +199,19 @@ class Test_Reaction(TestCase):
             }
         )
 
-    def test_eq(self):
+    def test_eq1(self):
         rxn = deepcopy(self.rxn)
+        self.assertEqual(
+            rxn,
+            self.rxn
+        )
+
+    def test_eq2(self):
+        rxn = Reaction(
+            id='rxn_test_eq2',
+            reactants=self.rxn.get_reactants(),
+            products=self.rxn.get_products()
+        )
         self.assertEqual(
             rxn,
             self.rxn

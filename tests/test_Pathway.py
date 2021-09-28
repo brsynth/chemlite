@@ -329,7 +329,18 @@ class Test_Pathway(TestCase):
         list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions.values()]
         list_of_species = list(set([spe for species in list_of_list_of_species for spe in species]))
         self.assertDictEqual(
-            self.pathway._to_dict(),
+            self.pathway._to_dict(full=False),
+            {
+                'reactions': {rxn.get_id(): rxn._to_dict() for rxn in self.reactions.values()},
+                'species': {spe.get_id(): spe._to_dict() for spe in [self.species[spe_id] for spe_id in list_of_species]},
+            }
+        )
+
+    def test__to_dict_full(self):
+        list_of_list_of_species = [rxn.get_species_ids() for rxn in self.reactions.values()]
+        list_of_species = list(set([spe for species in list_of_list_of_species for spe in species]))
+        self.assertDictEqual(
+            self.pathway._to_dict(full=True),
             {
                 'reactions': {rxn.get_id(): rxn._to_dict() for rxn in self.reactions.values()},
                 'species': {spe.get_id(): spe._to_dict() for spe in [self.species[spe_id] for spe_id in list_of_species]},
@@ -349,9 +360,16 @@ class Test_Pathway(TestCase):
         )
 
     def test_eq(self):
-        pathway = Pathway(id=self.id)
+        reactions = []
         for rxn in self.reactions.values():
-            pathway.add_reaction(rxn)
+            reactions.append(deepcopy(rxn))
+        pathway = Pathway(id='pathway_test')
+        for i in range(len(reactions)):
+            index = len(reactions)-i-1
+            # change id
+            reactions[index].set_id(i)
+            # add reaction in the reverse order
+            pathway.add_reaction(rxn=reactions[index])
         self.assertEqual(
             self.pathway,
             pathway
