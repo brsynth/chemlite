@@ -50,7 +50,7 @@ class Test_Object(TestCase):
     def test_eq_diffid(self):
         id = 'obj_id'
         obj = Object(id)
-        self.assertEqual(
+        self.assertNotEqual(
             obj,
             Object(id=id+'diff')
         )
