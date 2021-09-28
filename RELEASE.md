@@ -1,5 +1,15 @@
 # Release history
 
+## 2.6.0
+#### Sep 28 2021
+- chore(Reaction): rm condition in to_string()
+- BREAK! chore(Object): rm __to_dict + change __eq__
+- BREAK! chore(Reaction): merge _to_dict and __to_dict
+- BREAK! chore(Pathway): merge __to_dict and _to_dict + add specific __eq__
+- build(ci): update
+- test: add new tests
+- doc: insert path
+
 ## 2.5.0
 #### Jun 25 2021
 - chore(Object): remove 'id' attribute for objects comparison
