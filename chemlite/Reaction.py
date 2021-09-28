@@ -83,7 +83,7 @@ class Reaction(Object):
             ),
         )
 
-    def _to_dict(self) -> Dict:
+    def _to_dict(self, full=False) -> Dict:
         '''Returns a dictionary with all (with legacy) attributes of the reaction:
             - id (legacy)
             - ec_numbers
@@ -95,27 +95,18 @@ class Reaction(Object):
         dict: Dict
             Dictionary with all (with legacy) attributes of the reaction
         '''
-        return {
-            **super()._to_dict(),
-            **self.__to_dict()
-        }
-
-    def __to_dict(self) -> Dict:
-        '''Returns a dictionary with only specific attributes of the reaction:
-            - ec_numbers
-            - reactants
-            - products
-
-        Returns
-        -------
-        dict: Dict
-            Dictionary with only specific attributes of the reaction
-        '''
-        return {
-            'ec_numbers': deepcopy(self.get_ec_numbers()),
+        d = {
             'reactants': deepcopy(self.get_reactants()),
             'products': deepcopy(self.get_products()),
         }
+        if full:
+            d.update(
+                {
+                    **super()._to_dict(),
+                    'ec_numbers': deepcopy(self.get_ec_numbers()),
+                }
+            )
+        return d
 
     ## READ METHODS
     def get_ec_numbers(self) -> List[str]:
