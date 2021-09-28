@@ -64,7 +64,7 @@ class Object:
         '''
         return self.to_string()
 
-    def _to_dict(self) -> Dict[str, TypeVar]:
+    def _to_dict(self, full=False) -> Dict[str, TypeVar]:
         '''Return a dictionary with the attributes of the object:
             - id
 
@@ -73,10 +73,6 @@ class Object:
         obj_dict: Dict[str, TypeVar]
             A dictionary with the attributes of the object
         '''
-        return self.__to_dict()
-
-    def __to_dict(self) -> Dict:
-        '''Same as _to_dict()'''
         return {
             'id': self.get_id()
         }
@@ -95,10 +91,7 @@ class Object:
             Return true if the two objects are equal, False otherwise
         '''
         if isinstance(self, other.__class__):
-            # Do not compare ids
-            keys = list(self._to_dict().keys())
-            keys.remove('id')
-            return all(self._to_dict().get(key) == other._to_dict().get(key) for key in keys)
+            return self._to_dict() == other._to_dict()
         return False
 
     ## READ METHODS
