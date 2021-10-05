@@ -6,6 +6,7 @@ on:
   push:         # <- on push
     branches:
       - master  # <- ... on the branch "master"
+      - main  # <- ... on the branch "main"
 
 jobs:
 
