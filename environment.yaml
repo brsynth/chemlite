@@ -4,7 +4,3 @@ channels:
 dependencies:
   - python
   - brs_utils
-  - pytest
-  - pytest-cov
-  - pytest-mock
-  - pyyaml
