@@ -2,7 +2,7 @@
 Defines chemical compounds, reactions, pathways
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-brs_utils-green.svg)](https://anaconda.org/conda-forge/brs_utils) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/brs_utils.svg)](https://anaconda.org/conda-forge/brs_utils) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/brs_utils.svg)](https://anaconda.org/conda-forge/brs_utils) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/brs_utils.svg)](https://anaconda.org/conda-forge/brs_utils) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-chemlite-green.svg)](https://anaconda.org/conda-forge/chemlite) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/chemlite.svg)](https://anaconda.org/conda-forge/chemlite) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/chemlite.svg)](https://anaconda.org/conda-forge/chemlite) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/chemlite.svg)](https://anaconda.org/conda-forge/chemlite) |
 
 ## Description
 *chemlite* provides classes to deal with chemical compounds, reactions and metabolic pathways.
