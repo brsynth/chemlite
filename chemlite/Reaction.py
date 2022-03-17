@@ -34,6 +34,7 @@ from logging import (
 )
 from json import dumps as json_dumps
 from copy import deepcopy
+
 from brs_utils import Cache
 from chemlite.Compound import Compound
 from chemlite.Object import Object
