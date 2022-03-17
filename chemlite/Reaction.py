@@ -396,6 +396,24 @@ class Reaction(Object):
             )
         )
 
+    def get_specie(self, cmpd_id: str) -> Dict:
+        '''Return informations about a specie within the current reaction
+
+        Parameters
+        ----------
+        cmpd_id: str
+            ID of the compound to return the informations
+
+        Returns
+        -------
+        infos: Dict
+            Informations
+        '''
+        return {
+            'reactant': self.get_reactant(cmpd_id),
+            'product': self.get_product(cmpd_id)
+        }
+
     def get_species_compounds(self) -> List[Compound]:
         '''Returns the list of compounds in the reaction
 
