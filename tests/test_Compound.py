@@ -5,56 +5,50 @@ Created on May 28 2021
 """
 
 from unittest import TestCase
+from os import path as os_path
+from json import load as jsload
+
 from chemlite import Compound
 
+HERE = os_path.dirname(os_path.realpath(__file__))
+DATA_PATH = os_path.join(HERE, 'data')
 
 class Test_Compound(TestCase):
 
     def setUp(self):
-        self.id = "MNXM23"
-        self.smiles = "CC(=O)C(=O)O]"
-        self.inchi = "InChI=1S/C3H4O3/c1-2(4)3(5)6/h1H3,(H,5,6)"
-        self.inchikey = "LCTONWCANYUPML-UHFFFAOYSA-N"
-        self.name = "target"
-        self.formula = "C3H3O3"
-        self.compound = Compound(
-            id=self.id,
-            smiles=self.smiles,
-            inchi=self.inchi,
-            inchikey=self.inchikey,
-            name=self.name,
-            formula=self.formula
+        with open(os_path.join(DATA_PATH, 'compounds.json'), 'r') as fp:
+            compounds = jsload(fp)
+        self.compound_dict = compounds['MNXM23']
+        self.compound = Compound(**self.compound_dict)
+
+    def test_from_dict(self):
+        self.assertEqual(
+            self.compound,
+            Compound.from_dict(self.compound_dict)
         )
 
     def test_to_string(self):
         self.assertEqual(
             self.compound.to_string(),
-            f'Compound {self.id}'
+            f'Compound {self.compound_dict["id"]}'
         )
 
     def test__to_dict(self):
         self.assertDictEqual(
             self.compound._to_dict(),
-            {
-                'name': self.name,
-                'smiles': self.smiles,
-                'inchi': self.inchi,
-                'inchikey': self.inchikey,
-                'formula': self.formula,
-                'id': self.id
-            }
+            self.compound_dict
         )
 
     def test_eq(self):
         self.assertEqual(
             self.compound,
             Compound(
-                smiles=self.smiles,
-                inchi=self.inchi,
-                inchikey=self.inchikey,
-                id=self.id,
-                formula=self.formula,
-                name=self.name
+                smiles=self.compound_dict['smiles'],
+                inchi=self.compound_dict['inchi'],
+                inchikey=self.compound_dict['inchikey'],
+                id=self.compound_dict['id'],
+                formula=self.compound_dict['formula'],
+                name=self.compound_dict['name']
             )
         )
 
@@ -62,10 +56,10 @@ class Test_Compound(TestCase):
     #     self.assertNotEqual(
     #         self.compound,
     #         Compound(
-    #             smiles=self.smiles,
-    #             inchi=self.inchi,
-    #             inchikey=self.inchikey,
-    #             id=self.id
+    #             smiles=self.compound_dict['smiles'],
+    #             inchi=self.compound_dict['inchi'],
+    #             inchikey=self.compound_dict['inchikey'],
+    #             id=self.compound_dict['id']
     #         )
     #     )
 
@@ -73,9 +67,9 @@ class Test_Compound(TestCase):
         self.assertNotEqual(
             self.compound,
             Compound(
-                inchi=self.inchi,
-                inchikey=self.inchikey,
-                id=self.id
+                inchi=self.compound_dict['inchi'],
+                inchikey=self.compound_dict['inchikey'],
+                id=self.compound_dict['id']
             )
         )
 
@@ -90,7 +84,7 @@ class Test_Compound(TestCase):
             with self.subTest(f'test_get_{attr}', attr=attr):
                 self.assertEqual(
                     getattr(self.compound, f'get_{attr}')(),
-                    getattr(self, f'{attr}')
+                    self.compound_dict[attr]
                 )
 
     def test_set(self):
