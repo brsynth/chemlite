@@ -61,6 +61,10 @@ class Compound(Object):
     # def __repr__(self):
     #     return f'Compound {self.get_id()}'
 
+    @staticmethod
+    def from_dict(compound: Dict) -> 'Compound':
+        return Compound(**compound)
+
     def _to_dict(self) -> Dict:
         '''Return a dictionary with all (with legacy) attributes of the object:
             - id (legacy)
