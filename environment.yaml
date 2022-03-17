@@ -1,4 +1,4 @@
-name: chemlite-dev
+name: chemlite
 channels:
   - conda-forge
 dependencies:
