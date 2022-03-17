@@ -201,6 +201,13 @@ class Reaction(Object):
                 and Cache.get(spe_id).get_smiles() != ''
             )
             if check_smiles:
+                _spe_sto = round(spe_sto)
+                _spe_sto = _spe_sto if _spe_sto > 0 else 1
+                if _spe_sto != spe_sto:
+                    self.get_logger().warning(
+                        f'Stoichiometric coefficient of compound {spe_id} ({spe_sto}) \
+                            has been rounded to {_spe_sto}.'
+                        )
                 return [Cache.get(spe_id).get_smiles()]*spe_sto
             else:
                 self.get_logger().warning(f'Compound {spe_id} has no smiles')
