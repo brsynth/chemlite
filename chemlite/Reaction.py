@@ -79,9 +79,11 @@ class Reaction(Object):
 
         Parameters
         ----------
-        trans_smi: str
+        rxn: str
             Transformation in SMILES format or with CID.
             Stoichiometric coefficients must be separated by spaces.
+        id: str
+            ID of the reaction
         logger : Logger
             The logger object.
 
@@ -106,6 +108,24 @@ class Reaction(Object):
         rxn: str,
         logger: Logger = getLogger(__file__)
     ):
+        """
+        Parse the reaction string.
+
+        Parameters
+        ----------
+        rxn: str
+            Transformation in SMILES format or with CID.
+            Stoichiometric coefficients must be separated by spaces.
+        id: str
+            ID of the reaction
+        logger : Logger
+            The logger object.
+
+        Returns
+        -------
+        transfo: Dict
+            Dictionary of the transformation.
+        """
         transfo = {
             'left': {},
             'right': {},
