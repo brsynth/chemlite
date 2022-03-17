@@ -1,0 +1,51 @@
+{
+    "smiles": {
+        "string": "[H]OC(=O)c1c([H])c([H])c(O[H])c(O[H])c1[H].[H+]>>[H]Oc1c([H])c([H])c([H])c([H])c1O[H].O=C=O",
+        "dict": {
+            "left": {
+                "[H]OC(=O)c1c([H])c([H])c(O[H])c(O[H])c1[H]": 1,
+                "[H+]": 1
+            },
+            "right": {
+                "[H]Oc1c([H])c([H])c([H])c([H])c1O[H]": 1,
+                "O=C=O": 1
+            },
+            "format": "cid",
+            "sep_side": "=",
+            "sep_cmpd": "+"
+        }
+    },
+    "int": {
+        "string": "1 CMPD_0000000010 + 1 MNXM1 = 1 CMPD_0000000003 + 1 MNXM13",
+        "dict": {
+            "left": {
+                "CMPD_0000000010": 1,
+                "MNXM1": 1
+            },
+            "right": {
+                "CMPD_0000000003": 1,
+                "MNXM13": 1
+            },
+            "format": "cid",
+            "sep_side": "=",
+            "sep_cmpd": "+"
+        }
+    },
+    "float": {
+        "string": "1.0 CMPD_0000000003 + 1.0 MNXM13 + 1.7 MNXM6 = 1.0 CMPD_0000000010 + 2.3 MNXM6",
+        "dict": {
+            "left": {
+                "CMPD_0000000003": 1.0,
+                "MNXM13": 1.0,
+                "MNXM6": 1.7
+            },
+            "right": {
+                "CMPD_0000000010": 1.0,
+                "MNXM6": 2.3
+            },
+            "format": "cid",
+            "sep_side": "=",
+            "sep_cmpd": "+"
+        }
+    }
+}

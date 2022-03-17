@@ -35,9 +35,8 @@ class Test_Reaction(TestCase):
             "CMPD_0000000003": 1,
             "MNXM13": 1
         }
-        self.smiles = '[H]OC(=O)c1c([H])c([H])c(O[H])c(O[H])c1[H].[H+]>>[H]Oc1c([H])c([H])c([H])c([H])c1O[H].O=C=O'
-        self.string = '1 CMPD_0000000010 + 1 MNXM1 = 1 CMPD_0000000003 + 1 MNXM13'
-        self.rxn_string_w_floating_coeff = '1.0 CMPD_0000000005 + 1.0 MNXM1462 + 1.7 MNXM27 = 1.0 CMPD_0000000028 + 1.0 CMPD_0000000022 + 1.7 MNXM27'
+        with open(os_path.join(DATA_PATH, 'reactions.json'), 'r') as fp:
+            self.reactions = jsload(fp)
         self.ec_numbers = [
             "4.1.1.63"
         ]
@@ -63,7 +62,7 @@ class Test_Reaction(TestCase):
     def test_to_string(self):
         self.assertEqual(
             self.rxn.to_string(),
-            f'Reaction {self.rxn.get_id()}: {self.string}'
+            f'Reaction {self.rxn.get_id()}: {self.reactions["int"]["string"]}'
         )
 
     def test_to_string_0(self):
@@ -154,7 +153,7 @@ class Test_Reaction(TestCase):
     def test_get_smiles(self):
         self.assertEqual(
             self.rxn.get_smiles(),
-            self.smiles
+            self.reactions['smiles']['string']
         )
 
     def test_get_smiles_cmpd_wo_smiles_L(self):
@@ -164,7 +163,7 @@ class Test_Reaction(TestCase):
         )
         self.assertEqual(
             self.rxn.get_smiles(),
-            self.smiles
+            self.reactions['smiles']['string']
         )
 
     def test_get_smiles_cmpd_wo_smiles_R(self):
@@ -174,7 +173,7 @@ class Test_Reaction(TestCase):
         )
         self.assertEqual(
             self.rxn.get_smiles(),
-            self.smiles
+            self.reactions['smiles']['string']
         )
 
     def test_get_smiles_w_cmpd_not_in_cache(self):
@@ -184,7 +183,7 @@ class Test_Reaction(TestCase):
         )
         self.assertEqual(
             self.rxn.get_smiles(),
-            self.smiles
+            self.reactions['smiles']['string']
         )
 
     def test_get_smiles_w_smile_None_L(self):
@@ -194,7 +193,7 @@ class Test_Reaction(TestCase):
         )
         self.assertEqual(
             self.rxn.get_smiles(),
-            self.smiles
+            self.reactions['smiles']['string']
         )
 
     def test_get_smiles_w_smile_None_R(self):
@@ -204,7 +203,7 @@ class Test_Reaction(TestCase):
         )
         self.assertEqual(
             self.rxn.get_smiles(),
-            self.smiles
+            self.reactions['smiles']['string']
         )
 
     def test_get_smiles_w_all_cmpds_wo_smiles(self):
@@ -218,30 +217,27 @@ class Test_Reaction(TestCase):
         )
         self.assertEqual(
             self.rxn.get_smiles(),
-            self.smiles
+            self.reactions['smiles']['string']
         )
     
     def test_get_smiles_w_floating_coeff(self):
         rxn = Reaction.from_string(
             id='test',
-            rxn=self.rxn_string_w_floating_coeff
+            rxn=self.reactions['float']['string']
         )
-        print(rxn._to_dict())
-        print(rxn.get_smiles())
         self.assertEqual(
             rxn.get_smiles(),
-            ''
+            '[H]Oc1c([H])c([H])c([H])c([H])c1O[H].O=C=O.[H]N=C(O[H])C1=C([H])N(C2([H])OC([H])(C([H])([H])OP(=O)(O[H])OP(=O)(O[H])OC([H])([H])C3([H])OC([H])(n4c([H])nc5c(N([H])[H])nc([H])nc54)C([H])(OP(=O)(O[H])O[H])C3([H])O[H])C([H])(O[H])C2([H])O[H])C([H])=C([H])C1([H])[H].[H]N=C(O[H])C1=C([H])N(C2([H])OC([H])(C([H])([H])OP(=O)(O[H])OP(=O)(O[H])OC([H])([H])C3([H])OC([H])(n4c([H])nc5c(N([H])[H])nc([H])nc54)C([H])(OP(=O)(O[H])O[H])C3([H])O[H])C([H])(O[H])C2([H])O[H])C([H])=C([H])C1([H])[H]>>[H]OC(=O)c1c([H])c([H])c(O[H])c(O[H])c1[H].[H]N=C(O[H])C1=C([H])N(C2([H])OC([H])(C([H])([H])OP(=O)(O[H])OP(=O)(O[H])OC([H])([H])C3([H])OC([H])(n4c([H])nc5c(N([H])[H])nc([H])nc54)C([H])(OP(=O)(O[H])O[H])C3([H])O[H])C([H])(O[H])C2([H])O[H])C([H])=C([H])C1([H])[H].[H]N=C(O[H])C1=C([H])N(C2([H])OC([H])(C([H])([H])OP(=O)(O[H])OP(=O)(O[H])OC([H])([H])C3([H])OC([H])(n4c([H])nc5c(N([H])[H])nc([H])nc54)C([H])(OP(=O)(O[H])O[H])C3([H])O[H])C([H])(O[H])C2([H])O[H])C([H])=C([H])C1([H])[H]'
         )
-
 
     def test_from_string(self):
         rxn = Reaction.from_string(
             id='test',
-            rxn=self.rxn_string_w_floating_coeff
+            rxn=self.reactions['float']['string']
         )
         self.assertEqual(
-            sum(rxn.get_specie('MNXM27').values()),
-            3.4
+            sum(rxn.get_specie('MNXM6').values()),
+            4
         )
 
     def test_from_string_smiles(self):
@@ -252,6 +248,12 @@ class Test_Reaction(TestCase):
         self.assertEqual(
             sum(rxn.get_specie('[H]O[H]').values()),
             2
+        )
+    
+    def test_parse(self):
+        self.assertEqual(
+            Reaction.parse(self.reactions['float']['string']),
+            self.reactions['float']['dict']
         )
 
     def test_get_products_compounds(self):

@@ -91,6 +91,20 @@ class Reaction(Object):
         """
         logger.debug(f'transfo: {rxn}')
 
+        transfo = Reaction.parse(rxn, logger)
+
+        return Reaction(
+            id=id,
+            reactants=transfo['left'],
+            products=transfo['right'],
+            logger=logger
+        )
+
+    @staticmethod
+    def parse(
+        rxn: str,
+        logger: Logger = getLogger(__file__)
+    ):
         transfo = {
             'left': {},
             'right': {},
@@ -124,12 +138,7 @@ class Reaction(Object):
                     transfo[side][_cmpd] = 0
                 transfo[side][_cmpd] += _coeff
         logger.debug('INPUT TRANSFORMATION: '+str(json_dumps(transfo, indent=4)))
-        return Reaction(
-            id=id,
-            reactants=transfo['left'],
-            products=transfo['right'],
-            logger=logger
-        )
+        return transfo
 
     def to_string(self) -> str:
         '''Returns the string representation of the reaction
@@ -194,7 +203,7 @@ class Reaction(Object):
         smiles: str
             SMILES string of the reaction
         '''
-        def get_smi(spe_id: str, spe_sto: int) -> str:
+        def get_smi(spe_id: str, spe_sto: float) -> str:
             check_smiles = (
                 Cache.get(spe_id) is not None
                 and Cache.get(spe_id).get_smiles() is not None
@@ -205,10 +214,9 @@ class Reaction(Object):
                 _spe_sto = _spe_sto if _spe_sto > 0 else 1
                 if _spe_sto != spe_sto:
                     self.get_logger().warning(
-                        f'Stoichiometric coefficient of compound {spe_id} ({spe_sto}) \
-                            has been rounded to {_spe_sto}.'
+                        f'Stoichiometric coefficient of compound {spe_id} ({spe_sto}) has been rounded to {_spe_sto}.'
                         )
-                return [Cache.get(spe_id).get_smiles()]*spe_sto
+                return [Cache.get(spe_id).get_smiles()]*_spe_sto
             else:
                 self.get_logger().warning(f'Compound {spe_id} has no smiles')
                 return []
