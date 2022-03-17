@@ -32,6 +32,7 @@ from logging import (
     Logger,
     getLogger
 )
+from json import dumps as json_dumps
 from copy import deepcopy
 from brs_utils import Cache
 from chemlite.Compound import Compound
@@ -39,6 +40,8 @@ from chemlite.Object import Object
 
 
 class Reaction(Object):
+
+    def get_SIDES() -> List: return ['left', 'right']
 
     def __init__(
         self,
@@ -63,6 +66,70 @@ class Reaction(Object):
     ## OUT METHODS
     # def __repr__(self):
     #     return f'Reaction {self.get_name()}'
+
+    @staticmethod
+    def from_string(
+        rxn: str,
+        id: str,
+        logger: Logger = getLogger(__file__)
+    ) -> 'Reaction':
+        """
+        Build transformation to complete.
+
+        Parameters
+        ----------
+        trans_smi: str
+            Transformation in SMILES format or with CID.
+            Stoichiometric coefficients must be separated by spaces.
+        logger : Logger
+            The logger object.
+
+        Returns
+        -------
+        transfo: Dict
+            Dictionary of the transformation.
+        """
+        logger.debug(f'transfo: {rxn}')
+
+        transfo = {
+            'left': {},
+            'right': {},
+            'format': '',
+            'sep_side': '',
+            'sep_cmpd': ''
+        }
+        # Detect input format
+        if '>>' in rxn:  # SMILES
+            transfo['format'] = 'smiles'
+            transfo['sep_side'] = '>>'
+            transfo['sep_cmpd'] = '.'
+        elif '=' in rxn:  # CMPD IDs
+            transfo['format'] = 'cid'
+            transfo['sep_side'] = '='
+            transfo['sep_cmpd'] = '+'
+        trans = {}
+        trans['left'], trans['right'] = rxn.split(transfo['sep_side'])
+        for side in Reaction.get_SIDES():
+            for cmpd in trans[side].split(transfo['sep_cmpd']):
+                # Separate compounds, remove leading and trailing spaces
+                _list = cmpd.strip().split(' ')
+                # Detect stoichio coeff
+                if len(_list) > 1:
+                    _coeff = float(_list[0])
+                    _cmpd = _list[1]
+                else:
+                    _coeff = 1.0
+                    _cmpd = _list[0]
+                if not _cmpd in transfo[side]:
+                    transfo[side][_cmpd] = 0
+                transfo[side][_cmpd] += _coeff
+        logger.debug('INPUT TRANSFORMATION: '+str(json_dumps(transfo, indent=4)))
+        return Reaction(
+            id=id,
+            reactants=transfo['left'],
+            products=transfo['right'],
+            logger=logger
+        )
 
     def to_string(self) -> str:
         '''Returns the string representation of the reaction
