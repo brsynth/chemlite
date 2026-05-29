@@ -1,4 +1,5 @@
 """A file to define constants"""
+
 # The MIT License (MIT)
 #
 # Copyright (c) 2018 Institute for Molecular Systems Biology, ETH Zurich.
@@ -25,19 +26,7 @@
 
 # default thermo values
 DEFAULT_THERMO = {
-    "dG0_prime": {
-        "value": float('nan'),
-        "error": float('nan'),
-        "unit": ''
-    },
-    "dGm_prime": {
-        "value": float('nan'),
-        "error": float('nan'),
-        "unit": ''
-    },
-    "dG_prime": {
-        "value": float('nan'),
-        "error": float('nan'),
-        "unit": ''
-    }
+    "dG0_prime": {"value": float("nan"), "error": float("nan"), "unit": ""},
+    "dGm_prime": {"value": float("nan"), "error": float("nan"), "unit": ""},
+    "dG_prime": {"value": float("nan"), "error": float("nan"), "unit": ""},
 }
