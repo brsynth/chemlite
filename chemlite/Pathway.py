@@ -50,6 +50,8 @@ class Pathway(Object):
             logger=logger
         )
         self.__reactions = {}
+        self.set_target_id(None)
+
 
     ## OUT METHODS
     # def __repr__(self):
@@ -82,6 +84,7 @@ class Pathway(Object):
         d = {
             'reactions': {rxn_id: self.get_reaction(rxn_id)._to_dict() for rxn_id in self.get_reactions_ids()},
             'species': {spe_id: self.get_specie(spe_id)._to_dict() for spe_id in self.get_species_ids()},
+            'target_id': self.get_target_id(),
         }
         if full:
             d.update(super()._to_dict())
@@ -108,7 +111,7 @@ class Pathway(Object):
                 ) and all (  # all reactions of other are in self
                     rxn in other.get_list_of_reactions()
                     for rxn in self.get_list_of_reactions()
-                )
+                ) and self.get_target_id() == other.get_target_id()
             )
         return False
 
@@ -270,8 +273,28 @@ class Pathway(Object):
                 ]
             )
         )
+    
+    def get_target_id(self) -> str:
+        '''Returns the target id of the pathway, i.e. the id of the compound that is produced by the pathway
+
+        Returns
+        -------
+        target_id: str
+            ID of the target compound of the pathway
+        '''
+        return self.__target_id
 
     ## WRITE METHODS
+    def set_target_id(self, target_id: str) -> None:
+        '''Set the target id of the pathway, i.e. the id of the compound that is produced by the pathway
+
+        Parameters
+        ----------
+        target_id: str
+            ID of the target compound of the pathway
+        '''
+        self.__target_id = target_id
+
     def rename_compound(self, id: str, new_id: str) -> None:
         '''Rename a compound within the pathway. Actually, the
         compound is renamed over all reactions

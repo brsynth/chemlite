@@ -22,6 +22,7 @@ class Test_Pathway(TestCase):
 
     def setUp(self):
         self.species = {}
+        self.target_id = 'TARGET_0000000001'
         with open(os_path.join(DATA_PATH, 'compounds.json'), 'r') as fp:
             species = jsload(fp)
         for spe_id in species:
@@ -31,7 +32,7 @@ class Test_Pathway(TestCase):
             "MNXM4": 1
         }
         self.products = {
-            "TARGET_0000000001": 1,
+            self.target_id: 1,
             "MNXM1": 2
         }
         self.rxn = Reaction(
@@ -95,6 +96,7 @@ class Test_Pathway(TestCase):
         )
         for rxn in self.reactions.values():
             self.pathway.add_reaction(rxn)
+        self.pathway.set_target_id(self.target_id)
 
     ## READ METHODS
     def test_rename_compound(self):
@@ -267,6 +269,7 @@ class Test_Pathway(TestCase):
             {
                 'reactions': {rxn.get_id(): rxn._to_dict() for rxn in self.reactions.values()},
                 'species': {spe.get_id(): spe._to_dict() for spe in [self.species[spe_id] for spe_id in list_of_species]},
+                'target_id': self.target_id
             }
         )
 
@@ -278,7 +281,8 @@ class Test_Pathway(TestCase):
             {
                 'reactions': {rxn.get_id(): rxn._to_dict() for rxn in self.reactions.values()},
                 'species': {spe.get_id(): spe._to_dict() for spe in [self.species[spe_id] for spe_id in list_of_species]},
-                'id': self.id
+                'id': self.id,
+                'target_id': self.target_id
             }
         )
 
@@ -304,6 +308,7 @@ class Test_Pathway(TestCase):
             reactions[index].set_id(i)
             # add reaction in the reverse order
             pathway.add_reaction(rxn=reactions[index])
+        pathway.set_target_id(self.target_id)
         self.assertEqual(
             self.pathway,
             pathway
@@ -312,6 +317,7 @@ class Test_Pathway(TestCase):
     def test_not_equal_reactions(self):
         pathway = deepcopy(Pathway(id=self.id))
         pathway.add_reaction(Reaction(id='test_1'))
+        pathway.set_target_id(self.target_id)
         self.assertNotEqual(
             self.pathway,
             pathway
@@ -357,7 +363,7 @@ class Test_Pathway(TestCase):
             self.pathway.net_reaction(),
             {
                 'MNXM4': -2,
-                'TARGET_0000000001': 1,
+                self.target_id: 1,
                 'MNXM13': 1,
                 'MNXM6': -1,
                 'MNXM2': 1,
@@ -372,7 +378,7 @@ class Test_Pathway(TestCase):
             self.pathway.pseudo_reaction(),
             {
                 'MNXM4': -2,
-                'TARGET_0000000001': 1,
+                self.target_id: 1,
                 'MNXM13': 1,
                 'MNXM6': -1,
                 'MNXM2': 1,
