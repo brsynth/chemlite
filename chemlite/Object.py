@@ -1,4 +1,5 @@
 """A class to represent a basic object."""
+
 # The MIT License (MIT)
 #
 # Copyright (c) 2018 Institute for Molecular Systems Biology, ETH Zurich.
@@ -23,62 +24,49 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-from typing import (
-    Dict,
-    Union,
-    TypeVar
-)
-from logging import (
-    Logger,
-    getLogger
-)
+from typing import Dict, Union, TypeVar
+from logging import Logger, getLogger
 
 
 class Object:
 
-    def __init__(
-        self,
-        id: str,
-        logger: Logger = getLogger(__name__)
-    ):
+    def __init__(self, id: str, logger: Logger = getLogger(__name__)):
         self.__logger = logger
         self.set_id(id)
 
     def to_string(self) -> str:
-        '''Returns a string representation of the object
+        """Returns a string representation of the object
 
         Returns
         -------
         string: str
             The string representation of the object
-        '''
-        return f'{type(self).__name__} {self.get_id()}'
+        """
+        return f"{type(self).__name__} {self.get_id()}"
 
     def __str__(self) -> str:
-        '''Prints a string representation of the object (called by print())
+        """Prints a string representation of the object (called by print())
 
         Returns
         -------
         string: str
             The string representation of the object
-        '''
+        """
         return self.to_string()
 
     def _to_dict(self, full=False) -> Dict[str, TypeVar]:
-        '''Return a dictionary with the attributes of the object:
+        """Return a dictionary with the attributes of the object:
             - id
 
         Returns
         -------
         obj_dict: Dict[str, TypeVar]
             A dictionary with the attributes of the object
-        '''
-        return {
-            'id': self.get_id()
-        }
+        """
+        return {"id": self.get_id()}
 
     def __eq__(self, other) -> bool:
-        '''Return the equality status of two Object objects
+        """Return the equality status of two Object objects
 
         Parameters
         ----------
@@ -89,44 +77,44 @@ class Object:
         -------
         equal: bool
             Return true if the two objects are equal, False otherwise
-        '''
+        """
         if isinstance(self, other.__class__):
             return self._to_dict() == other._to_dict()
         return False
 
     ## READ METHODS
     def get_id(self) -> str:
-        '''Return the ID of the object
+        """Return the ID of the object
 
         Returns
         -------
         id: str
             ID of the object
-        '''
+        """
         return self.__id
 
     def get_logger(self) -> Logger:
-        '''Return the object's logger
+        """Return the object's logger
 
         Returns
         -------
         logger: Logger
             The object's logger
-        '''
+        """
         return self.__logger
 
     ## WRITE METHODS
     def set_id(self, id: str) -> Union[str, None]:
-        '''Set the object's id
+        """Set the object's id
 
         Parameters
         ----------
         id: str
             String to set the object's ID to
-        '''
+        """
         if id is None:
-            raise ValueError('id argument must be different to None for an Object')
-        elif id == '':
-            raise ValueError('id argument must not be empty for an Object')
+            raise ValueError("id argument must be different to None for an Object")
+        elif id == "":
+            raise ValueError("id argument must not be empty for an Object")
         else:
             self.__id = id

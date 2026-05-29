@@ -1,4 +1,5 @@
 """A class to represent a chemical species."""
+
 # The MIT License (MIT)
 #
 # Copyright (c) 2018 Institute for Molecular Systems Biology, ETH Zurich.
@@ -26,10 +27,7 @@
 from typing import (
     Dict,
 )
-from logging import (
-    Logger,
-    getLogger
-)
+from logging import Logger, getLogger
 from brs_utils import Cache
 from chemlite.Object import Object
 
@@ -39,17 +37,14 @@ class Compound(Object):
     def __init__(
         self,
         id: str,
-        smiles: str = '',
-        inchi: str = '',
-        inchikey: str = '',
-        formula: str = '',
-        name: str = '',
-        logger: Logger = getLogger(__name__)
+        smiles: str = "",
+        inchi: str = "",
+        inchikey: str = "",
+        formula: str = "",
+        name: str = "",
+        logger: Logger = getLogger(__name__),
     ):
-        super().__init__(
-            id=id,
-            logger=logger
-        )
+        super().__init__(id=id, logger=logger)
         self.set_smiles(smiles)
         self.set_inchi(inchi)
         self.set_inchikey(inchikey)
@@ -62,11 +57,11 @@ class Compound(Object):
     #     return f'Compound {self.get_id()}'
 
     @staticmethod
-    def from_dict(compound: Dict) -> 'Compound':
+    def from_dict(compound: Dict) -> "Compound":
         return Compound(**compound)
 
     def _to_dict(self) -> Dict:
-        '''Return a dictionary with all (with legacy) attributes of the object:
+        """Return a dictionary with all (with legacy) attributes of the object:
             - id (legacy)
             - name
             - smiles
@@ -78,14 +73,11 @@ class Compound(Object):
         -------
         obj_dict: Dict[str, TypeVar]
             A dictionary with all (with legacy) attributes
-        '''
-        return {
-            **super()._to_dict(),
-            **self.__to_dict()
-        }
+        """
+        return {**super()._to_dict(), **self.__to_dict()}
 
     def __to_dict(self) -> Dict:
-        '''Return a dictionary with (specific) attributes:
+        """Return a dictionary with (specific) attributes:
             - name
             - smiles
             - inchi
@@ -96,113 +88,113 @@ class Compound(Object):
         -------
         obj_dict: Dict[str, TypeVar]
             A dictionary with (specific) attributes of the object
-        '''
+        """
         return {
-            'name': self.get_name(),
-            'smiles': self.get_smiles(),
-            'inchi': self.get_inchi(),
-            'inchikey': self.get_inchikey(),
-            'formula': self.get_formula(),
+            "name": self.get_name(),
+            "smiles": self.get_smiles(),
+            "inchi": self.get_inchi(),
+            "inchikey": self.get_inchikey(),
+            "formula": self.get_formula(),
         }
 
     ## READ METHODS
     def get_name(self) -> str:
-        '''Returns the name of the compound
+        """Returns the name of the compound
 
         Returns
         -------
         name: str
             Name of the compound
-        '''
+        """
         return self.__name
 
     def get_smiles(self) -> str:
-        '''Returns the SMILES string of the compound
+        """Returns the SMILES string of the compound
 
         Returns
         -------
         smiles: str
             SMILES of the compound
-        '''
+        """
         return self.__smiles
 
     def get_inchi(self) -> str:
-        '''Returns the InChI of the compound
+        """Returns the InChI of the compound
 
         Returns
         -------
         inchi: str
             Inchi of the compound
-        '''
+        """
         return self.__inchi
 
     def get_inchikey(self) -> str:
-        '''Returns the InChIKey of the compound
+        """Returns the InChIKey of the compound
 
         Returns
         -------
         inchikey: str
             InChIKey of the compound
-        '''
+        """
         return self.__inchikey
 
     def get_formula(self) -> str:
-        '''Returns the formula of the compound
+        """Returns the formula of the compound
 
         Returns
         -------
         formula: str
             Formula of the compound
-        '''
+        """
         return self.__formula
 
     ## WRITE METHODS
     def set_name(self, name: str) -> None:
-        '''Set the name of the compound
+        """Set the name of the compound
 
         Parameters
         ----------
         name: str
             String to set the compound's name to
-        '''
+        """
         self.__name = name
 
     def set_smiles(self, smiles: str) -> None:
-        '''Set the SMILES string of the compound
+        """Set the SMILES string of the compound
 
         Parameters
         ----------
         smiles: str
             String to set the compound's SMILES string to
-        '''
+        """
         self.__smiles = smiles
 
     def set_inchi(self, inchi: str) -> None:
-        '''Set the InChI of the compound
+        """Set the InChI of the compound
 
         Parameters
         ----------
         inchi: str
             String to set the compound's InChI to
-        '''
+        """
         self.__inchi = inchi
 
     def set_inchikey(self, inchikey: str) -> None:
-        '''Set the InChIKey of the compound
+        """Set the InChIKey of the compound
 
         Parameters
         ----------
         inchikey: str
             String to set the compound's InChIKey to
-        '''
+        """
         self.__inchikey = inchikey
 
     def set_formula(self, formula: str) -> None:
-        '''Set the formula of the compound
+        """Set the formula of the compound
 
         Parameters
         ----------
         formula: str
             String to set the compound's formula to
-        '''
+        """
         self.__formula = formula
