@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.8.0](https://github.com/brsynth/chemlite/tree/2.8.0) (2026-05-29)
+
+[Full Changelog](https://github.com/brsynth/chemlite/compare/2.7.0...2.8.0)
+
 ## [2.7.0](https://github.com/brsynth/chemlite/tree/2.7.0) (2022-03-17)
 
 [Full Changelog](https://github.com/brsynth/chemlite/compare/2.6.1...2.7.0)
