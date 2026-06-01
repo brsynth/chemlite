@@ -303,6 +303,13 @@ class Pathway(Object):
         """
         self.__target_id = target_id
 
+    def get_target_rxn_id(self) -> str:
+        """Get the ID of the reaction that produces
+        the target compound of the pathway."""
+        for rxn in self.get_list_of_reactions():
+            if self.get_target_id() in rxn.get_products_ids():
+                return rxn.get_id()
+
     def rename_compound(self, id: str, new_id: str) -> None:
         """Rename a compound within the pathway. Actually, the
         compound is renamed over all reactions
