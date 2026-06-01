@@ -1,8 +1,16 @@
 # Changelog
 
+## [2.9.0](https://github.com/brsynth/chemlite/tree/2.9.0) (2026-06-01)
+
+[Full Changelog](https://github.com/brsynth/chemlite/compare/2.8.0...2.9.0)
+
 ## [2.8.0](https://github.com/brsynth/chemlite/tree/2.8.0) (2026-05-29)
 
 [Full Changelog](https://github.com/brsynth/chemlite/compare/2.7.0...2.8.0)
+
+**Merged pull requests:**
+
+- Feat \(target\) [\#1](https://github.com/brsynth/chemlite/pull/1) ([breakthewall](https://github.com/breakthewall))
 
 ## [2.7.0](https://github.com/brsynth/chemlite/tree/2.7.0) (2022-03-17)
 
