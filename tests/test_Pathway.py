@@ -250,6 +250,7 @@ class Test_Pathway(TestCase):
             "----------------\n"
             + f"Pathway {self.pathway.get_id()}\n"
             + "----------------\n"
+            + f"Target: {self.pathway.get_target_id()}\n"
             + "\n".join([rxn.to_string() for rxn in self.reactions.values()]),
         )
 
