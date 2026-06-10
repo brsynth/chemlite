@@ -63,6 +63,7 @@ class Pathway(Object):
             "----------------\n"
             + f"Pathway {self.get_id()}\n"
             + "----------------\n"
+            + f"Target: {self.get_target_id()}\n"
             + "\n".join([rxn.__str__() for rxn in self.get_reactions().values()])
         )
 
